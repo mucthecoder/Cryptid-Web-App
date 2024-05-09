@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="stylesheets/play.css" />
+  </head>
+  <body>
+    <div id="buttons">
+      <button id="difficulty">intro</button>
+      <button id="number">0</button>
+      <div id="inputdiv">
+        <input
+          type="text"
+          id="custom"
+          placeholder="6Numbers&A_manWillDoTheRest"
+        />
+        <button id="customNumber"><b>Submit Custom</b></button>
+      </div>
+    </div>
+
+    <section>
+      <article>
+        <div class="legend">
+          <img src="tiles/legend.png" alt="" id="legendImg">
+          <div class="turns">
+            <div class="color red"></div>
+            <div class="color green"></div>
+            <div class="color orange"></div>
+            <div class="color blue"></div>
+            <div class="color purple"></div>
+          </div>
+      </article>
+
+      <div class="large">
+        <div id="box"></div>
+        <canvas id="myCanvas" width="600" height="600"> </canvas>
+      </div>
+     
+      
+      <article id="pdf">
+        <img src="tiles/refrules.png" alt="" id="rulesImg">
+      </article>
+    </section>
+
+    
+
+    <div id="modal">
+      <img id="modalImg" src="" alt="">
+      <span id="closeModal">&times;</span>
+    </div>
+
+    <br />
+
+    <script src="javascripts/drawBoard.js"></script>
+    <script src="javascripts/getBoards.js"></script>
+    <script src="javascripts/buttons.js"></script> 
+    <script src="javascripts/gameRules.js"></script>
+  </body>
+</html>

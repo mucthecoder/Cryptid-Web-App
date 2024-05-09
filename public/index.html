@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cryptid Web App</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/stylesheets/index.css" />
+    <!-- <script src="/javascripts/index.js"></script> -->
+  </head>
+  <body>
+    <header class="d-flex bg-light flex-wrap justify-content-between py-1">
+      <img
+        width="100px"
+        class="px-3"
+        src="/images/logo.jpg"
+        alt="Cryptid_img"
+      />
+      <ul class="nav align-content-center px-2 nav-pills">
+        <li class="nav-item">
+          <a href="#Overview" class="nav-link">Overview</a>
+        </li>
+        <li class="nav-item">
+          <a href="#How-To-Play" class="nav-link">How to Play</a>
+        </li>
+        <li class="nav-item"><a href="#About" class="nav-link">About</a></li>
+        <li class="nav-item">
+          <a href="#Contact" class="nav-link">Contact</a>
+        </li>
+      </ul>
+    </header>
+
+    <section
+      class="p-5 text-bg-primary"
+      style="
+        position: relative;
+        background-image: url('/images/shadow.png');
+        background-size: cover;
+        background-position: center;
+      "
+    >
+      <div
+        class="position-absolute top-0 start-0 w-100 h-100"
+        style="background-color: rgba(0, 0, 0, 0.5)"
+      ></div>
+      <div class="container-fluid py-5">
+        <div class="row">
+          <div class="col-md-7 z-2">
+            <h1 class="display-5 fw-bold">Welcome to Cryptid</h1>
+            <p class="fs-4">
+              Sea-serpents, yetis, the chupacabra: you’ve studied the footage,
+              connected the dots, and gathered what meagre evidence you could.
+              You’re close – soon the whole world will know the truth behind the
+              cryptid.
+            </p>
+            <p class="fs-4">
+              You have come together with a group of like-minded
+              cryptozoologists to finally uncover the elusive creature, but the
+              glory of discovery is too rich a prize to share. Without giving
+              away some of what you know, you will never succeed in locating the
+              beast, but reveal too much and your name will be soon forgotten!
+            </p>
+            <div class="d-flex justify-content-center gap-3">
+              <a
+                id="Login"
+                href="/users"
+                class="btn my-2 px-5 btn-secondary btn-lg"
+                type="button"
+              >
+                Play
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="Overview" class="px-5 py-2 bg-secondary-subtle">
+        <div class="container-fluid py-5 d-flex flex-wrap justify-content-center align-items-center">
+            <h1 class="text-center display-4 mb-4 fw-bold">Overview</h1>
+            <div class="row d-flex flex-wrap justify-content-center align-items-center">
+                <div class="col-md-6">
+                    <p class="fs-4">You are all cryptozoologists, trying to be the first to discover definitive proof of a cryptid in the wilds of North America. Each player will be given a unique clue – one piece of crucial information about where the creature lives. When combined, the clues identify a single space on the map – the creature’s habitat. Each player’s clue either states an area where the creature can be found, or where it cannot be found, based on the terrain and structures on the board. During the game, you will ask each other questions with the aim of guessing each other’s clues. The first player to correctly use all of the clues to find the habitat wins the game.</p>
+                </div>
+                <img src="/images/Cryptid_Card.jpg" alt="Image" class="col-md-2 img-fluid" style="min-width: 20em;">
+            </div>
+        </div>
+    </section>
+
+    <section id="How-To-Play" class="px-5 py-2 bg-light">
+      <div
+        class="container-fluid py-5 d-flex flex-wrap justify-content-center align-items-center"
+      >
+        <h1 class="text-center display-4 mb-4 fw-bold">How To Play</h1>
+        <div
+          class="row d-flex flex-wrap justify-content-center align-items-center"
+        >
+          <img
+            src="/images/logo.jpg"
+            alt="Image"
+            class="col-md-2 img-fluid"
+            style="min-width: 20em"
+          />
+          <div class="col-md-6">
+            <p class="fs-4">
+              Cryptid is a deduction board game where players search for a
+              hidden creature. Players take turns asking questions, making
+              searches, or attempting to solve the mystery. The game ends when
+              someone correctly identifies the cryptid's location. For detailed
+              rules, check out the
+              <a href="/rulebook/CRPT_Rulebook_for_WEB.pdf" target="_blank"
+                >Cryptid rulebook</a
+              >. It's a thrilling game of deduction and strategy that keeps
+              players engaged until the very end!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="About" class="px-5 py-2 bg-secondary-subtle">
+      <div
+        class="container-fluid py-5 d-flex flex-wrap justify-content-center align-items-center"
+      >
+        <h1 class="text-center display-4 mb-4 fw-bold">About</h1>
+        <div
+          class="row d-flex flex-wrap justify-content-center align-items-center"
+        >
+          <div class="col-md-6">
+            <p class="fs-4">
+              Cryptid is a strategic board game designed by Hal Duncan and Ruth
+              Veevers, first published in 2018 by Osprey Games. Set in the world
+              of cryptozoology, players take on the roles of cryptozoologists
+              searching for an elusive creature in the wilderness. The game
+              revolves around deduction, logic, and strategic placement of
+              pieces on the game board.
+            </p>
+            <p class="fs-4">
+              Each player receives a clue about the cryptid's habitat, such as
+              its preferred terrain or climate. Through a series of questions
+              and deductions, players narrow down the possible locations of the
+              cryptid on the modular game board, which represents different
+              types of terrain like forests, swamps, and mountains. Players must
+              carefully analyze their opponents' actions and use logic to
+              determine the cryptid's location while concealing their own.
+            </p>
+            <p class="fs-4">
+              Cryptid is known for its tense gameplay and requires players to
+              think critically and strategically to outwit their opponents. The
+              game typically accommodates 3 to 5 players and offers various
+              levels of complexity, making it accessible to both casual and
+              seasoned gamers. It has gained praise for its unique theme,
+              engaging mechanics, and high replay value.
+            </p>
+          </div>
+          <img
+            src="/images/board_and_cards.jpg"
+            alt="Image"
+            class="col-md-2 img-fluid"
+            style="min-width: 20em"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section id="Contact" class="bg-light py-3 py-md-5">
+      <div class="container">
+        <div class="row justify-content-md-center">
+          <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
+            <h1 class="text-center display-4 mb-4 fw-bold">Contact</h1>
+            <p class="text-secondary mb-5 text-center">
+              The best way to contact us is to use our contact form below.
+              Please fill out all of the required fields and we will get back to
+              you as soon as possible.
+            </p>
+            <hr class="w-50 mx-auto mb-5 mb-xl-9 border-dark-subtle" />
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row justify-content-lg-center">
+          <div class="col-12 col-lg-9">
+            <div class="bg-white border rounded shadow-sm overflow-hidden">
+              <form action="/users/sendemail" method="POST">
+                <div class="row gy-4 gy-xl-5 p-4 p-xl-5">
+                  <div class="col-12">
+                    <label for="fullname" class="form-label"
+                      >Full Name <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="fullname"
+                      name="fullname"
+                      value=""
+                      required
+                    />
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="email" class="form-label"
+                      >Email <span class="text-danger">*</span></label
+                    >
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-envelope"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"
+                          />
+                        </svg>
+                      </span>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        value=""
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-telephone"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"
+                          />
+                        </svg>
+                      </span>
+                      <input
+                        type="tel"
+                        class="form-control"
+                        id="phone"
+                        name="phone"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label for="message" class="form-label"
+                      >Message <span class="text-danger">*</span></label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="message"
+                      name="message"
+                      rows="3"
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="col-12">
+                    <div class="d-grid">
+                      <button class="btn btn-primary btn-lg" type="submit">
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="py-3 my-4">
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item">
+          <a href="#Overview" class="nav-link">Overview</a>
+        </li>
+        <li class="nav-item">
+          <a href="#How-To-Play" class="nav-link">How to Play</a>
+        </li>
+        <li class="nav-item"><a href="#About" class="nav-link">About</a></li>
+        <li class="nav-item">
+          <a href="#Contact" class="nav-link">Contact</a>
+        </li>
+      </ul>
+      <p class="text-center text-muted">&copy; 2024</p>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+  </body>
+</html>
