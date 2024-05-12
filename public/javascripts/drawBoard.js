@@ -10,8 +10,16 @@ function drawIt(path) {
   fetch(path)
     .then((response) => response.json())
     .then((data) => {
-      //console.log('Here');
-      mapCodeValue = data.mapCode;
+      //console.log(data);
+      if (goal=="local"){
+        mapCodeValue = data.mapCode;
+      }
+      else{
+        let temp= sessionStorage.getItem("cryptid-game-map-code");
+        mapCodeValue=who.mapCode;
+        console.log(temp);
+        console.log(mapCodeValue);
+      }
       config = transformString(mapCodeValue);
 
       canvas = document.getElementById("myCanvas");

@@ -2,7 +2,8 @@ console.log("Waiting scripts started succesfully");
 const username=sessionStorage.getItem("cryptid-game-username");
 const goal=sessionStorage.getItem("cryptid-game-action");
 const code=sessionStorage.getItem("cryptid-game-room-number");
-const mode=sessionStorage.getItem("cryptid-game-mode");
+let mode=sessionStorage.getItem("cryptid-game-mode");
+let map="";
 console.log(`Username:${username}`);
 console.log(`Goal:${goal}`);
 console.log(`Room number:${code}`);
@@ -27,7 +28,7 @@ console.log(`Game mode:${mode}`);
 let met = document.getElementById("myname");
 console.log(typeof met);
 console.log(met);
-console.log("what the fuck")
+
 met.textContent=username;
 const socket = io();
 let players=1;
@@ -56,8 +57,13 @@ socket.on("create-res",(response)=>{
 });
 
 
-socket.on("enable-start",()=>{
+socket.on("enable-start",(data)=>{
     console.log("Let the games begin");
+    console.log(data);
+    map=data.map_code;
+    mode=data.mode;
+    sessionStorage.setItem("cryptid-game-mode",mode);
+    sessionStorage.setItem("cryptid-game-map-code",map);
     if (goal=="create"){
         let tem=document.createElement("button");
         tem.textContent="Start Game";
