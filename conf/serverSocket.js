@@ -55,7 +55,7 @@ function configureSocketIO(server) {
                     for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
                         io.to(custom_lobbies[index].player_sockets[i]).emit("enable-start");
                     }
-                    custom_lobbies[index].started=true;
+                    
                 }
                 io.to(socket.id).emit("others",{identity:custom_lobbies[index].lobby_id,others:custom_lobbies[index].players});
             }
@@ -89,7 +89,7 @@ function configureSocketIO(server) {
                     for (let i=0;i<lobbies[index].player_sockets.length;i++){
                         io.to(lobbies[index].player_sockets[i]).emit("enable-start");
                     }
-                    lobbies[index].started=true;
+                    
                 }
             }
 
@@ -103,6 +103,7 @@ function configureSocketIO(server) {
                 for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
                     io.to(custom_lobbies[index].player_sockets[i]).emit("start-match");
                 }
+                custom_lobbies[index].started=true;
             }
             else if(data.action=="play"){
                 const index = lobbies.findIndex(car => car.lobby_id==data.id);
@@ -110,6 +111,28 @@ function configureSocketIO(server) {
                 for (let i=0;i<lobbies[index].player_sockets.length;i++){
                     io.to(lobbies[index].player_sockets[i]).emit("start-match");
                 }
+                lobbies[index].started=true;
+            }
+        });
+
+        socket.on("reconnect",(data)=>{
+            if (data.action=="join"||data.action=="create"){
+                let index = custom_lobbies.findIndex(car => car.lobby_id == data.identity);
+                for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
+                    io.to(custom_lobbies[index].player_sockets[i]).emit("another",{name:data.username});
+                }
+                custom_lobbies[index].player_sockets.push(socket.id);
+                custom_lobbies[index].players.push(data.username);
+                io.to(socket.id).emit("others",{others:custom_lobbies[index].players});
+            }
+            else if(data.action=="play"){
+                let index = lobbies.findIndex(car => car.lobby_id == data.identity);
+                for (let i=0;i<lobbies[index].player_sockets.length;i++){
+                    io.to(lobbies[index].player_sockets[i]).emit("another",{name:data.username});
+                }
+                lobbies[index].player_sockets.push(socket.id);
+                lobbies[index].players.push(data.username);
+                io.to(socket.id).emit("others",{others:lobbies[index].players});
             }
         });
 

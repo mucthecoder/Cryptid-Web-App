@@ -87,6 +87,7 @@ socket.on("start-match",()=>{
         him.parentNode.removeChild(him);
     }
     console.log('starting');
+    sessionStorage.setItem("cryptid-match-id",match_id);
     countdown(5);
 });
 
