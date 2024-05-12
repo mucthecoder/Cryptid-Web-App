@@ -23,7 +23,7 @@ function configureSocketIO(server) {
         console.log('User connected');
         //socket.emit("new_player");
         //socket.emit("identity",{found:"found"});
-        io.to(socket.id).emit("identity",{found:"found"});
+        io.to(socket.id).emit("identity",{connected:"connected"});
         //check if it's a return
         socket.on("create",(what)=>{
             let some = new lobby();
@@ -39,14 +39,16 @@ function configureSocketIO(server) {
         socket.on("join",(data)=>{
             const index = custom_lobbies.findIndex(car => car.lobby_id == data.code);
             if (index==-1){
+                console.log("not found");
+                console.log(data);
                 io.to(socket.id).emit("not-found");
             }
             else{
+                for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
+                    io.to(custom_lobbies[index].player_sockets[i]).emit("newplayer",{name:data.username});
+                }
                 custom_lobbies[index].player_sockets.push(socket.id);
                 custom_lobbies[index].players.push(data.username);
-                for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
-                    io.to(custom_lobbies[index].player_sockets[i]).emit("new_player",{name:data.username});
-                }
                 io.to(socket.id).emit("others",{others:custom_lobbies[index].players});
             }
         });

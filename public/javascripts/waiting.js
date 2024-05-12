@@ -7,6 +7,7 @@ console.log(`Username:${username}`);
 console.log(`Goal:${goal}`);
 console.log(`Room number:${code}`);
 console.log(`Game mode:${mode}`);
+
 //const username="temporary";
 //const goal="play";
 //const code=0;
@@ -32,7 +33,7 @@ const socket = io();
 let players=1;
 
 socket.on("identity", (identity) => {
-    console.log("Received identity:", identity);
+    console.log("Socket connected:", identity);
     
     if (goal=="create"){
         socket.emit("create",{username:username,mode:mode});
@@ -104,6 +105,7 @@ socket.on("others",(data)=>{
         som.textContent=data.others[i];
         document.getElementById("players").appendChild(som);
     }
+    document.getElementById("join_code").textContent=`Joining code: ${code}`;
 });
 socket.on("not-found",()=>{
     //invalid code, alert player
