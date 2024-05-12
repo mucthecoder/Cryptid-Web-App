@@ -24,6 +24,7 @@ function cellClicked(cellClass) {
   }
 }
 
+
 function createPiece(shape) {
   var shapeDiv = document.createElement("div");
   shapeDiv.style.width = "15px"; // Adjust width as needed
