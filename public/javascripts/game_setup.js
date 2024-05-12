@@ -13,6 +13,7 @@ console.log(`Number of Players:${num_players}`);
 var socket = null;
 if (goal=="local"){
     //local game
+    
 }
 else{
     socket = io();
@@ -22,7 +23,7 @@ else{
     });
 
     socket.on("another",(data)=>{
-        console.log("another")
+        console.log("another");
         console.log(data);
     });
 

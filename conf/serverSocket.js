@@ -14,6 +14,7 @@ class lobby {
         this.mode = "temp";
         this.started = false;
         this.finished=false;
+        this.num_players=0;
     }
 }
 
@@ -103,6 +104,7 @@ function configureSocketIO(server) {
                 for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
                     io.to(custom_lobbies[index].player_sockets[i]).emit("start-match");
                 }
+                custom_lobbies[index].num_players=custom_lobbies[index].players.length;
                 custom_lobbies[index].started=true;
             }
             else if(data.action=="play"){
@@ -111,6 +113,7 @@ function configureSocketIO(server) {
                 for (let i=0;i<lobbies[index].player_sockets.length;i++){
                     io.to(lobbies[index].player_sockets[i]).emit("start-match");
                 }
+                lobbies[index].num_players=lobbies[index].players.length;
                 lobbies[index].started=true;
             }
         });
