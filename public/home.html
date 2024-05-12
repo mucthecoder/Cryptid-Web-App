@@ -26,12 +26,15 @@
                             <div class="card-front">
                                 <div class="center-wrap">
                                     <div class="section d-flex flex-column">
-                                        <a href="/game-mode" class="link">
-                                            <button id="Play" class="btn mt-4">Online Play</button>
+                                        <a class="link">
+                                            <button onclick="online_play()" id="Play" class="btn mt-4">Online Play</button>
+                                        </a>
+                                        <a class="link">
+                                            <button onclick="local_play()" id="local" class="btn mt-4">Local Play</button>
                                         </a>
                                         <!-- this is to create the session play() -->
-                                        <a href="/custom-room" onclick="play()" class="link"> 
-                                            <button type id="Custome" class="btn mt-4">
+                                        <a class="link"> 
+                                            <button onclick="custom()" type id="Custome" class="btn mt-4">
                                                 <p class="title">Custom Game Room</p>
                                                 <p class="description">Create and invite others to a game room</p>
                                             </button>

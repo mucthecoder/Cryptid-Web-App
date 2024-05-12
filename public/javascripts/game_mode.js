@@ -7,5 +7,5 @@ function switch_page (url){
     }
     window.location.href="/waiting";
 }
-
+console.log(sessionStorage.getItem("temp","play"));
 
