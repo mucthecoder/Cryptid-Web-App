@@ -4,10 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join room</title>
+    <link rel="stylesheet" href="stylesheets/join_room.css">
     <script src="/javascripts/join_room.js"></script>
 </head>
+
 <body>
-    <input type="text" id="room_number">
-    <button onclick="join()">Join Room</button>
+    <div class="bigger">
+        <div class="some">
+            <h id="mainy">Cryptid</h>
+        </div>
+        <div id="holder">
+            <span style="height: 30px;"></span>
+            <div class="inners">
+                <h id="enter">Enter Joining Code</h>
+            </div>
+            <span style="height: 5px;"></span>
+            <div class="inners">
+                <input type="text" placeholer="ALPHA" id="room_number">
+            </div>
+            <span style="height: 10px;"></span>
+            <div class ="inners">
+                <button id="join" onclick="join()">
+                    <h id="join_text">Join Game!</h>
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
