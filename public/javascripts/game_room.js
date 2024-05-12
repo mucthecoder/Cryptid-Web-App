@@ -1,5 +1,8 @@
 function create(){
     sessionStorage.setItem("cryptid-game-action","create");
+    if (sessionStorage.getItem("cryptid-num-players")!=null){
+        sessionStorage.removeItem("cryptid-num-players")
+    }
     window.location.href="/game-mode";
 }
 function join(){
