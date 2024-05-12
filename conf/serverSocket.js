@@ -13,6 +13,7 @@ class lobby {
         this.lobby_id = -1;
         this.mode = "temp";
         this.started = false;
+        this.finished=false;
     }
 }
 
@@ -49,7 +50,14 @@ function configureSocketIO(server) {
                 }
                 custom_lobbies[index].player_sockets.push(socket.id);
                 custom_lobbies[index].players.push(data.username);
-                io.to(socket.id).emit("others",{others:custom_lobbies[index].players});
+                if (custom_lobbies[index].players.length == 3){
+                    //full, so start
+                    for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
+                        io.to(custom_lobbies[index].player_sockets[i]).emit("enable-start");
+                    }
+                    custom_lobbies[index].started=true;
+                }
+                io.to(socket.id).emit("others",{identity:custom_lobbies[index].lobby_id,others:custom_lobbies[index].players});
             }
         });
 
@@ -79,12 +87,30 @@ function configureSocketIO(server) {
                 if (lobbies[index].players.length == 3){
                     //full, so start
                     for (let i=0;i<lobbies[index].player_sockets.length;i++){
-                        io.to(lobbies[index].player_sockets[i]).emit("start-game");
+                        io.to(lobbies[index].player_sockets[i]).emit("enable-start");
                     }
                     lobbies[index].started=true;
                 }
             }
 
+        });
+        socket.on("start",(data)=>{
+            console.log(data.id);
+            if (data.action=="create"){
+                
+                const index = custom_lobbies.findIndex(car => car.lobby_id==data.id);
+                console.log(index);
+                for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
+                    io.to(custom_lobbies[index].player_sockets[i]).emit("start-match");
+                }
+            }
+            else if(data.action=="play"){
+                const index = lobbies.findIndex(car => car.lobby_id==data.id);
+                console.log(index);
+                for (let i=0;i<lobbies[index].player_sockets.length;i++){
+                    io.to(lobbies[index].player_sockets[i]).emit("start-match");
+                }
+            }
         });
 
         socket.on('disconnect', () => {

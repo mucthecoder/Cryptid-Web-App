@@ -28,7 +28,7 @@ function LogIn(e){
             val1();
         }
         else{
-            localStorage.setItem("cryptid-game-username",username);
+            sessionStorage.setItem("cryptid-game-username",username);
             window.location.href = "/users/home";
         }
     })
@@ -79,7 +79,7 @@ function SignUp(e){
             val2();
         }
         else{
-            localStorage.setItem("cryptid-game-username",username);
+            sessionStorage.setItem("cryptid-game-username",username);
             window.location.href = "/users/home";
         }
     })
