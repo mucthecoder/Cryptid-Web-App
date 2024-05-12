@@ -1,5 +1,6 @@
 const socketIO = require('socket.io');
-
+const fs=require("fs");
+const path=require("path");
 const custom_lobbies = [];
 const lobbies = [];
 const curr_ind=0;
@@ -15,6 +16,7 @@ class lobby {
         this.started = false;
         this.finished=false;
         this.num_players=0;
+        this.mapCode="empty";
     }
 }
 
@@ -51,11 +53,27 @@ function configureSocketIO(server) {
                 }
                 custom_lobbies[index].player_sockets.push(socket.id);
                 custom_lobbies[index].players.push(data.username);
-                if (custom_lobbies[index].players.length == 3){
-                    //full, so start
-                    for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
-                        io.to(custom_lobbies[index].player_sockets[i]).emit("enable-start");
-                    }
+                if (custom_lobbies[index].players.length >= 3){
+                    const directoryPath = path.join(__dirname, '../public/maps/intro');
+                    fs.readdir(directoryPath, function(err, files) {
+                        if (err) {
+                          console.log('Error reading directory');
+                        }
+                    
+                        const jsonFiles = files.filter(file => file.endsWith('.json'));
+                    
+                        if (jsonFiles.length === 0) {
+                          console.log('No JSON files found');
+                        }
+                        const randomJsonFile = jsonFiles[Math.floor(Math.random() * jsonFiles.length)];
+                    
+                        custom_lobbies[index].mapCode=randomJsonFile;
+                        
+                        //full, so start
+                        for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
+                            io.to(custom_lobbies[index].player_sockets[i]).emit("enable-start",{map_code:custom_lobbies[index].mapCode,mode:custom_lobbies[index].mode});
+                        }
+                    });
                     
                 }
                 io.to(socket.id).emit("others",{identity:custom_lobbies[index].lobby_id,others:custom_lobbies[index].players});
@@ -86,10 +104,25 @@ function configureSocketIO(server) {
                 }
                 io.to(socket.id).emit("others",{identity:lobbies[index].lobby_id,others:lobbies[index].players});
                 if (lobbies[index].players.length == 3){
-                    //full, so start
-                    for (let i=0;i<lobbies[index].player_sockets.length;i++){
-                        io.to(lobbies[index].player_sockets[i]).emit("enable-start");
-                    }
+                    const directoryPath = path.join(__dirname, '../public/maps/intro');
+                    fs.readdir(directoryPath, function(err, files) {
+                        if (err) {
+                          console.log('Error reading directory');
+                        }
+                    
+                        const jsonFiles = files.filter(file => file.endsWith('.json'));
+                    
+                        if (jsonFiles.length === 0) {
+                          console.log('No JSON files found');
+                        }
+                        const randomJsonFile = jsonFiles[Math.floor(Math.random() * jsonFiles.length)];
+                    
+                        lobbies[index].mapCode=randomJsonFile;
+                        //full, so start
+                        for (let i=0;i<lobbies[index].player_sockets.length;i++){
+                            io.to(lobbies[index].player_sockets[i]).emit("enable-start",{map_code:lobbies[index].mapCode,mode:lobbies[index].mode});
+                        }
+                    });
                     
                 }
             }
