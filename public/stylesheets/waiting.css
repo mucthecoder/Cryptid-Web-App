@@ -2,6 +2,8 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color:  #b9bdc2; 
+    
 }
 #heads{
     display: flex;
