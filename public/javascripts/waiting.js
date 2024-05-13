@@ -26,8 +26,8 @@ console.log(`Game mode:${mode}`);
 //make sure the matchid search is gonna work for rejoining 
 
 let met = document.getElementById("myname");
-console.log(typeof met);
-console.log(met);
+// console.log(typeof met);
+// console.log(met);
 
 met.textContent=username;
 const socket = io();
