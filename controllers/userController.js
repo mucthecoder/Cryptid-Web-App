@@ -1,5 +1,6 @@
 const User = require("../models/user.model.js");
 const bcrypt = require("bcrypt");
+var path = require('path');
 
 
 const login = async function(req, res) {
@@ -165,11 +166,25 @@ const usersendemail = (req,res)=>{
     res.sendFile(filePath);
 }
 
+const verifyUserData = (req, res, next) => {
+  if (!req.session || !req.session.user_id) {
+      if (req._parsedUrl.pathname !== "/users/login") {
+        // const filePath = path.join(__dirname, "../public/login.html");
+        // return res.sendFile(filePath)
+      }
+  }
+  // If user is authenticated or already on the login page, proceed to the next middleware
+  next();
+};
+
+
+
 module.exports = {
     login,
     signup,
     postforgot,
     postforgotcode,
     patchpassword,
-    usersendemail
+    usersendemail,
+    verifyUserData
 }
