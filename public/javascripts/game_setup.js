@@ -6,6 +6,7 @@ const mode=sessionStorage.getItem("cryptid-game-mode");
 const num_players = sessionStorage.getItem("cryptid-num-players");
 const match_id = sessionStorage.getItem("cryptid-match-id");
 let who=null;
+let colors=["red","blue","green","purple","yellow"];
 console.log(`Username:${username}`);
 console.log(`Goal:${goal}`);
 console.log(`Room number:${code}`);

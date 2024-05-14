@@ -11,12 +11,14 @@ class lobby {
     constructor() {
         this.players = [];
         this.player_sockets = [];
+        this.colors=["red","blue","green","purple","yellow"];
         this.lobby_id = -1;
         this.mode = "temp";
         this.started = false;
         this.finished=false;
         this.num_players=0;
         this.mapCode="empty";
+        this.creator="";
     }
 }
 
@@ -49,7 +51,7 @@ function configureSocketIO(server) {
             }
             else{
                 for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
-                    io.to(custom_lobbies[index].player_sockets[i]).emit("newplayer",{name:data.username});
+                    io.to(custom_lobbies[index].player_sockets[i]).emit("newplayer",{name:data.username,avail:custom_lobbies[index].players});
                 }
                 custom_lobbies[index].player_sockets.push(socket.id);
                 custom_lobbies[index].players.push(data.username);
@@ -76,7 +78,7 @@ function configureSocketIO(server) {
                     });
                     
                 }
-                io.to(socket.id).emit("others",{identity:custom_lobbies[index].lobby_id,others:custom_lobbies[index].players});
+                io.to(socket.id).emit("others",{identity:custom_lobbies[index].lobby_id,others:custom_lobbies[index].players,avail:custom_lobbies[index].players});
             }
         });
 
@@ -89,8 +91,8 @@ function configureSocketIO(server) {
                 temp.players.push(data.username);
                 temp.mode=data.mode;
                 lobbies.push(temp);
-                io.to(socket.id).emit("found",{data:"uhmm what",identity:temp.lobby_id});
-                console.log("well what");
+                io.to(socket.id).emit("found",{data:"new lobby",identity:temp.lobby_id});
+                console.log("creating new lobby");
                 //console.log(lobbies);
             }
             else{
@@ -100,9 +102,9 @@ function configureSocketIO(server) {
                 //console.log(lobbies);
                 for (let i=0;i<lobbies[index].player_sockets.length;i++){
                     console.log(`sending to ${lobbies[index].player_sockets[i]}`);
-                    io.to(lobbies[index].player_sockets[i]).emit("newplayer",{name:data.username});
+                    io.to(lobbies[index].player_sockets[i]).emit("newplayer",{name:data.username,avail:lobbies[index].players});
                 }
-                io.to(socket.id).emit("others",{identity:lobbies[index].lobby_id,others:lobbies[index].players});
+                io.to(socket.id).emit("others",{identity:lobbies[index].lobby_id,others:lobbies[index].players,avail:lobbies[index].players});
                 if (lobbies[index].players.length == 3){
                     const directoryPath = path.join(__dirname, '../public/maps/intro');
                     fs.readdir(directoryPath, function(err, files) {
@@ -155,20 +157,20 @@ function configureSocketIO(server) {
             if (data.action=="join"||data.action=="create"){
                 let index = custom_lobbies.findIndex(car => car.lobby_id == data.identity);
                 for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
-                    io.to(custom_lobbies[index].player_sockets[i]).emit("another",{name:data.username});
+                    io.to(custom_lobbies[index].player_sockets[i]).emit("another",{name:data.username,avail:custom_lobbies[index].players});
                 }
                 custom_lobbies[index].player_sockets.push(socket.id);
                 custom_lobbies[index].players.push(data.username);
-                io.to(socket.id).emit("others",{others:custom_lobbies[index].players});
+                io.to(socket.id).emit("others",{others:custom_lobbies[index].players,avail:custom_lobbies[index].players});
             }
             else if(data.action=="play"){
                 let index = lobbies.findIndex(car => car.lobby_id == data.identity);
                 for (let i=0;i<lobbies[index].player_sockets.length;i++){
-                    io.to(lobbies[index].player_sockets[i]).emit("another",{name:data.username});
+                    io.to(lobbies[index].player_sockets[i]).emit("another",{name:data.username,avail:lobbies[index].players});
                 }
                 lobbies[index].player_sockets.push(socket.id);
                 lobbies[index].players.push(data.username);
-                io.to(socket.id).emit("others",{others:lobbies[index].players});
+                io.to(socket.id).emit("others",{others:lobbies[index].players,avail:lobbies[index].players});
             }
         });
 
@@ -181,7 +183,7 @@ function configureSocketIO(server) {
                     lobbies[i].player_sockets.splice(j,1);
                     lobbies[i].players.splice(j,1);
                     for (let z=0;z<lobbies[i].player_sockets.length;z++){
-                    io.to(lobbies[i].player_sockets[z]).emit("player_lost",{username:temp_name});
+                        io.to(lobbies[i].player_sockets[z]).emit("player_lost",{username:temp_name,avail:lobbies[i].players});
                     }
                 }
 
@@ -194,7 +196,7 @@ function configureSocketIO(server) {
                     custom_lobbies[i].player_sockets.splice(j,1);
                     custom_lobbies[i].players.splice(j,1);
                     for (let z=0;z<custom_lobbies[i].player_sockets.length;z++){
-                    io.to(custom_lobbies[i].player_sockets[z]).emit("player_lost",{username:temp_name});
+                        io.to(custom_lobbies[i].player_sockets[z]).emit("player_lost",{username:temp_name,avail:custom_lobbies[i].players});
                     }
                 }
 

@@ -3,21 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lobby</title>
     <script src="/socket.io/socket.io.js"></script>
     
     <link rel="stylesheet" href="./stylesheets/waiting.css">
 </head>
 <body>
-    <div id="heads">
-        <h1>Definitely the waiting page</h1>
-        <p id="join_code">Joining code: </p>
-    </div>
-    <div id="players">
-        <h3 style="align-self: center;">Players:</h3>
-        <p id="myname">something</p>
-    </div>
-    <div id="counter"></div>
+    <header>
+        <h id="mainy">Game Lobby</h>
+    </header>
+    <main>
+        <div class="bigger">
+            <div class="info">
+                <div class="data">
+                    <h id="mode">Mode</h>
+                </div>
+                <span style="width: 10px;"></span>
+                <div class="data">
+                    <h id="nump">
+                        Total Players:
+                    </h>
+                </div>
+            </div>
+            <span style="height: 2px;"></span>
+            <div class="info">
+                <div id="joiner">
+                    <h id="join_code">
+                        Joining Code:
+                    </h>
+                </div>
+            </div>
+            <span style="height: 20px;"></span>
+            <div id="holder">
+                <div id="players">
+                    <!-- <div id="smaller">
+                        Players:
+                    </div> -->
+                    <div id="player">
+                        <div class="inners" id="myname" style="background-color: rgb(255, 0, 0);">
+                            My name
+                        </div>
+                        <!-- <span style="height: 5px;"></span>
+                        <div class="inners" style="background-color: rgb(0, 157, 255);">
+                            Player 2
+                        </div>
+                        <span style="height: 5px;"></span>
+                        <div class="inners" style="background-color: green;">
+                            Player 3
+                        </div>
+                        <span style="height: 5px;"></span>
+                        <div class="inners" style="background-color: purple;">
+                            Player 4
+                        </div>
+                        <span style="height: 5px;"></span>
+                        <div class="inners" style="background-color: yellow;">
+                            Player 5
+                        </div> -->
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div id="counter">
+            <button id="starter">
+                Start
+            </button>
+        </div>
+    </footer>
 
 </body>
 <script src="/javascripts/waiting.js"></script>
