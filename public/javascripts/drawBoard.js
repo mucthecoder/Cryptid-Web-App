@@ -246,6 +246,7 @@ function setUp() {
       cell.classList.add(`${row},${col}`);
       cell.onclick = function () {
         cellClicked(`${row},${col}`);
+        on_starter(`${row},${col}`);
       };
       //cell.addEventListener("click",interact);
       cell.style.backgroundColor = "#80808000";

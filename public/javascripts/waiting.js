@@ -4,6 +4,7 @@ const goal=sessionStorage.getItem("cryptid-game-action");
 const code=sessionStorage.getItem("cryptid-game-room-number");
 let mode=sessionStorage.getItem("cryptid-game-mode");
 let map="";
+let my_colour="black";
 console.log(`Username:${username}`);
 console.log(`Goal:${goal}`);
 console.log(`Room number:${code}`);
@@ -118,6 +119,8 @@ socket.on("start-match",()=>{
     }
     console.log('starting');
     sessionStorage.setItem("cryptid-match-id",match_id);
+    sessionStorage.setItem("cryptid-my-colour",my_colour);
+    
     countdown(5);
 });
 
@@ -212,6 +215,10 @@ function update_colors(who,what){
         if (par.children[i].tagName=="DIV"&&par.children[i].textContent==who){
             par.children[i].style.backgroundColor=what;
         }
+        
+    }
+    if (who==username){
+        my_colour=what;
     }
 }
 socket.on("not-found",()=>{
