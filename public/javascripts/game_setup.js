@@ -125,9 +125,6 @@ else{
         
     });
 
-    //
-    
-    //
     socket.on("resp",(data)=>{
         console.log("resp");
         console.log(data);
