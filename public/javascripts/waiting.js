@@ -120,7 +120,7 @@ socket.on("start-match",()=>{
     console.log('starting');
     sessionStorage.setItem("cryptid-match-id",match_id);
     sessionStorage.setItem("cryptid-my-colour",my_colour);
-    
+    sessionStorage.setItem("cryptid-num-players",players);
     countdown(5);
 });
 
