@@ -10,8 +10,16 @@ function drawIt(path) {
   fetch(path)
     .then((response) => response.json())
     .then((data) => {
-      //console.log('Here');
-      mapCodeValue = data.mapCode;
+      //console.log(data);
+      if (goal=="local"){
+        mapCodeValue = data.mapCode;
+      }
+      else{
+        let temp= sessionStorage.getItem("cryptid-game-map-code");
+        mapCodeValue=who.mapCode;
+        console.log(temp);
+        console.log(mapCodeValue);
+      }
       config = transformString(mapCodeValue);
 
       canvas = document.getElementById("myCanvas");
@@ -236,9 +244,18 @@ function setUp() {
       const cell = document.createElement("div");
       cell.classList.add("cell");
       cell.classList.add(`${row},${col}`);
+      if (goal=="local"){
       cell.onclick = function () {
         cellClicked(`${row},${col}`);
+        //on_starter(`${row},${col}`);
       };
+      }
+      else{
+        cell.onclick = function () {
+          //cellClicked(`${row},${col}`);
+          on_starter(`${row},${col}`);
+        };
+      }
       //cell.addEventListener("click",interact);
       cell.style.backgroundColor = "#80808000";
       hover(cell);
@@ -268,5 +285,17 @@ function hover(cell) {
   cell.addEventListener("mouseleave", function () {
     // Reset background color when mouse leaves
     this.style.backgroundColor = "rgba(128, 128, 128, 0)"; // Restore initial background color on mouse leave
+  });
+}
+
+function custom_hover(cell,val) {
+  console.log(cell);
+  cell.addEventListener("mouseenter", function () {
+    if(val) this.style.backgroundColor = "rgba(255, 0, 0, 0.4)";
+    else  this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
+  });
+
+  cell.addEventListener("mouseleave", function () {
+    this.style.backgroundColor = "rgba(128, 128, 128, 0)"; 
   });
 }
