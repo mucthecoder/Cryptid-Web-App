@@ -200,6 +200,35 @@ function configureSocketIO(server) {
             }
             
         });
+        socket.on("sacrifice",(data)=>{
+            console.log(`sacrificing: ${data.cell}`);
+            //const index = lobbies.findIndex(car => car.mode==data.mode&&car.started == false);
+            if (data.why=="join"||data.why=="create"){
+                const index = custom_lobbies.findIndex(car => car.lobby_id==data.match);
+                //skeptical
+                custom_lobbies[index].turn++;
+                if (custom_lobbies[index].turn>=custom_lobbies[index].players.length){
+                    custom_lobbies[index].turn=0;
+                }
+                //skeptical
+                for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
+                    io.to(custom_lobbies[index].player_sockets[i]).emit("sac",{colour:data.colour,name:data.name,cell:data.cell,why:data.why});
+                }
+            }
+            else if (data.why=="play"){
+                const index = lobbies.findIndex(car => car.lobby_id==data.match);
+                //skeptical
+                lobbies[index].turn++;
+                if (lobbies[index].turn>=lobbies[index].players.length){
+                    lobbies[index].turn=0;
+                }
+                //skeptical
+                for (let i=0;i<lobbies[index].player_sockets.length;i++){
+                    io.to(lobbies[index].player_sockets[i]).emit("sac",{colour:data.colour,name:data.name,cell:data.cell,why:data.why});
+                }
+            }
+            
+        });
         socket.on("search",(data)=>{
             console.log(`Searching: ${data.cell}`);
             if (data.why=="join"||data.why=="create"){
@@ -229,6 +258,36 @@ function configureSocketIO(server) {
                 }
             }
         });
+
+        socket.on("wrong",(data)=>{
+            console.log(`Searching: ${data.cell}`);
+            if (data.why=="join"||data.why=="create"){
+                const index = custom_lobbies.findIndex(car => car.lobby_id==data.match);
+                //skeptical
+                custom_lobbies[index].turn++;
+                if (custom_lobbies[index].turn>=custom_lobbies[index].players.length){
+                    custom_lobbies[index].turn=0;
+                }
+                //skeptical
+                console.log("here");
+                for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
+                    io.to(custom_lobbies[index].player_sockets[i]).emit("wrong",{colour:data.colour,name:data.name,cell:data.cell,why:data.why});
+                }
+            }
+            else if (data.why=="play"){
+                const index = lobbies.findIndex(car => car.lobby_id==data.match);
+                //skeptical
+                lobbies[index].turn++;
+                if (lobbies[index].turn>=lobbies[index].players.length){
+                    lobbies[index].turn=0;
+                }
+                //skeptical
+                for (let i=0;i<lobbies[index].player_sockets.length;i++){
+                    io.to(lobbies[index].player_sockets[i]).emit("wrong",{colour:data.colour,name:data.name,cell:data.cell,why:data.why});
+                }
+            }
+        });
+
         socket.on("question",(data)=>{
             console.log(`Questioning: ${data.cell}`);
             //{colour:my_colour,name:username,match:match_id,cell:where,target:who,why:goal}
