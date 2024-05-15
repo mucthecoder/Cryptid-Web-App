@@ -9,12 +9,15 @@ for (let i=turnList.length-1;i>num-1;i--){
   t.parentNode.removeChild(t);
   turnList.splice(i,1);
 }
+let search_array=[];
+
 images = [];
 turn = 0;
 var initTurn = document.getElementsByClassName(turnList[turn]);
 initTurn[0].style.backgroundColor="red";
 let q=false;
 let questioned="";
+let questioner="";
 let uhm="";
 let bq=0;
 var search_turn=0;
@@ -46,6 +49,24 @@ function cellClicked(cellClass) {
       processTurn();
       cell.appendChild(shapeDiv);
     }
+  }
+  else if (wrong){
+    console.log("false")
+    console.log(`questioner:${questioner},turn:${turnList[turn]}`);
+    var shapeDiv = createPiece("square");
+    var classesArray = Array.from(cell.classList);
+    var classToAdd = turnList[turn];
+    
+    if (!classesArray.includes("c"+classToAdd) && !classesArray.includes("neg")) {
+      cell.classList.add("c"+turnList[turn]);
+      cell.classList.add("neg");
+      cell.classList.add("nred");
+      //processTurn();
+      cell.appendChild(shapeDiv);
+    }
+    wrong=false;
+    if (questioning){done_question();}
+    if (searching){done_search();}
   }
   else if(searching||questioning){
     console.log("Can't do that during a search");
@@ -84,6 +105,7 @@ function load_possible_actions(){
     search_turn=turn;
     search_count=0;
     searching=true;
+    create_search();
     search_mark(uhm);
     start_search();
     process_search_turn();
@@ -112,21 +134,46 @@ function append_piece(what,where){
   e.appendChild(what);
   console.log(`Appended ${what} to ${where}`)
 }
-function replace_with(what,where){
+function add_piece(what,where){
   let e=document.getElementsByClassName(`cell ${where}`)[0];
   e.replaceChildren(what);
   console.log(`Replaced ${what.tagName} at ${where}`)
 }
+function replace_with(what,where){
+  let e=document.getElementsByClassName(`cell ${where}`)[0];
+  for (let i=e.children.length-1;i>=0;i--){
+    if (e.children[i].tagName=="DIV"&&e.children[i].style.backgroundColor=="black"){
+      e.removeChild(e.children[i]);
+    }
+  }
+  e.appendChild(what);
+}
+
 function search_mark(where){
   let he=createPiece("circle");
   append_piece(he,where);
 }
+function create_search(){
+  search_array=[];
+  let e=document.getElementsByClassName(`cell ${uhm}`)[0];
+  console.log(e.tagName);
+  
+  for (let i=0;i<e.children.length;i++){
+    if (e.children[i].tagName=="DIV"){
+      search_array.push(e.children[i].style.backgroundColor);
+    }
+  }
+    
+  
+  console.log(search_array);
+}
 function start_search(){
+  
   console.log("starting search");
   for (let i=0;i<turnList.length;i++){
     document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
   }
-
+  
 }
 //not suppose to replace structures
 function question_mark(where){
@@ -152,7 +199,8 @@ function load_question_options(){
     r.textContent=`Player${i+1}`;
     r.addEventListener("click",()=>{
       questioned=r.style.backgroundColor;
-      console.log(`${questioned}, questioned`);
+      questioner=turnList[turn];
+      console.log(`${questioned}, questioned by ${questioner}`);
       document.getElementById("butts").replaceChildren();
       load_possible_answers();
       start_quest();
@@ -178,6 +226,7 @@ function load_possible_answers(){
   one.style.backgroundColor=questioned;
   one.addEventListener("click",()=>{
     console.log("denying");
+    wrong=true;
     let h=createPiece("square");
     let r=document.getElementsByClassName(uhm)[0];
     r.addEventListener("mouseenter",()=>{
@@ -185,8 +234,10 @@ function load_possible_answers(){
     });
     r.onclick=nothing;
     h.style.backgroundColor=questioned;
+    document.getElementById("butts").replaceChildren();
     replace_with(h,uhm);
-    done_question();
+    //done_question();
+    console.log("it is i");
   });
 
   let two=document.createElement("span");
@@ -200,8 +251,10 @@ function load_possible_answers(){
     let h=createPiece("circle");
     h.className="yep"
     h.style.backgroundColor=questioned;
+    document.getElementById("butts").replaceChildren();
     replace_with(h,uhm);
-    done_question();
+    if (searching){done_search();}
+    if (questioning){done_question();}
     
   });
 
@@ -218,15 +271,20 @@ function load_possible_responses(){
   one.style.backgroundColor=turnList[search_turn];
   one.addEventListener("click",()=>{
     console.log("denying");
+    wrong=true;
     let h=createPiece("square");
     let r=document.getElementsByClassName(uhm)[0];
     r.addEventListener("mouseenter",()=>{
       r.style.backgroundColor="rgba(255, 0, 0, 0.4)";
     });
     r.onclick=nothing;
-    h.style.backgroundColor=turnList[search_turn];
+    h.style.backgroundColor=turnList[search_turn]; 
+    console.log("odd");
+    document.getElementById("butts").replaceChildren();
     replace_with(h,uhm);
-    done_search();
+    console.log("after denying and replacing");
+    
+    //done_search();
     
   });
 
@@ -256,12 +314,15 @@ function load_possible_responses(){
   four.appendChild(three);
 }
 
-function start_quest(){
+function start_question(){
+  bq=turn;
   for (let i=0;i<turnList.length;i++){
     document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
   }
+  
   //document.getElementsByClassName(questioned)[0].style.backgroundColor=questioned;
 }
+
 function done_question(){
   // for (let i=0;i<turnList.length;i++){
   //   document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
@@ -269,8 +330,8 @@ function done_question(){
   questioning=false;
   processTurn();
   document.getElementById("butts").replaceChildren();
-  
 }
+
 function done_search(){
   for (let i=0;i<turnList.length;i++){
     document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
@@ -278,6 +339,7 @@ function done_search(){
   processTurn();
   document.getElementById("butts").replaceChildren();
   searching=false;
+  search_array=[];
   
 }
 
@@ -296,6 +358,7 @@ function createPiece(shape) {
 }
 
 function processTurn() {
+  console.log("Processing turn");
   turn++;
   if (turn == turnList.length) {
     turn = 0;
@@ -312,15 +375,27 @@ function processTurn() {
 
 function process_search_turn() {
   search_count++;
+  console.log(`search count:${search_count}`);
   if (search_count==turnList.length){
-    console.log(`${searcher} wins`);
+    for(let i=0;i<turnList.length;i++){
+      document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
+    }
+    console.log(`${searcher} wins:${search_count}`);
+    document.getElementsByClassName(searcher)[0].style.backgroundColor = searcher;
     return;
   }
   document.getElementById("butts").replaceChildren();
   search_turn++;
+  //if turnlist[search] is not inside search array 
+  //skip that mf so searchturn++
+  if (inside(turnList[search_turn],search_array)){
+    search_turn++;
+    search_count++;
+  }
   if (search_turn == turnList.length) {
     search_turn = 0;
   }
+  
   let pre = search_turn - 1;
   if (pre == -1) pre = turnList.length-1;
   let currTurn = document.getElementsByClassName(turnList[search_turn]);
