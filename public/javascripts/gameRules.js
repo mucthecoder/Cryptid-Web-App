@@ -23,6 +23,8 @@ let searcher = "me";
 let searching=false;
 let questioning=false;
 
+let on_round=0;
+
 
 function nothing(){
   console.log("stupid");
@@ -301,6 +303,7 @@ function processTurn() {
   }
   var prev = turn - 1;
   if (prev == -1) prev = turnList.length-1;
+  //console.log(turn);
   var currentTurn = document.getElementsByClassName(turnList[turn]);
   currentTurn[0].style.backgroundColor = turnList[turn];
   var prevTurn = document.getElementsByClassName(turnList[prev]);
@@ -319,7 +322,7 @@ function process_search_turn() {
     search_turn = 0;
   }
   let pre = search_turn - 1;
-  if (pre == -1) pre = 4;
+  if (pre == -1) pre = turnList.length-1;
   let currTurn = document.getElementsByClassName(turnList[search_turn]);
   currTurn[0].style.backgroundColor = turnList[search_turn];
   let preTurn = document.getElementsByClassName(turnList[pre]);
