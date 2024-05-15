@@ -9,7 +9,7 @@ console.log(`Username:${username}`);
 console.log(`Goal:${goal}`);
 console.log(`Room number:${code}`);
 console.log(`Game mode:${mode}`);
-let colors=["red","blue","green","purple","yellow"];
+let colors=["red", "green", "orange", "blue", "purple"];
 
 if (mode!=null){
     document.getElementById("mode").textContent=mode;

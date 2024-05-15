@@ -7,7 +7,7 @@ const num_players = sessionStorage.getItem("cryptid-num-players");
 const match_id = sessionStorage.getItem("cryptid-match-id");
 let my_colour=sessionStorage.getItem("cryptid-my-colour");
 let who=null;
-let colors=["red","blue","green","purple","yellow"];
+let colors=["red", "green", "orange", "blue", "purple"];
 console.log(`Username:${username}`);
 console.log(`Goal:${goal}`);
 console.log(`Room number:${code}`);

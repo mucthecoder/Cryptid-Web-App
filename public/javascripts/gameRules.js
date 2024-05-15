@@ -1,6 +1,14 @@
 //should implement the game rules and let us play, ideally
+let num=sessionStorage.getItem("cryptid-num-players");
 round = 0;
-turnList = ["red", "green", "orange", "blue", "purple"];
+turnList = ["red", "green", "orange", "blue","purple"];
+for (let i=turnList.length-1;i>num-1;i--){
+  let g=turnList[i]
+  console.log(g);
+  let t=document.getElementsByClassName(g)[0];
+  t.parentNode.removeChild(t);
+  turnList.splice(i,1);
+}
 images = [];
 turn = 0;
 var initTurn = document.getElementsByClassName(turnList[turn]);
@@ -12,6 +20,9 @@ let bq=0;
 var search_turn=0;
 let search_count=0;
 let searcher = "me";
+let searching=false;
+let questioning=false;
+
 
 function nothing(){
   console.log("stupid");
@@ -34,6 +45,9 @@ function cellClicked(cellClass) {
       cell.appendChild(shapeDiv);
     }
   }
+  else if(searching||questioning){
+    console.log("Can't do that during a search");
+  }
   else{
     uhm=cellClass;
     let e=document.getElementsByClassName(cellClass)[0];
@@ -50,6 +64,7 @@ function load_possible_actions(){
   one.addEventListener("click",()=>{
     console.log("Questioning");
     bq=turn;
+    questioning=true;
     question_mark(uhm);
     load_question_options();
   });
@@ -66,6 +81,7 @@ function load_possible_actions(){
     searcher=turnList[turn];
     search_turn=turn;
     search_count=0;
+    searching=true;
     search_mark(uhm);
     start_search();
     process_search_turn();
@@ -125,6 +141,9 @@ function load_question_options(){
   let h=document.getElementById("butts");
   h.replaceChildren();
   for (let i=0;i<turnList.length;i++){
+    if (turnList[turn]==turnList[i]){
+      continue;
+    }
     let r=document.createElement("div");
     r.className="circs";
     r.style.backgroundColor=turnList[i];
@@ -245,6 +264,7 @@ function done_question(){
   // for (let i=0;i<turnList.length;i++){
   //   document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
   // }
+  questioning=false;
   processTurn();
   document.getElementById("butts").replaceChildren();
   
@@ -255,10 +275,9 @@ function done_search(){
   }
   processTurn();
   document.getElementById("butts").replaceChildren();
+  searching=false;
   
 }
-
-
 
 function createPiece(shape) {
   var shapeDiv = document.createElement("div");
@@ -281,7 +300,7 @@ function processTurn() {
     round++;
   }
   var prev = turn - 1;
-  if (prev == -1) prev = 4;
+  if (prev == -1) prev = turnList.length-1;
   var currentTurn = document.getElementsByClassName(turnList[turn]);
   currentTurn[0].style.backgroundColor = turnList[turn];
   var prevTurn = document.getElementsByClassName(turnList[prev]);

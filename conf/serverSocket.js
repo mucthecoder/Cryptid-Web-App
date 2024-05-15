@@ -11,7 +11,7 @@ class lobby {
     constructor() {
         this.players = [];
         this.player_sockets = [];
-        this.colors=["red","blue","green","purple","yellow"];
+        this.colors=["red", "green", "orange", "blue", "purple"];
         this.colours=[];
         this.lobby_id = -1;
         this.mode = "temp";
