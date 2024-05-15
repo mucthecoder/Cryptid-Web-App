@@ -11,7 +11,7 @@ class lobby {
     constructor() {
         this.players = [];
         this.player_sockets = [];
-        this.colors=["red","blue","green","purple","yellow"];
+        this.colors=["red", "green", "orange", "blue", "purple"];
         this.colours=[];
         this.lobby_id = -1;
         this.mode = "temp";
@@ -178,7 +178,7 @@ function configureSocketIO(server) {
                 const index = custom_lobbies.findIndex(car => car.lobby_id==data.match);
                 //skeptical
                 custom_lobbies[index].turn++;
-                if (turn>=custom_lobbies[index].players.length){
+                if (custom_lobbies[index].turn>=custom_lobbies[index].players.length){
                     custom_lobbies[index].turn=0;
                 }
                 //skeptical
@@ -190,7 +190,7 @@ function configureSocketIO(server) {
                 const index = lobbies.findIndex(car => car.lobby_id==data.match);
                 //skeptical
                 lobbies[index].turn++;
-                if (turn>=lobbies[index].players.length){
+                if (lobbies[index].turn>=lobbies[index].players.length){
                     lobbies[index].turn=0;
                 }
                 //skeptical
@@ -202,11 +202,85 @@ function configureSocketIO(server) {
         });
         socket.on("search",(data)=>{
             console.log(`Searching: ${data.cell}`);
-
+            if (data.why=="join"||data.why=="create"){
+                const index = custom_lobbies.findIndex(car => car.lobby_id==data.match);
+                //skeptical
+                custom_lobbies[index].turn++;
+                if (custom_lobbies[index].turnturn>=custom_lobbies[index].players.length){
+                    custom_lobbies[index].turn=0;
+                }
+                //skeptical
+                for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
+                    io.to(custom_lobbies[index].player_sockets[i]).emit("searcher",{colour:data.colour,name:data.name,cell:data.cell,why:data.why});
+                }
+            }
+            else if (data.why=="play"){
+                const index = lobbies.findIndex(car => car.lobby_id==data.match);
+                //skeptical
+                lobbies[index].turn++;
+                if (lobbies[index].turn>=lobbies[index].players.length){
+                    lobbies[index].turn=0;
+                }
+                //skeptical
+                for (let i=0;i<lobbies[index].player_sockets.length;i++){
+                    io.to(lobbies[index].player_sockets[i]).emit("searcher",{colour:data.colour,name:data.name,cell:data.cell,why:data.why});
+                }
+            }
         });
         socket.on("question",(data)=>{
             console.log(`Questioning: ${data.cell}`);
+            if (data.why=="join"||data.why=="create"){
+                const index = custom_lobbies.findIndex(car => car.lobby_id==data.match);
+                //skeptical
+                custom_lobbies[index].turn++;
+                if (custom_lobbies[index].turn>=custom_lobbies[index].players.length){
+                    custom_lobbies[index].turn=0;
+                }
+                //skeptical
+                for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
+                    io.to(custom_lobbies[index].player_sockets[i]).emit("quest",{colour:data.colour,name:data.name,cell:data.cell,why:data.why});
+                }
+            }
+            else if (data.why=="play"){
+                const index = lobbies.findIndex(car => car.lobby_id==data.match);
+                //skeptical
+                lobbies[index].turn++;
+                if (lobbies[index].turn>=lobbies[index].players.length){
+                    lobbies[index].turn=0;
+                }
+                //skeptical
+                for (let i=0;i<lobbies[index].player_sockets.length;i++){
+                    io.to(lobbies[index].player_sockets[i]).emit("quest",{colour:data.colour,name:data.name,cell:data.cell,why:data.why});
+                }
+            }
+        });
 
+        socket.on("response",(data)=>{
+            console.log(`Responding: ${data.cell}`);
+            if (data.why=="join"||data.why=="create"){
+                const index = custom_lobbies.findIndex(car => car.lobby_id==data.match);
+                //skeptical
+                custom_lobbies[index].turn++;
+                if (custom_lobbies[index].turn>=custom_lobbies[index].players.length){
+                    custom_lobbies[index].turn=0;
+                }
+                //skeptical
+                for (let i=0;i<custom_lobbies[index].player_sockets.length;i++){
+                    io.to(custom_lobbies[index].player_sockets[i]).emit("res",{colour:data.colour,name:data.name,cell:data.cell,why:data.why});
+                }
+            }
+            else if (data.why=="play"){
+                const index = lobbies.findIndex(car => car.lobby_id==data.match);
+                //skeptical
+                lobbies[index].turn++;
+                if (lobbies[index].turn>=lobbies[index].players.length){
+                    lobbies[index].turn=0;
+                }
+                //skeptical
+                for (let i=0;i<lobbies[index].player_sockets.length;i++){
+                    io.to(lobbies[index].player_sockets[i]).emit("res",{colour:data.colour,name:data.name,cell:data.cell,why:data.why});
+                }
+            }
         });
 
         //#################################################################

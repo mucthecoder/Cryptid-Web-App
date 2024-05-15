@@ -7,7 +7,7 @@ const num_players = sessionStorage.getItem("cryptid-num-players");
 const match_id = sessionStorage.getItem("cryptid-match-id");
 let my_colour=sessionStorage.getItem("cryptid-my-colour");
 let who=null;
-let colors=["red","blue","green","purple","yellow"];
+let colors=["red", "green", "orange", "blue", "purple"];
 console.log(`Username:${username}`);
 console.log(`Goal:${goal}`);
 console.log(`Room number:${code}`);
@@ -80,6 +80,11 @@ function on_starter(where){
 function on_question(where,who){
     console.log("starting negations");
     socket.emit("question",{colour:my_colour,name:username,cell:where,target:who});
+}
+
+function on_response(where,what){
+    console.log(`Responding: ${what}`);
+    socket.emit("response",{colour:my_colour,name:username,match:match_id,cell:where,answer:what});
 }
 
 function on_cellClicked(cellClass,colour) {

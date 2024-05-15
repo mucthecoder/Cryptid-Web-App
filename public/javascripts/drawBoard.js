@@ -246,7 +246,7 @@ function setUp() {
       cell.classList.add(`${row},${col}`);
       cell.onclick = function () {
         cellClicked(`${row},${col}`);
-        on_starter(`${row},${col}`);
+        //on_starter(`${row},${col}`);
       };
       //cell.addEventListener("click",interact);
       cell.style.backgroundColor = "#80808000";
@@ -277,5 +277,17 @@ function hover(cell) {
   cell.addEventListener("mouseleave", function () {
     // Reset background color when mouse leaves
     this.style.backgroundColor = "rgba(128, 128, 128, 0)"; // Restore initial background color on mouse leave
+  });
+}
+
+function custom_hover(cell,val) {
+  console.log(cell);
+  cell.addEventListener("mouseenter", function () {
+    if(val) this.style.backgroundColor = "rgba(255, 0, 0, 0.4)";
+    else  this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
+  });
+
+  cell.addEventListener("mouseleave", function () {
+    this.style.backgroundColor = "rgba(128, 128, 128, 0)"; 
   });
 }
