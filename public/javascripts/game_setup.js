@@ -15,6 +15,8 @@ console.log(`Room number:${code}`);
 console.log(`Game mode:${mode}`);
 console.log(`Number of Players:${num_players}`);
 var socket = null;
+let wrong=false;
+let me_wrong=false;
 if (goal=="local"){
     //local game
     sessionStorage.removeItem("cryptid-game-map-code");
@@ -66,6 +68,22 @@ else{
 
     });
 
+    socket.on("sac",(data)=>{
+        console.log(`sacrificed${data.cell}`);
+        let h=createPiece("square");
+        h.style.backgroundColor=turnList[turn];
+        append_piece(h,data.cell);
+        me_wrong=false;
+        wrong=false;
+        if (questioning){
+            done_question();
+        }
+        else{
+            done_search();
+        }
+    });
+
+
     socket.on("quest",(data)=>{
         console.log(data);
         //{colour:data.colour,name:data.name,cell:data.cell,target:data.target}
@@ -91,6 +109,7 @@ else{
             r.onclick=nothing;
             h.style.backgroundColor=questioned;
             replace_with(h,her);
+            on_wrong(data.cell);
         }
         else if(data.answer=="yes"){
             let h=createPiece("circle");
@@ -101,9 +120,14 @@ else{
             r.onclick=nothing;
             h.style.backgroundColor=questioned;
             replace_with(h,her);
+            done_question();
         }
-        done_question();
+        
     });
+
+    //
+    
+    //
     socket.on("resp",(data)=>{
         console.log("resp");
         console.log(data);
@@ -116,8 +140,8 @@ else{
             });
             r.onclick=nothing;
             h.style.backgroundColor=data.colour;
-            replace_with(h,her);
-            done_search();
+            append_piece(h,her);
+            on_wrong(data.cell);
         }
         else if(data.answer=="yes"){
             let h=createPiece("circle");
@@ -145,6 +169,18 @@ else{
         start_search();
         on_process_search_turn();
     });
+    socket.on("wrong",(data)=>{
+        console.log("wrong");
+        document.getElementById("butts").replaceChildren();
+        for (let i=0;i<turnList.length;i++){
+            document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
+        }
+        console.log(data);
+        wrong=true;
+        if (data.colour==my_colour){
+            me_wrong=true;
+        }
+    });
 
     socket.on("error", (error) => {
         console.error("Socket error:", error);
@@ -165,9 +201,15 @@ function on_search(where){
 }
 
 function on_starter(where){
-    if (round<2&&turnList[turn]==my_colour){
+    if (round<2&&turnList[turn]==my_colour&&!wrong){
         //console.log("starting negations");
         socket.emit("starter",{colour:my_colour,name:username,match:match_id,cell:where,why:goal});
+    }
+    else if(me_wrong){
+        socket.emit("sacrifice",{colour:my_colour,name:username,match:match_id,cell:where,why:goal});
+    }
+    else if(wrong){
+        console.log("wait for Wrong person to sacrifice");
     }
     else{
         her=where;
@@ -182,6 +224,10 @@ function on_question(where,who){
 function on_response(where,what){
     console.log(`Responding: ${what} to ${where}`);
     socket.emit("response",{colour:my_colour,name:username,match:match_id,cell:where,answer:what,why:goal});
+}
+function on_wrong(where,who){
+    console.log(`Wrong about: ${where}`);
+    socket.emit("wrong",{colour:turnList[turn],name:username,match:match_id,cell:where,why:goal});
 }
 function on_answer(where,what){
     console.log(`Responding: ${what}`);
