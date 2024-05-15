@@ -82,6 +82,11 @@ function on_question(where,who){
     socket.emit("question",{colour:my_colour,name:username,cell:where,target:who});
 }
 
+function on_response(where,what){
+    console.log(`Responding: ${what}`);
+    socket.emit("response",{colour:my_colour,name:username,match:match_id,cell:where,answer:what});
+}
+
 function on_cellClicked(cellClass,colour) {
     var cells = document.getElementsByClassName(cellClass);
     var cell = cells[0];

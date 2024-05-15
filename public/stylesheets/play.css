@@ -16,7 +16,68 @@ body {
   width: 100%;
   flex-wrap: nowrap;
 }
-
+#butts{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.circs{
+  height:60px;
+  width:60px;
+  border: 2px solid;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.nope{
+  height: 15px;
+  width:15px;
+}
+.nope:hover{
+  height: 15px;
+  width:15px;
+  background-color: rgba(255, 0, 0, 0.4);
+}
+.yep{
+  height: 15px;
+  width:15px;
+}
+.yep:hover{
+  height: 15px;
+  width:15px;
+  background-color: rgba(0, 0, 255, 0.4);
+}
+.circ{
+  height:70px;
+  width:70px;
+  border: 2px solid;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.squares{
+  height:60px;
+  width:60px;
+  
+}
+.actions{
+  background-color: black;
+  font-size: 20px;
+  color: white;
+  border: 5px solid black;
+  border-radius: 5px;
+  height:50px
+}
+.actions:hover{
+  background-color: white;
+  border: 5px solid white;
+  font-size: 20px;
+  color: black;
+}
 #custom,
 #customNumber {
   height: 25px;
