@@ -8,31 +8,30 @@ var app = require('../app');
 var debug = require('debug')('cryptid:server');
 var http = require('http');
 
-
-require("../conf/dbconnect.js"); // connects the database
+const connectToDatabase = require('../conf/dbconnect'); // connects the database
 const configureSocketIO = require("../conf/serverSocket.js"); // socket for the server
 
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
 var server = http.createServer(app);
-const io = configureSocketIO(server); // set up the socket.io
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+// Set up database connection
+connectToDatabase()
+    .then(() => {
+        var port = normalizePort(process.env.PORT || '3000');
+        app.set('port', port);
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+        const io = configureSocketIO(server); // set up the socket.io
+
+        server.listen(port);
+        server.on('error', onError);
+        server.on('listening', onListening);
+
+        console.log(`Server started on port ${port}`);
+    })
+    .catch((error) => {
+        // Database connection failed, exit the process
+        console.error("Server startup failed:", error.message);
+        process.exit(1);
+    });
 
 /**
  * Normalize a port into a number, string, or false.
