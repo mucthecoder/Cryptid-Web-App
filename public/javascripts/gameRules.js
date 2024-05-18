@@ -10,7 +10,26 @@ for (let i=turnList.length-1;i>num-1;i--){
   turnList.splice(i,1);
 }
 let search_array=[];
-
+let u=document.getElementById("clues");
+//this should be done if it's a local game
+if (goal=="local"){
+  for (let i=0;i<turnList.length;i++){
+    let k=document.createElement("div");
+    k.textContent=`Player ${i+1} Clue`
+    k.addEventListener("click",()=>{
+      something(i);
+      
+    });
+    if (i<turnList.length-1){
+      k.className="clue";
+    }
+    else{
+      k.className="clue-final";
+    }
+    k.style.backgroundColor=turnList[i];
+    u.appendChild(k);
+  }
+}
 images = [];
 turn = 0;
 var initTurn = document.getElementsByClassName(turnList[turn]);
@@ -28,8 +47,39 @@ let questioning=false;
 
 let on_round=0;
 
+function something(w) {
+  document.getElementById("clue-show").textContent = clues[w];
+  if (w>=turnList.length-1) {
+    document.getElementsByClassName("clue-final")[0].textContent="Hide Clue";
+    document.getElementsByClassName("clue-final")[0].addEventListener("click",()=>{
+      un_something(w);
+    },{ once:true});
+  }
+  else{
+    document.getElementsByClassName("clue")[w].textContent=`Hide clue`;
+    document.getElementsByClassName("clue")[w].addEventListener("click",()=>{
+      un_something(w);
+    },{ once:true});
+  }
+}
 
-function nothing(){
+function un_something(w) {
+  document.getElementById("clue-show").textContent = `Press to show Clue`;
+  if (w >= turnList.length-1) {
+    document.getElementsByClassName("clue-final")[0].textContent=`Player ${w+1} Clue`;
+    document.getElementsByClassName("clue-final")[0].addEventListener("click", () => {
+      something(w);
+    },{once:true});
+  }
+  else{
+    document.getElementsByClassName("clue")[w].textContent=`Player ${w+1} Clue`;
+    document.getElementsByClassName("clue")[w].addEventListener("click", () => {
+      something(w);
+    },{once:true});
+  }
+}
+
+function nothing(what){
   console.log("stupid");
 }
 
@@ -244,7 +294,7 @@ function load_possible_answers(){
   });
 
   let two=document.createElement("span");
-  two.style.width="10px";
+  two.style.width="40px";
 
   let three=document.createElement("button");
   three.className="circs";
@@ -292,7 +342,7 @@ function load_possible_responses(){
   });
 
   let two=document.createElement("span");
-  two.style.width="10px";
+  two.style.width="40px";
 
   let three=document.createElement("button");
   three.className="circs";
