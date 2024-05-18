@@ -85,11 +85,11 @@ const postforgot = async (req, res) => {
       const code = generateCode();
       console.log(code, email);
       // uncomment when a correct email is set
-      // sendEmail(code, email)
-      //     .catch((err) => {
-      //         console.log(err);
-      //         return res.status(500).json({ message: "server error" });
-      //     });
+      sendEmail(code, email)
+          .catch((err) => {
+              console.log(err);
+              return res.status(500).json({ message: "server error" });
+          });
       //============================================================================
 
 
@@ -112,8 +112,8 @@ const postforgot = async (req, res) => {
 async function sendEmail(code, email) {
   const service = "gmail";
   const host = "smtp.gmail.com"; // Corrected the host to Gmail SMTP server
-  const user =  ""; //=================================email
-  const pass = "";//=================================email
+  const user =  "munadandou@gmail.com"; //=================================email
+  const pass = "bkmm prtb pvjr fsuy";//=================================email
   const transporter = nodemailer.createTransport({
     service: service,
     host: host,
@@ -129,7 +129,7 @@ async function sendEmail(code, email) {
   const info = await transporter.sendMail({
     from: `"Cryptid Game" <${user}>`, // corrected the from field
     to: email,
-    subject: "Forgot Password",
+    subject: "Forgot Password Code",
     text: `Security Code: ${code}`,
   });
   
