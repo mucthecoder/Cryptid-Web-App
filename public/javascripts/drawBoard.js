@@ -1,5 +1,5 @@
 var mapCodeValue = 0,
-  config = 0,
+  config = 0,clues,
   canvas,
   ctx,
   gridSize,
@@ -13,6 +13,7 @@ function drawIt(path) {
       //console.log(data);
       if (goal=="local"){
         mapCodeValue = data.mapCode;
+        console.log(data.players[num_players]);
       }
       else{
         let temp= sessionStorage.getItem("cryptid-game-map-code");
