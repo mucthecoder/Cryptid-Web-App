@@ -44,6 +44,19 @@ function drawIt(path) {
       else{
         let temp= sessionStorage.getItem("cryptid-game-map-code");
         mapCodeValue=who.mapCode;
+        let f = who.players[num_players].length;
+        //console.log(data.players[num_players]);
+        let ind = 0;
+        clues = who.players[num_players][ind].rules;
+        console.log(clues);
+        hint=who.players[num_players][ind].hint;
+        console.log(hint);
+        dest=who.players[num_players][ind].destination;
+        console.log(dest);
+        for (let i=0;i<clues.length;i++){
+          clues[i]=dict[clues[i]];
+          console.log(clues[i]);
+        }
         console.log(temp);
         console.log(mapCodeValue);
       }
