@@ -188,6 +188,11 @@ canvas {
   bottom: -1.8em;
 }
 
+.finisher{
+  font-size: 30px;
+  font-weight: bold;
+}
+
 .cell {
   border: 0.5px solid;
   width: 60px;

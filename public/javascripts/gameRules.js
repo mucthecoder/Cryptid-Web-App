@@ -36,7 +36,10 @@ function nothing(){
 function cellClicked(cellClass) {
   var cells = document.getElementsByClassName(cellClass);
   var cell = cells[0];
-  
+  if (finished){
+    console.log("Game is finished");
+    return;
+  }
   if (round < 2) {
     var shapeDiv = createPiece("square");
     var classesArray = Array.from(cell.classList);
@@ -380,8 +383,10 @@ function process_search_turn() {
     for(let i=0;i<turnList.length;i++){
       document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
     }
-    console.log(`${searcher} wins:${search_count}`);
+    //console.log(`${searcher} wins:${search_count}`);
     document.getElementsByClassName(searcher)[0].style.backgroundColor = searcher;
+    index = turnList.findIndex(car => car==searcher);
+    finish_game(`Player ${index+1}`,searcher);
     return;
   }
   document.getElementById("butts").replaceChildren();
@@ -403,4 +408,14 @@ function process_search_turn() {
   let preTurn = document.getElementsByClassName(turnList[pre]);
   preTurn[0].style.backgroundColor = "";
   load_possible_responses();
+}
+
+function finish_game(who,wha){
+  console.log(`${who} wins!!!`);
+  let s=document.createElement("h");
+  s.className="finisher";
+  s.style.color=wha;
+  s.textContent=`${who} wins!!!`;
+  finished=true;
+  document.getElementById("butts").replaceChildren(s);
 }
