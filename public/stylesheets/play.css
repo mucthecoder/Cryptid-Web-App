@@ -230,6 +230,17 @@ canvas {
   background-color: red;
   font-weight: bold;
 }
+.master-clue{
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height:30px;
+  border: 1px solid;
+  text-align: center;
+  justify-content: center;
+  background-color: red;
+  font-weight: bold;
+}
 .clue-final{
   display: flex;
   flex-direction: column;

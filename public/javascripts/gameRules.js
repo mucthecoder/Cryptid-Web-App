@@ -30,6 +30,19 @@ if (goal=="local"){
     u.appendChild(k);
   }
 }
+else{
+  let bhari=turnList.findIndex(car=>car=my_colour);
+  //let my_clue=clues[bhari];
+  let k=document.createElement("div");
+  k.textContent=`View My Clue`;
+  k.className="master-clue";
+  k.style.backgroundColor=my_colour;
+  k.addEventListener("click",()=>{
+    do_it();
+  });
+  document.getElementById("clues").appendChild(k);
+  
+}
 images = [];
 turn = 0;
 var initTurn = document.getElementsByClassName(turnList[turn]);
@@ -79,6 +92,25 @@ function un_something(w) {
   }
 }
 
+function do_it(){
+  //console.log("calling do it");
+  let bhari=turnList.findIndex(car=>car==my_colour);
+  console.log(bhari);
+  document.getElementById("clue-show").textContent=clues[bhari];
+  document.getElementsByClassName("master-clue")[0].textContent="Hide My Clue";
+  document.getElementsByClassName("master-clue")[0].addEventListener("click", () => {
+    undo_it();
+  },{once:true});
+}
+
+function undo_it(){
+  //console.log("calling undo it");
+  document.getElementById("clue-show").textContent = `Press to show Clue`;
+  document.getElementsByClassName("master-clue")[0].textContent="View My Clue";
+  document.getElementsByClassName("master-clue")[0].addEventListener("click", () => {
+    do_it();
+  },{once:true});
+}
 function nothing(what){
   console.log("stupid");
 }

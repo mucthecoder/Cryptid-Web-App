@@ -30,7 +30,7 @@ else{
     fetch(`../maps/${mode}/${temp}`)
     .then((response) => response.json())
     .then((data) => {
-        console.log(data[num_players]);
+        console.log(data);
         who=data;
     })
     .catch((error) => console.error("Error fetching JSON:", error));
