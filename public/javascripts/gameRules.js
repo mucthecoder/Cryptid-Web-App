@@ -114,6 +114,9 @@ function undo_it(){
 function nothing(what){
   console.log("stupid");
 }
+function nothing(){
+  console.log("stupid");
+}
 
 function cellClicked(cellClass) {
   var cells = document.getElementsByClassName(cellClass);
