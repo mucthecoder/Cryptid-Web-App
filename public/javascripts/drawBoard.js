@@ -1,10 +1,24 @@
 var mapCodeValue = 0,
-  config = 0,
+  config = 0,clues,hint,dest,
   canvas,
   ctx,
   gridSize,
   cellSize,
   imageUrls;
+
+
+var dict ={};
+
+fetch("/maps/dictionary.json")
+  .then(response => response.json())
+  .then(data => {
+    // Work with the fetched dictionary object
+    dict=data;
+  })
+  .catch(error => {
+    // Handle errors
+    console.error('Error fetching dictionary:', error);
+  });
 
 function drawIt(path) {
   fetch(path)
@@ -13,6 +27,19 @@ function drawIt(path) {
       //console.log(data);
       if (goal=="local"){
         mapCodeValue = data.mapCode;
+        let f = data.players[num_players].length;
+        //console.log(data.players[num_players]);
+        let ind = Math.floor(Math.random()*f);
+        clues = data.players[num_players][ind].rules;
+        console.log(clues);
+        hint=data.players[num_players][ind].hint;
+        console.log(hint);
+        dest=data.players[num_players][ind].destination;
+        console.log(dest);
+        for (let i=0;i<clues.length;i++){
+          clues[i]=dict[clues[i]];
+          console.log(clues[i]);
+        }
       }
       else{
         let temp= sessionStorage.getItem("cryptid-game-map-code");

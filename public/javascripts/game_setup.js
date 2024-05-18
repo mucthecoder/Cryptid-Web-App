@@ -30,10 +30,11 @@ else{
     fetch(`../maps/${mode}/${temp}`)
     .then((response) => response.json())
     .then((data) => {
-        console.log(data);
+        console.log(data[num_players]);
         who=data;
     })
     .catch((error) => console.error("Error fetching JSON:", error));
+
     socket.on("identity", (identity) => {
         console.log("Received identity:", identity);
         socket.emit("reconnect",{username:username,colour:my_colour,action:goal,identity:match_id});
@@ -177,8 +178,10 @@ else{
         }
         console.log(data);
         wrong=true;
+        document.getElementsByClassName(data.colour)[0].style.backgroundColor = data.colour;
         if (data.colour==my_colour){
             me_wrong=true;
+            
         }
     });
 
@@ -208,18 +211,15 @@ else{
     
 
 }
-
 function on_search_mark(where,damn){
     let he=createPiece("circle");
     he.style.backgroundColor=damn;
     append_piece(he,where);
 }
-
 function on_search(where){
     console.log("Searching");
     socket.emit("search",{colour:my_colour,name:username,cell:where,why:goal,match:match_id});
 }
-
 function create_search_array(){
     search_array=[];
     let e=document.getElementsByClassName(`cell ${her}`)[0];
@@ -233,8 +233,7 @@ function create_search_array(){
       
     
     console.log(search_array);
-  }
-
+}
 function on_starter(where){
     if (round<2&&turnList[turn]==my_colour&&!wrong){
         //console.log("starting negations");
@@ -258,7 +257,6 @@ function on_question(where,who){
     console.log("starting negations");
     socket.emit("question",{colour:my_colour,name:username,match:match_id,cell:where,target:who,why:goal});
 }
-
 function on_response(where,what){
     console.log(`Responding: ${what} to ${where}`);
     socket.emit("response",{colour:my_colour,name:username,match:match_id,cell:where,answer:what,why:goal});
@@ -271,7 +269,6 @@ function on_answer(where,what){
     console.log(`Responding: ${what}`);
     socket.emit("answer",{colour:my_colour,name:username,match:match_id,cell:where,answer:what,why:goal});
 }
-
 function on_cellClicked(cellClass,colour) {
     if (colour==my_colour){
         
@@ -282,7 +279,6 @@ function on_cellClicked(cellClass,colour) {
 
 
 }
-
 function on_load_possible_actions(){
     let one=document.createElement("button");
     one.className="actions";
@@ -322,17 +318,16 @@ function start_quest(){
       document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
     }
     //document.getElementsByClassName(questioned)[0].style.backgroundColor=questioned;
-  }
+}
 function done_question(){
-    // for (let i=0;i<turnList.length;i++){
-    //   document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
-    // }
+    for (let i=0;i<turnList.length;i++){
+      document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
+    }
     questioning=false;
     processTurn();
     document.getElementById("butts").replaceChildren();
     
 }
-
 function on_load_question_options(){
     let h=document.getElementById("butts");
     h.replaceChildren();
@@ -360,7 +355,6 @@ function on_load_question_options(){
       }
     }
 }
-
 function on_load_possible_answers(){
     let one=document.createElement("button");
     one.className="squares";
@@ -402,7 +396,6 @@ function on_load_possible_answers(){
     four.appendChild(two);
     four.appendChild(three);
 }
-
 function on_load_possible_responses(){
     let one=document.createElement("button");
     one.className="squares";
