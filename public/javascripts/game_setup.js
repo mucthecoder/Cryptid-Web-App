@@ -189,7 +189,7 @@ else{
     socket.on("win",(data)=>{
         console.log(data);
         console.log(`${data.colour} wins!!!`);
-        let s=document.createElement("h");
+        let s=document.createElement("h1");
         s.className="finisher";
         s.style.color=data.colour;
         s.textContent=`${data.name} wins!`;
@@ -198,6 +198,8 @@ else{
         for (let i=0;i<turnList.length;i++){
             document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
         }
+        //close the io connection
+        socket.disconnect();
     });
 
     socket.on("error", (error) => {

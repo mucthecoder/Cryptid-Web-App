@@ -412,7 +412,7 @@ function process_search_turn() {
 
 function finish_game(who,wha){
   console.log(`${who} wins!!!`);
-  let s=document.createElement("h");
+  let s=document.createElement("h1");
   s.className="finisher";
   s.style.color=wha;
   s.textContent=`${who} wins!!!`;
