@@ -9,7 +9,7 @@ const session = require("express-session");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var gameRouter = require('./routes/game');
-const authRouter = require('./controllers/passport');
+//const authRouter = require('./controllers/passport');
 const userController = require("./controllers/userController")
 
 var app = express();
@@ -34,5 +34,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/game', gameRouter);
-app.use('/users', authRouter);
+//app.use('/users', authRouter);
 module.exports = app;
