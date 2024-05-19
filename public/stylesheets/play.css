@@ -2,10 +2,9 @@ body {
   display: flex;
   flex-direction: column;
   padding: 5px 0;
-  height: 100vh;
+  min-height: 100vh;
   align-items: center;
   background-color: #efd29f;
-  overflow: hidden;
   justify-content:center;
   margin-left: 0;
   margin-right: 0;
@@ -24,7 +23,7 @@ body {
   flex-direction: row;
   justify-content: center;
   margin: 0px 0px 20px 0px;
-  height: 10%;
+  min-height: 10%;
 }
 .circs{
   height:60px;
@@ -178,7 +177,7 @@ canvas {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1/1;
 }
 
 .column {
@@ -327,10 +326,10 @@ article{
 
 #rules{
   width: 100%;
-  height: 10%;
+  min-height: 10%;
   background-color: #3d7bb6;
   margin-top: 10%;
-  font-size: 1.3em;
+  font-size: 1.3rem;
 }
 
 #legendImg{
@@ -339,4 +338,56 @@ article{
 
 #specialarticle{
   width: 40%;
+}
+
+@media (max-width: 900px) {
+  article:nth-of-type(3) {
+    display: none;
+  }
+  article:nth-child(2){
+    width: 70%;
+  }
+  article:nth-child(1){
+    width: 30%;
+  }
+}
+
+@media (max-width: 700px) {
+  section {
+    flex-direction: column-reverse;
+  }
+  
+  article {
+    width: 100% !important;
+    aspect-ratio: 1/1;
+  }
+
+  article:nth-child(1){
+    aspect-ratio: auto;
+    padding: 0 10px;
+  }
+
+  #rules{
+    display: none;
+  }
+
+  #bigg{
+    margin-top: 15px;
+  }
+
+  #clue-show{
+    flex: 0;
+  }
+
+  .turns{
+    border: 1px solid black;
+  }
+
+  .turns div{
+    flex:1;
+    border-radius: 10%;
+    height: 30px ;
+    aspect-ratio: auto;
+    border: 0px;
+  }
 }
