@@ -263,8 +263,8 @@ function start_search(){
 //not suppose to replace structures
 function question_mark(where){
   var he = document.createElement("div");
-  he.style.width = "15px"; 
-  he.style.height = "15px";
+  he.style.width = "20%"; 
+  he.style.height = "20%";
   he.classList.add("circle");
   he.style.borderRadius = "50%";
   he.style.backgroundColor="black";
@@ -430,8 +430,8 @@ function done_search(){
 
 function createPiece(shape) {
   var shapeDiv = document.createElement("div");
-  shapeDiv.style.width = "15px"; // Adjust width as needed
-  shapeDiv.style.height = "15px"; // Adjust height as needed
+  shapeDiv.style.width = "20%"; // Adjust width as needed
+  shapeDiv.style.aspectRatio= "1/1"; // Adjust height as needed
   shapeDiv.style.backgroundColor = turnList[turn];
   if (shape == "square") {
     shapeDiv.classList.add("square");
