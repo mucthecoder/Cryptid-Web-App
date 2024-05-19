@@ -1,78 +1,64 @@
+
 const express = require('express');
-const session = require('express-session');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const mongoose = require('mongoose');
-const User = require('../models/user.model.js');
+const session = require('express-session');
 const path = require('path');
 
-mongoose.connect("mongodb+srv://Qwertyui1:neyon71133@cluster0.zbdv8in.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
+const router = express.Router();
 
-passport.use(
-  new GoogleStrategy(
-    {
-      callbackURL: "https://playcryptidweb.azurewebsites.net/google/callback",
+// Configure session middleware for this router
+router.use(session({
+  secret: "CryptidWebAp~byTheGreatestTeam!!!",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 6000 * 60
+  }
+}));
+
+// Initialize Passport and restore authentication state, if any, from the session
+router.use(passport.initialize());
+router.use(passport.session());
+
+passport.use(new GoogleStrategy({
+  callbackURL: "https://playcryptidweb.azurewebsites.net/google/callback",
       clientID: "813500182154-rb9qve19jksavhheklmiiger4kfs52j7.apps.googleusercontent.com",
-      clientSecret: "GOCSPX-sbXUhLu7FFFbbE6K48kgrZoFLii"
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        let user = await User.findOne({ googleId: profile.id });
-        if (user) {
-          return done(null, user);
-        } else {
-          user = new User({
-            googleId: profile.id,
-            displayName: profile.displayName,
-            email: profile.emails[0].value
-          });
-          await user.save();
-          return done(null, user);
-        }
-      } catch (err) {
-        return done(err, null);
-      }
-    }
-  )
-);
+      clientSecret: "GOCSPX-sbXUhLu7FFFbbE6K48kgrZoFLii",
+  passReqToCallback: true
+},
+function(request, accessToken, refreshToken, profile, done) {
+  return done(null, profile);
+}));
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
+passport.serializeUser(function(user, done) {
+  done(null, user);
 });
 
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
+passport.deserializeUser(function(user, done) {
+  done(null, user);
 });
 
-const app = express();
+// Define routes for Google OAuth
+router.get('/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 
-app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/login.html'));
-});
-
-app.get('/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
-
-app.get('/google/callback',
+router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    res.redirect('/');
+    res.redirect('/profile'); // Redirect to a profile page or some other page after successful login
   });
 
-app.get('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
   req.logout(() => {
     res.redirect('/');
   });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+router.get('/profile', (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect('/login');
+  }
+  res.send(`<h1>Hello ${req.user.displayName}</h1>`);
+});
+
+module.exports = router;
