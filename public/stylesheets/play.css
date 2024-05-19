@@ -201,7 +201,7 @@ canvas {
 .cell {
   border: 0.5px solid;
   width: 100%;
-  height: 10%;
+  aspect-ratio: 14/13;
   display: flex;
   justify-content: center;
   align-items: center;
