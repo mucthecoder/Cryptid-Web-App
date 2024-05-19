@@ -60,6 +60,8 @@ socket.on("identity", (identity) => {
 socket.on("create-res",(response)=>{
     console.log(response);
     match_id=response.id;
+    sessionStorage.setItem("cryptid-game-room-number",match_id);
+    sessionStorage.setItem("cryptid-game-action","join");
     document.getElementById("join_code").textContent=`Joining code: ${response.id}`;
 });
 
