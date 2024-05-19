@@ -17,8 +17,10 @@ async function initialize() {
 
 initialize(); 
 
-document.getElementById("legendImg").addEventListener("click", function() {
-    openModal("tiles/legend.png");
+document.querySelectorAll(".legendImg").forEach(function(element) {
+    element.addEventListener("click", function() {
+        openModal("tiles/legend.png");
+    });
 });
   
 document.getElementById("rules").addEventListener("click", function() {

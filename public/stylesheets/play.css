@@ -332,12 +332,20 @@ article{
   font-size: 1.3rem;
 }
 
-#legendImg{
+.legendImg{
   width: 90%;
 }
 
 #specialarticle{
   width: 40%;
+}
+
+#legendButt{
+  width: 100%;
+  min-height: 30px;
+  background-color: #3d7bb6;
+  margin-top: 15px;
+  display: none;
 }
 
 @media (max-width: 900px) {
@@ -390,4 +398,13 @@ article{
     aspect-ratio: auto;
     border: 0px;
   }
+
+  #legendButt{
+    display: block;
+  }
+
+  #modalImg{
+    width: 100%;
+  }
 }
+
