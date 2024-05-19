@@ -21,7 +21,7 @@ document.getElementById("legendImg").addEventListener("click", function() {
     openModal("tiles/legend.png");
 });
   
-document.getElementById("rulesImg").addEventListener("click", function() {
+document.getElementById("rules").addEventListener("click", function() {
     openModal("tiles/refrules.png");
 });
   
