@@ -17,6 +17,7 @@ console.log(`Number of Players:${num_players}`);
 var socket = null;
 let wrong=false;
 let me_wrong=false;
+let finished=false;
 if (goal=="local"){
     //local game
     sessionStorage.removeItem("cryptid-game-map-code");
@@ -33,6 +34,7 @@ else{
         who=data;
     })
     .catch((error) => console.error("Error fetching JSON:", error));
+
     socket.on("identity", (identity) => {
         console.log("Received identity:", identity);
         socket.emit("reconnect",{username:username,colour:my_colour,action:goal,identity:match_id});
@@ -117,7 +119,7 @@ else{
             r.addEventListener("mouseenter",()=>{
                 r.style.backgroundColor="rgba(0, 255, 0, 0.4)";
             });
-            r.onclick=nothing;
+            
             h.style.backgroundColor=questioned;
             replace_with(h,her);
             done_question();
@@ -162,6 +164,8 @@ else{
         search_count=0;
         searching=true;
         her=data.cell;
+        console.log("filling search array");
+        create_search_array();
         on_search_mark(data.cell,searcher);
         start_search();
         on_process_search_turn();
@@ -174,9 +178,31 @@ else{
         }
         console.log(data);
         wrong=true;
+        document.getElementsByClassName(data.colour)[0].style.backgroundColor = data.colour;
         if (data.colour==my_colour){
             me_wrong=true;
+            
         }
+    });
+
+    socket.on("skipper",(data)=>{
+        on_process_search_turn();
+    });
+
+    socket.on("win",(data)=>{
+        console.log(data);
+        console.log(`${data.colour} wins!!!`);
+        let s=document.createElement("h1");
+        s.className="finisher";
+        s.style.color=data.colour;
+        s.textContent=`${data.name} wins!`;
+        document.getElementById("butts").replaceChildren(s);
+        finished=true;
+        for (let i=0;i<turnList.length;i++){
+            document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
+        }
+        //close the io connection
+        socket.disconnect();
     });
 
     socket.on("error", (error) => {
@@ -185,22 +211,36 @@ else{
     
 
 }
-
 function on_search_mark(where,damn){
     let he=createPiece("circle");
     he.style.backgroundColor=damn;
     append_piece(he,where);
 }
-
 function on_search(where){
     console.log("Searching");
     socket.emit("search",{colour:my_colour,name:username,cell:where,why:goal,match:match_id});
 }
-
+function create_search_array(){
+    search_array=[];
+    let e=document.getElementsByClassName(`cell ${her}`)[0];
+    console.log(e.tagName);
+    
+    for (let i=0;i<e.children.length;i++){
+      if (e.children[i].tagName=="DIV"){
+        search_array.push(e.children[i].style.backgroundColor);
+      }
+    }
+      
+    
+    console.log(search_array);
+}
 function on_starter(where){
     if (round<2&&turnList[turn]==my_colour&&!wrong){
         //console.log("starting negations");
         socket.emit("starter",{colour:my_colour,name:username,match:match_id,cell:where,why:goal});
+    }
+    else if(finished){
+        console.log("match finished");
     }
     else if(me_wrong){
         socket.emit("sacrifice",{colour:my_colour,name:username,match:match_id,cell:where,why:goal});
@@ -208,7 +248,7 @@ function on_starter(where){
     else if(wrong){
         console.log("wait for Wrong person to sacrifice");
     }
-    else{
+    else if (turnList[turn]==my_colour){
         her=where;
         on_load_possible_actions();
     }
@@ -217,7 +257,6 @@ function on_question(where,who){
     console.log("starting negations");
     socket.emit("question",{colour:my_colour,name:username,match:match_id,cell:where,target:who,why:goal});
 }
-
 function on_response(where,what){
     console.log(`Responding: ${what} to ${where}`);
     socket.emit("response",{colour:my_colour,name:username,match:match_id,cell:where,answer:what,why:goal});
@@ -230,7 +269,6 @@ function on_answer(where,what){
     console.log(`Responding: ${what}`);
     socket.emit("answer",{colour:my_colour,name:username,match:match_id,cell:where,answer:what,why:goal});
 }
-
 function on_cellClicked(cellClass,colour) {
     if (colour==my_colour){
         
@@ -241,7 +279,6 @@ function on_cellClicked(cellClass,colour) {
 
 
 }
-
 function on_load_possible_actions(){
     let one=document.createElement("button");
     one.className="actions";
@@ -281,17 +318,16 @@ function start_quest(){
       document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
     }
     //document.getElementsByClassName(questioned)[0].style.backgroundColor=questioned;
-  }
+}
 function done_question(){
-    // for (let i=0;i<turnList.length;i++){
-    //   document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
-    // }
+    for (let i=0;i<turnList.length;i++){
+      document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
+    }
     questioning=false;
     processTurn();
     document.getElementById("butts").replaceChildren();
     
 }
-
 function on_load_question_options(){
     let h=document.getElementById("butts");
     h.replaceChildren();
@@ -319,7 +355,6 @@ function on_load_question_options(){
       }
     }
 }
-
 function on_load_possible_answers(){
     let one=document.createElement("button");
     one.className="squares";
@@ -361,7 +396,6 @@ function on_load_possible_answers(){
     four.appendChild(two);
     four.appendChild(three);
 }
-
 function on_load_possible_responses(){
     let one=document.createElement("button");
     one.className="squares";
@@ -411,6 +445,9 @@ function on_process_search_turn() {
     search_count++;
     if (search_count==turnList.length){
       console.log(`${searcher} wins`);
+      if (searcher==my_colour){
+        on_finish_game(my_colour,username)
+      }
       return;
     }
     document.getElementById("butts").replaceChildren();
@@ -426,7 +463,16 @@ function on_process_search_turn() {
     console.log(preTurn);
     console.log(turnList[pre]);
     preTurn[0].style.backgroundColor = "";
+    //i'm thinking it's here, turnlist searchturn==mycolour & inside(mycolor,that spot)
+    //just need a new inside function
     if (turnList[search_turn]==my_colour){
+        if (inside(my_colour,search_array)){
+            console.log("i am the one");
+            socket.emit("skip",{colour:my_colour,match:match_id,why:goal,name:username});
+        }
         on_load_possible_responses();
     }
+}
+function on_finish_game(who,user){
+    socket.emit("winner",{colour:who,match:match_id,why:goal,name:user});
 }

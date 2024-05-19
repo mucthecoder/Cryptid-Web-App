@@ -1,11 +1,11 @@
 body {
   display: flex;
   flex-direction: column;
-  padding: 50px 30px;
+  padding: 0px 30px;
   /* height: 100vh; */    /* seems okay */
   align-items: center;
   background-color: #efd29f;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 #buttons {
@@ -20,6 +20,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin: 5px 0px 0px 0px;
 }
 .circs{
   height:60px;
@@ -188,6 +189,11 @@ canvas {
   bottom: -1.8em;
 }
 
+.finisher{
+  font-size: 30px;
+  font-weight: bold;
+}
+
 .cell {
   border: 0.5px solid;
   width: 60px;
@@ -203,7 +209,58 @@ canvas {
   border: 1px solid black;
 }
 
-
+#bigg{
+  display: flex;
+  flex-direction: column;
+}
+#clues{
+  display: flex;
+  flex-direction: row;
+  width: min-content;
+  height:30px;
+  border: 2px solid;
+}
+.clue{
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height:30px;
+  border-right: 2px solid;
+  text-align: center;
+  justify-content: center;
+  background-color: red;
+  font-weight: bold;
+}
+.master-clue{
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height:30px;
+  border: 1px solid;
+  text-align: center;
+  justify-content: center;
+  background-color: red;
+  font-weight: bold;
+}
+.clue-final{
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height:30px;
+  text-align: center;
+  justify-content: center;
+  background-color: purple;
+  font-weight: bold;
+}
+#clue-show{
+  width: inherit;
+  height: 20px;
+  border-left: 2px solid;
+  border-right: 2px solid;
+  border-bottom: 2px solid;
+  background-color: rgb(182, 182, 182);
+  text-align: center;
+}
 
 .turns{
   display: flex;
