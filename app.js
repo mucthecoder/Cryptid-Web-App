@@ -5,12 +5,22 @@ var logger = require('morgan');
 
 
 const session = require("express-session");
+const passport = require("passport");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var gameRouter = require('./routes/game');
+var authRouter = require('./routes/auth.js');
 
 const userController = require("./controllers/userController")
+
+//=============== Auth =====================
+const Google_Email = require("./auth/passport.js").Google_Email;
+Google_Email(passport);
+const Facebook_Email = require("./auth/passport.js").Facebook_Email;
+Facebook_Email(passport);
+
+//=========================================== 
 
 var app = express();
 
@@ -23,6 +33,10 @@ app.use(session({
     }
 }));
 
+//passport initialization
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(userController.verifyUserData);
 
 app.use(logger('dev'));
@@ -34,5 +48,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/game', gameRouter);
-
+app.use('/auth', authRouter);
 module.exports = app;

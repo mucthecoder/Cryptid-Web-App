@@ -80,4 +80,12 @@ router.get('/waiting', function(req, res, next) {
   res.sendFile(filePath);
 });
 
+// router.get('/profile', (req, res) => {
+//   if (!req.isAuthenticated() || (!req.session && !req.session.user_id )) {
+//     return res.redirect('/login');
+//   }
+//   return res.redirect('/home');
+//     // res.send(`<h1>Hello ${req.user.displayName}</h1>`);
+// });
+
 module.exports = router;
