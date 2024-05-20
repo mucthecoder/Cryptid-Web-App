@@ -7,17 +7,16 @@ const UserSchema = mongoose.Schema({
     },
     password:{
         type:String,
-        required:true
+    },
+    OAuthID:{
+        type:String,
     },
     email:{
         type:String,
         required:true,
         lowercase:true
-    },
-    problem_id:{
-        type:String
     }
-})
+});
 
 const UserModel = new mongoose.model("User",UserSchema);
 
