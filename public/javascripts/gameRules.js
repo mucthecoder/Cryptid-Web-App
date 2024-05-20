@@ -134,6 +134,7 @@ function cellClicked(cellClass) {
       processTurn();
       cell.appendChild(shapeDiv);
     }
+    negate(turnList[turn],cellClass);
   }
   else if (wrong){
     console.log("false")
@@ -150,6 +151,7 @@ function cellClicked(cellClass) {
       cell.appendChild(shapeDiv);
     }
     wrong=false;
+    negate(turnList[turn],cellClass);
     if (questioning){done_question();}
     if (searching){done_search();}
   }
@@ -194,7 +196,7 @@ function load_possible_actions(){
     search_mark(uhm);
     start_search();
     process_search_turn();
-
+    append_search(searcher,uhm);
   });
 
   let four=document.getElementById("butts");
@@ -286,6 +288,7 @@ function load_question_options(){
       questioned=r.style.backgroundColor;
       questioner=turnList[turn];
       console.log(`${questioned}, questioned by ${questioner}`);
+      append_question(questioner,questioned,uhm);
       document.getElementById("butts").replaceChildren();
       load_possible_answers();
       start_quest();
@@ -323,6 +326,7 @@ function load_possible_answers(){
     replace_with(h,uhm);
     //done_question();
     console.log("it is i");
+    append_answer(questioned,uhm,"N");
   });
 
   let two=document.createElement("span");
@@ -338,6 +342,7 @@ function load_possible_answers(){
     h.style.backgroundColor=questioned;
     document.getElementById("butts").replaceChildren();
     replace_with(h,uhm);
+    append_answer(questioned,uhm,"Y");
     if (searching){done_search();}
     if (questioning){done_question();}
     
@@ -368,7 +373,7 @@ function load_possible_responses(){
     document.getElementById("butts").replaceChildren();
     replace_with(h,uhm);
     console.log("after denying and replacing");
-    
+    append_answer(turnList[search_turn],uhm,"N");
     //done_search();
     
   });
@@ -389,6 +394,7 @@ function load_possible_responses(){
     h.style.backgroundColor=turnList[search_turn];
     append_piece(h,uhm);
     process_search_turn();
+    append_answer(turnList[search_turn],uhm,"Y");
     
   });
 
@@ -432,6 +438,7 @@ function createPiece(shape) {
   var shapeDiv = document.createElement("div");
   shapeDiv.style.width = "20%"; // Adjust width as needed
   shapeDiv.style.aspectRatio= "1/1"; // Adjust height as needed
+  shapeDiv.style.height = "20%";
   shapeDiv.style.backgroundColor = turnList[turn];
   if (shape == "square") {
     shapeDiv.classList.add("square");
@@ -462,6 +469,18 @@ function process_search_turn() {
   search_count++;
   console.log(`search count:${search_count}`);
   if (search_count==turnList.length){
+    let gp=dest.replaceAll(" ","");
+    let g=uhm.split(",");
+    //g=g.split(",");
+    g[0]=Number(g[0])+1;
+    g[1]=Number(g[1])+1;
+    let qu=`${g[0]},${g[1]}`;
+    if (qu!=gp){
+      console.log("you got it wrong");
+    }
+    if (qu==gp){
+      console.log("you got it right");
+    }
     for(let i=0;i<turnList.length;i++){
       document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
     }
@@ -479,6 +498,28 @@ function process_search_turn() {
     search_turn++;
     search_count++;
   }
+  if (search_count==turnList.length){
+    let gp=dest.replaceAll(" ","");
+    let g=uhm.split(",");
+    //g=g.split(",");
+    g[0]=Number(g[0])+1;
+    g[1]=Number(g[1])+1;
+    let qu=`${g[0]},${g[1]}`;
+    if (qu!=gp){
+      console.log("you got it wrong");
+    }
+    if (qu==gp){
+      console.log("you got it right");
+    }
+    for(let i=0;i<turnList.length;i++){
+      document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
+    }
+    //console.log(`${searcher} wins:${search_count}`);
+    document.getElementsByClassName(searcher)[0].style.backgroundColor = searcher;
+    index = turnList.findIndex(car => car==searcher);
+    finish_game(`Player ${index+1}`,searcher);
+    return;
+  }
   if (search_turn == turnList.length) {
     search_turn = 0;
   }
@@ -494,10 +535,31 @@ function process_search_turn() {
 
 function finish_game(who,wha){
   console.log(`${who} wins!!!`);
+  console.log(game_progress);
   let s=document.createElement("h1");
   s.className="finisher";
   s.style.color=wha;
   s.textContent=`${who} wins!!!`;
   finished=true;
   document.getElementById("butts").replaceChildren(s);
+}
+function append_question(questioner,questioned,cell){
+  let temp_event=new event(questioner,"question",cell);
+  temp_event["questioned"]=questioned;
+  game_progress.push(temp_event);
+}
+function append_search(searcher,cell){
+  let temp_event=new event(searcher,"search",cell);
+  game_progress.push(temp_event);
+}
+
+function append_answer(player,cell,answer){
+  let temp_event=new event(player,"answer",cell);
+  temp_event["answer"]=answer;
+  game_progress.push(temp_event);
+}
+
+function negate(player,cell){
+  let temp_event=new event(player,"negate",cell);
+  game_progress.push(temp_event);
 }

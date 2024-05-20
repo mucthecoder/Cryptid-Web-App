@@ -14,7 +14,7 @@ class lobby {
         this.colors=["red", "green", "orange", "blue", "purple"];
         this.colours=[];
         this.lobby_id = -1;
-        this.mode = "temp";
+        this.mode = "intro";
         this.started = false;
         this.finished=false;
         this.num_players=0;
@@ -25,6 +25,15 @@ class lobby {
     }
 }
 
+
+function code_gen(number) {
+    let base36String = number.toString(36);
+    const fixedPattern = 'uniqueid';
+    const combinedString = fixedPattern + base36String;
+    const paddedString = combinedString.slice(-8);
+
+    return paddedString;
+}
 function inside(arr,val){
     for (let i=0;i<arr.length;i++){
         // console.log(`${arr[i]} vs ${val}`);
@@ -51,7 +60,7 @@ function configureSocketIO(server) {
             let some = new lobby();
             some.players.push(what.username);
             some.player_sockets.push(socket.id);
-            some.lobby_id=next_custom;
+            some.lobby_id=code_gen(next_custom);
             some.mode=what.mode;
             next_custom++;
             custom_lobbies.push(some);
@@ -72,7 +81,7 @@ function configureSocketIO(server) {
                 custom_lobbies[index].player_sockets.push(socket.id);
                 custom_lobbies[index].players.push(data.username);
                 if (custom_lobbies[index].players.length >= 3){
-                    const directoryPath = path.join(__dirname, '../public/maps/intro');
+                    const directoryPath = path.join(__dirname, `../public/maps/${custom_lobbies[index].mode}`);
                     fs.readdir(directoryPath, function(err, files) {
                         if (err) {
                           console.log('Error reading directory');
@@ -122,7 +131,7 @@ function configureSocketIO(server) {
                 }
                 io.to(socket.id).emit("others",{identity:lobbies[index].lobby_id,others:lobbies[index].players,avail:lobbies[index].players});
                 if (lobbies[index].players.length == 3){
-                    const directoryPath = path.join(__dirname, '../public/maps/intro');
+                    const directoryPath = path.join(__dirname, `../public/maps/${lobbies[index].mode}`);
                     fs.readdir(directoryPath, function(err, files) {
                         if (err) {
                           console.log('Error reading directory');
