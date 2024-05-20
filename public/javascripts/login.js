@@ -29,7 +29,7 @@ function LogIn(e){
         }
         else{
             sessionStorage.setItem("cryptid-game-username",username);
-            window.location.href = "/users/home";
+            window.location.href = "/home";
         }
     })
     .catch((err)=>{
@@ -80,7 +80,7 @@ function SignUp(e){
         }
         else{
             sessionStorage.setItem("cryptid-game-username",username);
-            window.location.href = "/users/home";
+            window.location.href = "/home";
         }
     })
     .catch((err)=>{
