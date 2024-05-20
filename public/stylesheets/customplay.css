@@ -1,0 +1,88 @@
+.image-row {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    background-color: #f3f3f3;
+    padding: 10px;
+}
+
+.image-row img {
+    height: 100px;
+    margin-right: 10px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+    grid-template-rows: repeat(3, 150px);
+    gap: 10px;
+}
+
+.grid-cell {
+    width: 200px;
+    height: 150px;
+    border: 2px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.grid-cell img {
+    position: absolute;
+}
+
+.grid-cell.over {
+    border-color: #000;
+}
+
+canvas {
+    padding: 0;
+  }
+
+  .large {
+    position: relative;
+    width: 600px;
+    aspect-ratio: 1/1;
+  }
+  
+  #box {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    aspect-ratio: 1/1;
+  }
+  
+  .column {
+    width: 10.05%;
+    height: 92.5%;
+    margin-right: -2.1%;
+    background-color: transparent;
+  }
+  
+  .cdown-2 {
+    position: relative;
+    bottom: -5%;
+  }
+  
+  .finisher{
+    font-size: 30px;
+    font-weight: bold;
+  }
+  
+  .cell {
+    border: 0.5px solid;
+    width: 100%;
+    aspect-ratio: 14/13;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    clip-path: polygon(0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%, 25% 0%); /* Rotated hexagon */
+    flex-wrap: wrap;
+  }
+  
+  .cell div{
+    border: 1px solid black;
+  }
