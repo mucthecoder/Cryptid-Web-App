@@ -6,6 +6,8 @@ const mode=sessionStorage.getItem("cryptid-game-mode");
 const num_players = sessionStorage.getItem("cryptid-num-players");
 const match_id = sessionStorage.getItem("cryptid-match-id");
 let my_colour=sessionStorage.getItem("cryptid-my-colour");
+const game_progress=[];
+
 let who=null;
 let her="";
 let colors=["red", "green", "orange", "blue", "purple"];
@@ -18,6 +20,15 @@ var socket = null;
 let wrong=false;
 let me_wrong=false;
 let finished=false;
+
+class event {
+    constructor(player, act, cell) {
+        this.player = player;
+        this.action = act;
+        this.cell = cell;
+    }
+}
+
 if (goal=="local"){
     //local game
     sessionStorage.removeItem("cryptid-game-map-code");
@@ -66,6 +77,7 @@ else{
         r.onclick=nothing;
         h.style.backgroundColor=data.colour;
         replace_with(h,data.cell);
+        negate(data.colour,data.cell);
         processTurn();
 
     });
@@ -77,6 +89,7 @@ else{
         append_piece(h,data.cell);
         me_wrong=false;
         wrong=false;
+        negate(turnList[turn],data.cell);
         if (questioning){
             done_question();
         }
@@ -94,6 +107,7 @@ else{
         questioned=data.target;
         her=data.cell;
         questioning=true;
+        append_question(data.colour,data.target,data.cell);
         if (data.target==my_colour){
             on_load_possible_answers();
         }
@@ -102,6 +116,7 @@ else{
         console.log("res");
         console.log(data);
         //{colour:data.colour,name:data.name,cell:data.cell,why:data.why}
+        append_answer(data.colour,data.cell,data.answer);
         if(data.answer=="no"){
             let h=createPiece("square");
             let r=document.getElementsByClassName(`cell ${data.cell}`)[0];
@@ -131,6 +146,7 @@ else{
         console.log("resp");
         console.log(data);
         //{colour:data.colour,name:data.name,cell:data.cell,why:data.why}
+        append_answer(data.colour,data.cell,data.answer);
         if(data.answer=="no"){
             let h=createPiece("square");
             let r=document.getElementsByClassName(`cell ${data.cell}`)[0];
@@ -169,6 +185,7 @@ else{
         on_search_mark(data.cell,searcher);
         start_search();
         on_process_search_turn();
+        append_search(searcher,data.cell);
     });
     socket.on("wrong",(data)=>{
         console.log("wrong");
