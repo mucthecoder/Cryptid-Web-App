@@ -19,6 +19,15 @@ router.get('/custom-room', function(req, res, next) {
   res.sendFile(filePath);
 });
 
+router.get('/create-map', function(req, res, next) {
+  const filePath = path.join(__dirname, "../public/customplay.html");
+  res.sendFile(filePath);
+});
+router.get('/replay', function(req, res, next) {
+  const filePath = path.join(__dirname, "../public/replay.html");
+  res.sendFile(filePath);
+});
+
 router.get('/maps/intro', function(req, res, next) {
   const directoryPath = path.join(__dirname, '../public/maps/intro');
   

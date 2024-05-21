@@ -46,5 +46,12 @@ router.patch('/updatepassword',userController.patchpassword);
 
 router.post('/sendemail', userController.usersendemail);
 
+router.get("/getusername",(req,res)=>{
+  res.status(200).json({
+    username:req.session.username
+  });
+
+});
+
 
 module.exports = router;
