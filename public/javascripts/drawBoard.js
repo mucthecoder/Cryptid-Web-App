@@ -44,6 +44,7 @@ function drawIt(path) {
           clues[i] = dict[clues[i]];
           console.log(clues[i]);
         }
+        
       } else {
         let temp = sessionStorage.getItem("cryptid-game-map-code");
         mapCodeValue = who.mapCode;
@@ -51,17 +52,18 @@ function drawIt(path) {
         //console.log(data.players[num_players]);
         let ind = 0;
         clues = who.players[num_players][ind].rules;
-        console.log(clues);
+        //console.log(clues);
         hint = who.players[num_players][ind].hint;
-        console.log(hint);
+        //console.log(hint);
         dest = who.players[num_players][ind].destination;
-        console.log(dest);
+        //console.log(dest);
         for (let i = 0; i < clues.length; i++) {
           clues[i] = dict[clues[i]];
-          console.log(clues[i]);
+          //console.log(clues[i]);
         }
-        console.log(temp);
-        console.log(mapCodeValue);
+        well();
+        //console.log(temp);
+        //console.log(mapCodeValue);
       }
       config = transformString(mapCodeValue);
 

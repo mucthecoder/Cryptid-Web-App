@@ -1,5 +1,5 @@
 console.log("Waiting scripts started succesfully");
-const username=sessionStorage.getItem("cryptid-game-username");
+const username=localStorage.getItem("cryptid-game-username");
 const goal=sessionStorage.getItem("cryptid-game-action");
 const code=sessionStorage.getItem("cryptid-game-room-number");
 let mode=sessionStorage.getItem("cryptid-game-mode");
@@ -10,26 +10,17 @@ console.log(`Goal:${goal}`);
 console.log(`Room number:${code}`);
 console.log(`Game mode:${mode}`);
 let colors=["red", "green", "orange", "blue", "purple"];
-
+if (username==null){
+    username="temporary";
+}
+if (goal==null){
+    goal="play";
+    mode="intro";
+}
 if (mode!=null){
     document.getElementById("mode").textContent=mode;
 }
 
-//const username="temporary";
-//const goal="play";
-//const code=0;
-//const mode = "intro";
-
-//set the username in players joined
-// Establish a connection to the server
-
-//send a matchid from server after creation
-//set goal to join
-//write to sessionstorage
-//switch to play
-//initialize io
-//reconnect to matchid
-//make sure the matchid search is gonna work for rejoining 
 
 let met = document.getElementById("myname");
 // console.log(typeof met);
