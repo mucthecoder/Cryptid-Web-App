@@ -22,6 +22,8 @@ const login = async function(req, res) {
       }
   
       req.session.user_id = this_user._id;
+      req.session.username = username;
+      
       res.sendStatus(200)
   
     }catch(err){
@@ -56,6 +58,7 @@ const signup =  async function(req, res) {
       const user = await newUser.save();
   
       req.session.user_id = user._id;
+      req.session.username = username;
   
       res.sendStatus(201);
   
