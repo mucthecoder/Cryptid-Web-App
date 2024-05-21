@@ -54,7 +54,7 @@ else{
     .catch((error) => console.error("Error fetching JSON:", error));
 
     socket.on("identity", (identity) => {
-        //console.log("Received identity:", identity);
+        console.log("Received identity:", identity);
         socket.emit("reconnect",{username:username,colour:my_colour,action:goal,identity:match_id});
     });
 
