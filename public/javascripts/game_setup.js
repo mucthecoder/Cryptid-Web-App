@@ -1,5 +1,5 @@
 console.log("Waiting scripts started succesfully");
-const username=sessionStorage.getItem("cryptid-game-username");
+const username=localStorage.getItem("cryptid-game-username");
 const goal=sessionStorage.getItem("cryptid-game-action");
 const code=sessionStorage.getItem("cryptid-game-room-number");
 const mode=sessionStorage.getItem("cryptid-game-mode");
@@ -8,6 +8,13 @@ const match_id = sessionStorage.getItem("cryptid-match-id");
 let my_colour=sessionStorage.getItem("cryptid-my-colour");
 const game_progress=[];
 
+if (username==null){
+    username="temporary";
+}
+if (goal==null){
+    goal="play";
+    mode="intro";
+}
 let who=null;
 let her="";
 let colors=["red", "green", "orange", "blue", "purple"];
@@ -41,13 +48,13 @@ else{
     fetch(`../maps/${mode}/${temp}`)
     .then((response) => response.json())
     .then((data) => {
-        console.log(data);
+        //console.log(data);
         who=data;
     })
     .catch((error) => console.error("Error fetching JSON:", error));
 
     socket.on("identity", (identity) => {
-        console.log("Received identity:", identity);
+        //console.log("Received identity:", identity);
         socket.emit("reconnect",{username:username,colour:my_colour,action:goal,identity:match_id});
     });
 
@@ -200,6 +207,18 @@ else{
             me_wrong=true;
             
         }
+    });
+
+    socket.on("player-lost",(data)=>{
+        console.log("player-lost");
+        console.log(data);
+        alert(`${capitalizeFirstLetter(data.colour)} has left the game!`);
+    });
+
+    socket.on("disconnected",(data)=>{
+        console.log("player-lost");
+        console.log(data);
+        alert(`${capitalizeFirstLetter(data.username)} has left the game!`);
     });
 
     socket.on("skipper",(data)=>{
@@ -361,6 +380,7 @@ function on_load_question_options(){
         console.log(`${questioned}, questioned`);
         document.getElementById("butts").replaceChildren();
         on_question(her,questioned);
+        r.onclick=nothing;
         // on_load_possible_answers()
         //start_quest();
       });
@@ -379,6 +399,9 @@ function on_load_possible_answers(){
     one.addEventListener("click",()=>{
       console.log("denying");
       on_answer(her,"no");
+      one.onclick=function(){
+        console.log("already clicked");
+      }
     //    let h=createPiece("square");
     //   let r=document.getElementsByClassName(uhm)[0];
     //   r.addEventListener("mouseenter",()=>{
@@ -399,6 +422,9 @@ function on_load_possible_answers(){
     three.addEventListener("click",()=>{
       console.log("accepting");
       on_answer(her,"yes");
+      three.onclick=function(){
+        console.log("already clicked");
+      }
     //   let h=createPiece("circle");
     //   h.className="yep"
     //   h.style.backgroundColor=questioned;
@@ -420,6 +446,9 @@ function on_load_possible_responses(){
     one.addEventListener("click",()=>{
       console.log("denying");
       on_response(her,"no");
+      one.onclick=function(){
+        console.log("already clicked");
+      }
     //   let h=createPiece("square");
     //   let r=document.getElementsByClassName(uhm)[0];
     //   r.addEventListener("mouseenter",()=>{
@@ -441,6 +470,9 @@ function on_load_possible_responses(){
     three.addEventListener("click",()=>{
       console.log("accepting");
       on_response(her,"yes");
+      three.onclick=function(){
+        console.log("already clicked");
+      }
     //   let h=createPiece("circle");
     //   let r=document.getElementsByClassName(uhm)[0];
     //   r.addEventListener("mouseenter",()=>{
@@ -493,3 +525,4 @@ function on_process_search_turn() {
 function on_finish_game(who,user){
     socket.emit("winner",{colour:who,match:match_id,why:goal,name:user});
 }
+function whatever(){}
