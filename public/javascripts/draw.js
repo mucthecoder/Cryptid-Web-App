@@ -1,27 +1,23 @@
 var mapCodeValue = 0,
-  config = 0,
-  clues,
-  hint,
-  dest,
+  config = 0,clues,hint,dest,
   canvas,
   ctx,
   gridSize,
   cellSize,
   imageUrls;
 
-var dict = {};
 
-tilePos = [null, null, null, null, null, null];
+var dict ={};
 
 fetch("/maps/dictionary.json")
-  .then((response) => response.json())
-  .then((data) => {
+  .then(response => response.json())
+  .then(data => {
     // Work with the fetched dictionary object
-    dict = data;
+    dict=data;
   })
-  .catch((error) => {
+  .catch(error => {
     // Handle errors
-    console.error("Error fetching dictionary:", error);
+    console.error('Error fetching dictionary:', error);
   });
 
 function drawIt(path) {
@@ -29,41 +25,40 @@ function drawIt(path) {
     .then((response) => response.json())
     .then((data) => {
       //console.log(data);
-      if (goal == "local") {
+      if (goal=="local"){
         mapCodeValue = data.mapCode;
         let f = data.players[num_players].length;
         //console.log(data.players[num_players]);
-        let ind = Math.floor(Math.random() * f);
+        let ind = Math.floor(Math.random()*f);
         clues = data.players[num_players][ind].rules;
         console.log(clues);
-        hint = data.players[num_players][ind].hint;
+        hint=data.players[num_players][ind].hint;
         console.log(hint);
-        dest = data.players[num_players][ind].destination;
+        dest=data.players[num_players][ind].destination;
         console.log(dest);
-        for (let i = 0; i < clues.length; i++) {
-          clues[i] = dict[clues[i]];
+        for (let i=0;i<clues.length;i++){
+          clues[i]=dict[clues[i]];
           console.log(clues[i]);
         }
-        
-      } else {
-        let temp = sessionStorage.getItem("cryptid-game-map-code");
-        mapCodeValue = who.mapCode;
+      }
+      else{
+        let temp= sessionStorage.getItem("cryptid-game-map-code");
+        mapCodeValue=who.mapCode;
         let f = who.players[num_players].length;
         //console.log(data.players[num_players]);
         let ind = 0;
         clues = who.players[num_players][ind].rules;
-        //console.log(clues);
-        hint = who.players[num_players][ind].hint;
-        //console.log(hint);
-        dest = who.players[num_players][ind].destination;
-        //console.log(dest);
-        for (let i = 0; i < clues.length; i++) {
-          clues[i] = dict[clues[i]];
-          //console.log(clues[i]);
+        console.log(clues);
+        hint=who.players[num_players][ind].hint;
+        console.log(hint);
+        dest=who.players[num_players][ind].destination;
+        console.log(dest);
+        for (let i=0;i<clues.length;i++){
+          clues[i]=dict[clues[i]];
+          console.log(clues[i]);
         }
-        well();
-        //console.log(temp);
-        //console.log(mapCodeValue);
+        console.log(temp);
+        console.log(mapCodeValue);
       }
       config = transformString(mapCodeValue);
 
@@ -87,15 +82,6 @@ function drawIt(path) {
         "tiles/" + config[3] + ".png",
         "tiles/" + config[4] + ".png",
         "tiles/" + config[5] + ".png",
-      ];
-
-      tilePos = [
-        config[0],
-        config[1],
-        config[2],
-        config[3],
-        config[4],
-        config[5],
       ];
       //any image
       loadImages();
@@ -206,7 +192,6 @@ function loadImages() {
           cellSize.width,
           cellSize.height
         );
-        console.log("This is my ratio" + col * cellSize.width);
       }
 
       imagesLoaded++;
@@ -284,20 +269,6 @@ function drawShack(imgUrl, r, c) {
 }
 // Call the function to load images
 
-function rcToString(r,c){
-  console.log("My config "+config[0])
-  if(Math.floor(r/3)==0){
-    if(Math.floor(c/6)==0) return listOfAllTiles[config[0]][r%3][c%6];
-    else return listOfAllTiles[config[1]][r%3][c%6];
-  } else if (Math.floor(r/3)==1){
-    if(Math.floor(c/6)==0) return listOfAllTiles[config[2]][r%3][c%6];
-    else return listOfAllTiles[config[3]][r%3][c%6];
-  } else{
-    if(Math.floor(c/6)==0) return listOfAllTiles[config[4]][r%3][c%6];
-    else return listOfAllTiles[config[5]][r%3][c%6];
-  }
-}
-
 // Add this code after defining the canvas and context variables
 
 function setUp() {
@@ -313,21 +284,10 @@ function setUp() {
       const cell = document.createElement("div");
       cell.classList.add("cell");
       cell.classList.add(`${row},${col}`);
-      if (goal == "local") {
-        cell.onclick = function () {
-          cellClicked(`${row},${col}`);
-          //on_starter(`${row},${col}`);
-          // row//3 col//2
-        };
-      } else {
-        cell.onclick = function () {
-          //cellClicked(`${row},${col}`);
-          on_starter(`${row},${col}`);
-        };
-      }
+    
       //cell.addEventListener("click",interact);
       cell.style.backgroundColor = "#80808000";
-      hover(cell, row, col);
+      hover(cell);
       column.appendChild(cell);
     }
     box.appendChild(column);
@@ -341,32 +301,30 @@ function clearBox(elementID) {
   }
 }
 
-function hover(cell, r,c) {
+function hover(cell) {
+  
   cell.addEventListener("mouseenter", function () {
     // Set background color with RGBA (red, green, blue, alpha) values only on hover
     // Example RGBA color (light blue with 50% opacity)
     var classesArray = Array.from(cell.classList);
-    if (classesArray.includes("neg"))
-      this.style.backgroundColor = "rgba(255, 0, 0, 0.4)";
-    else this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
+    if(classesArray.includes("neg")) this.style.backgroundColor = "rgba(255, 0, 0, 0.4)";
+    else  this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
   });
 
   cell.addEventListener("mouseleave", function () {
     // Reset background color when mouse leaves
     this.style.backgroundColor = "rgba(128, 128, 128, 0)"; // Restore initial background color on mouse leave
   });
-  cell.title = rcToString(r,c);
 }
 
-function custom_hover(cell, val) {
+function custom_hover(cell,val) {
   console.log(cell);
   cell.addEventListener("mouseenter", function () {
-    if (val) this.style.backgroundColor = "rgba(255, 0, 0, 0.4)";
-    else this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
+    if(val) this.style.backgroundColor = "rgba(255, 0, 0, 0.4)";
+    else  this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
   });
 
   cell.addEventListener("mouseleave", function () {
-    this.style.backgroundColor = "rgba(128, 128, 128, 0)";
+    this.style.backgroundColor = "rgba(128, 128, 128, 0)"; 
   });
-  cell.title = "cell";
 }
