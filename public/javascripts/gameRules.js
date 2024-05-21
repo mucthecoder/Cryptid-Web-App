@@ -29,19 +29,16 @@ if (goal=="local"){
     k.style.backgroundColor=turnList[i];
     u.appendChild(k);
   }
+  game_start(turnList[0]);
 }
 else{
-  let bhari=turnList.findIndex(car=>car=my_colour);
-  //let my_clue=clues[bhari];
   let k=document.createElement("div");
   k.textContent=`View My Clue`;
   k.className="master-clue";
   k.style.backgroundColor=my_colour;
-  k.addEventListener("click",()=>{
-    do_it();
-  });
-  document.getElementById("clues").appendChild(k);
-  
+  //well();
+  //document.getElementById("clues").appendChild(k);
+  on_game_start(turnList[0]);
 }
 images = [];
 turn = 0;
@@ -90,6 +87,11 @@ function un_something(w) {
       something(w);
     },{once:true});
   }
+}
+function well(){
+  let bhari=turnList.findIndex(car=>car==my_colour);
+  console.log(bhari);
+  document.getElementById("clue-show").textContent=clues[bhari];
 }
 
 function do_it(){
@@ -150,8 +152,9 @@ function cellClicked(cellClass) {
       //processTurn();
       cell.appendChild(shapeDiv);
     }
-    wrong=false;
     negate(turnList[turn],cellClass);
+    wrong=false;
+    
     if (questioning){done_question();}
     if (searching){done_search();}
   }
@@ -288,6 +291,7 @@ function load_question_options(){
       questioned=r.style.backgroundColor;
       questioner=turnList[turn];
       console.log(`${questioned}, questioned by ${questioner}`);
+      //document.getElementById("notifier").textContent=`${capitalizeFirstLetter(questioned)}, questioned by ${capitalizeFirstLetter(questioner)}`;
       append_question(questioner,questioned,uhm);
       document.getElementById("butts").replaceChildren();
       load_possible_answers();
@@ -459,10 +463,20 @@ function processTurn() {
   var prev = turn - 1;
   if (prev == -1) prev = turnList.length-1;
   //console.log(turn);
+  
+  if (turnList[turn]==my_colour){
+    document.getElementById("notifier").textContent=`Your Turn`;
+  }
+  else{
+    document.getElementById("notifier").textContent=`${capitalizeFirstLetter(turnList[turn])}'s Turn`;
+  }
   var currentTurn = document.getElementsByClassName(turnList[turn]);
   currentTurn[0].style.backgroundColor = turnList[turn];
   var prevTurn = document.getElementsByClassName(turnList[prev]);
   prevTurn[0].style.backgroundColor = "";
+}
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function process_search_turn() {
@@ -515,6 +529,7 @@ function process_search_turn() {
       document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
     }
     //console.log(`${searcher} wins:${search_count}`);
+    
     document.getElementsByClassName(searcher)[0].style.backgroundColor = searcher;
     index = turnList.findIndex(car => car==searcher);
     finish_game(`Player ${index+1}`,searcher);
@@ -536,20 +551,42 @@ function process_search_turn() {
 function finish_game(who,wha){
   console.log(`${who} wins!!!`);
   console.log(game_progress);
+  let uo="";
+  if (my_colour==who){
+    uo=`YOU WIN!!!`;
+  }
+  else{
+    uo=`${capitalizeFirstLetter(who)} wins!!!`;
+  }
   let s=document.createElement("h1");
   s.className="finisher";
   s.style.color=wha;
-  s.textContent=`${who} wins!!!`;
+  s.textContent=uo;
   finished=true;
   document.getElementById("butts").replaceChildren(s);
 }
 function append_question(questioner,questioned,cell){
   let temp_event=new event(questioner,"question",cell);
   temp_event["questioned"]=questioned;
+  if (questioned==my_colour){
+    document.getElementById("notifier").textContent=`${capitalizeFirstLetter(questioner)} questioned You on ${cell}`;
+  }
+  if (questioner==my_colour){
+    document.getElementById("notifier").textContent=`You questioned ${capitalizeFirstLetter(questioned)} on ${cell}`;
+  }
+  else{
+    document.getElementById("notifier").textContent=`${capitalizeFirstLetter(questioner)} questioned ${capitalizeFirstLetter(questioned)} on ${cell}`;
+  }
   game_progress.push(temp_event);
 }
 function append_search(searcher,cell){
   let temp_event=new event(searcher,"search",cell);
+  if (searcher==my_colour){
+    document.getElementById("notifier").textContent=`You began search on: ${cell}`;
+  }
+  else{
+    document.getElementById("notifier").textContent=`${capitalizeFirstLetter(searcher)}began search on: ${cell}`;
+  }
   game_progress.push(temp_event);
 }
 
@@ -557,9 +594,39 @@ function append_answer(player,cell,answer){
   let temp_event=new event(player,"answer",cell);
   temp_event["answer"]=answer;
   game_progress.push(temp_event);
+  if (answer=="N"||answer=="no"){
+    answer="NO";
+  }
+  else if(answer=="Y"||answer=="yes"){
+    answer="YES";
+  }
+  if (player==my_colour){
+    document.getElementById("notifier").textContent=`You answered: ${answer}`;
+  }
+  else{
+    document.getElementById("notifier").textContent=`${capitalizeFirstLetter(player)} answered: ${answer}`;
+  }
 }
 
 function negate(player,cell){
   let temp_event=new event(player,"negate",cell);
+  document.getElementById("notifier").textContent=`${capitalizeFirstLetter(player)} negated ${cell}`;
   game_progress.push(temp_event);
+}
+function game_start(player){
+  if (player == my_colour){
+    document.getElementById("notifier").textContent=`Game Starting: Your Turn`;
+  }
+  else{
+    document.getElementById("notifier").textContent=`Game Starting: ${capitalizeFirstLetter(player)}'s Turn`;
+  }
+}
+
+function on_game_start(player){
+  if (player == my_colour){
+    document.getElementById("notifier").textContent=`You are ${capitalizeFirstLetter(my_colour)}, Your Turn`;
+  }
+  else{
+    document.getElementById("notifier").textContent=`You are ${capitalizeFirstLetter(my_colour)}, ${capitalizeFirstLetter(player)}'s Turn`;
+  }
 }

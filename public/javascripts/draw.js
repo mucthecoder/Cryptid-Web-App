@@ -284,18 +284,7 @@ function setUp() {
       const cell = document.createElement("div");
       cell.classList.add("cell");
       cell.classList.add(`${row},${col}`);
-      if (goal=="local"){
-      cell.onclick = function () {
-        cellClicked(`${row},${col}`);
-        //on_starter(`${row},${col}`);
-      };
-      }
-      else{
-        cell.onclick = function () {
-          //cellClicked(`${row},${col}`);
-          on_starter(`${row},${col}`);
-        };
-      }
+    
       //cell.addEventListener("click",interact);
       cell.style.backgroundColor = "#80808000";
       hover(cell);

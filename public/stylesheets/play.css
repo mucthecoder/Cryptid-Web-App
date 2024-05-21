@@ -9,6 +9,11 @@ body {
   margin-left: 0;
   margin-right: 0;
 }
+#whatt{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
 #buttons {
   display: flex;
@@ -19,11 +24,14 @@ body {
   flex-wrap: nowrap;
 }
 #butts{
+  width: 500px;
+  height:80px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin: 0px 0px 20px 0px;
   min-height: 10%;
+  
 }
 .circs{
   height:60px;
@@ -231,6 +239,19 @@ canvas {
 
 #clues > div{
   flex: 1;
+}
+#notifier{
+  width: 500px;
+  height:60px;
+  background-color: #bbb;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid;
+  border-radius: 10px;
 }
 
 .clue{

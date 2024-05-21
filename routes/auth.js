@@ -9,8 +9,7 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
         // Successful authentication, redirect home.
         req.session.user_id = req.user._id;
         res.redirect('/home');
-    }
-  );
+});
 
 router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 
@@ -19,6 +18,6 @@ router.get('/facebook/callback', passport.authenticate('facebook', { failureRedi
     // Successful authentication, redirect home.
     req.session.user_id = req.user._id;
     res.redirect('/home');
-  });
+});
 
 module.exports = router;
