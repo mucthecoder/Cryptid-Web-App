@@ -87,3 +87,23 @@ function SignUp(e){
         console.log(err);
     });
 }
+const buttonLog = document.getElementsByClassName("click_2")[0];
+const buttonSign = document.getElementsByClassName("click_2")[1];
+
+buttonLog.addEventListener("click",(e)=>{
+    check(e.target);
+});
+
+buttonSign.addEventListener("click",(e)=>{
+    check(e.target);
+});
+
+function check(btn) {
+    const checkbox = document.getElementById("reg-log");
+    if (btn.textContent.trim() === "Log In") {
+      checkbox.checked = false;
+    } else {
+      checkbox.checked = true;
+    }
+  }
+  
