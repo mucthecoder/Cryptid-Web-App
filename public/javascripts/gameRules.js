@@ -563,7 +563,12 @@ function finish_game(who,wha){
   s.style.color=wha;
   s.textContent=uo;
   finished=true;
-  document.getElementById("butts").replaceChildren(s);
+  document.getElementById("notifier").replaceChildren(s);
+  let f=document.createElement("button");
+  f.className="actions";
+  f.textContent="Download Game";
+  f.onclick=save_game;
+  document.getElementById("butts").replaceChildren(f);
 }
 function append_question(questioner,questioned,cell){
   let temp_event=new event(questioner,"question",cell);
@@ -588,6 +593,21 @@ function append_search(searcher,cell){
     document.getElementById("notifier").textContent=`${capitalizeFirstLetter(searcher)}began search on: ${cell}`;
   }
   game_progress.push(temp_event);
+}
+
+function save_game(){
+  const jsonString = JSON.stringify(game_progress, null, 2);
+
+  const blob = new Blob([jsonString], { type: "application/json" });
+
+  const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "game.json";
+    document.body.appendChild(link);
+
+    link.click();
 }
 
 function append_answer(player,cell,answer){
