@@ -18,6 +18,10 @@ function custom(){
     window.location.href="/custom-room";
 }
 
+function watch(){
+    window.location.href="/review";
+}
+
 fetch('/users/getusername')
     .then((response)=>{
         return response.json();

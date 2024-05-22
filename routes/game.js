@@ -14,7 +14,11 @@ function lobby(){
     this.started=false;
 }
 
-router.get('/', function(req, res, next) {
+const userController = require("../controllers/userController");
+
+const verify = userController.verifyUserData;
+
+router.get('/', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/play.html");
   res.sendFile(filePath);
 });

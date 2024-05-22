@@ -32,7 +32,7 @@ router.get('/replay', verify, function(req, res, next) {
   res.sendFile(filePath);
 });
 
-router.get('/maps/intro', verify, function(req, res, next) {
+router.get('/maps/intro', function(req, res, next) {
   const directoryPath = path.join(__dirname, '../public/maps/intro');
   
   fs.readdir(directoryPath, function(err, files) {
@@ -50,7 +50,7 @@ router.get('/maps/intro', verify, function(req, res, next) {
     res.json({randomJsonFile});
   });
 });
-router.get('/maps/normal', verify, function(req, res, next) {
+router.get('/maps/normal', function(req, res, next) {
   const directoryPath = path.join(__dirname, '../public/maps/normal');
   
   fs.readdir(directoryPath, function(err, files) {
