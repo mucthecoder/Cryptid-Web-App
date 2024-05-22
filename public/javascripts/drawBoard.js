@@ -65,6 +65,8 @@ function drawIt(path) {
           //console.log(clues[i]);
         }
         well();
+        let g={rules:clues}
+        game_progress.push(g);
         //console.log(temp);
         //console.log(mapCodeValue);
       }
