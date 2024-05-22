@@ -1,9 +1,38 @@
+body{
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #efd29f;
+}
+
+button{
+  background-color: #3d7bb6;
+  height: 30px;
+  font-size: 1.5rem;
+  margin: 5px;
+}
+
+#buttons{
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+input{
+  height: 30px;
+  width: 450px;
+}
+
 .image-row {
     display: flex;
     overflow-x: auto;
     white-space: nowrap;
-    background-color: #f3f3f3;
+    background-color: #532819;
     padding: 10px;
+    justify-content: center;
+    width: 100%;
 }
 
 .image-row img {
@@ -21,7 +50,7 @@
 .grid-cell {
     width: 200px;
     height: 150px;
-    border: 2px dashed #ccc;
+    border: 2px dashed  #532819;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,7 +62,7 @@
 }
 
 .grid-cell.over {
-    border-color: #000;
+    border-color: #fff;
 }
 
 canvas {
