@@ -14,16 +14,45 @@
       <img id="img3" height="100px" src="tiles/3.png" alt="" draggable="true" />
       <img id="img4" height="100px" src="tiles/4.png" alt="" draggable="true" />
       <img id="img5" height="100px" src="tiles/5.png" alt="" draggable="true" />
-      <img id="img6" height="100px" src="tiles/6.png" alt="" draggable="true" />
-      <img id="img7" height="100px" src="tiles/7.png" alt="" draggable="true" />
-      <img id="img8" height="100px" src="tiles/8.png" alt="" draggable="true" />
-      <img id="img9" height="100px" src="tiles/9.png" alt="" draggable="true" />
+      <img
+        id="img6"
+        height="100px"
+        src="tiles/6.png"
+        alt=""
+        draggable="true"
+        style="display: none"
+      />
+      <img
+        id="img7"
+        height="100px"
+        src="tiles/7.png"
+        alt=""
+        draggable="true"
+        style="display: none"
+      />
+      <img
+        id="img8"
+        height="100px"
+        src="tiles/8.png"
+        alt=""
+        draggable="true"
+        style="display: none"
+      />
+      <img
+        id="img9"
+        height="100px"
+        src="tiles/9.png"
+        alt=""
+        draggable="true"
+        style="display: none"
+      />
       <img
         id="img10"
         height="100px"
         src="tiles/10.png"
         alt=""
         draggable="true"
+        style="display: none"
       />
       <img
         id="img11"
@@ -31,7 +60,15 @@
         src="tiles/11.png"
         alt=""
         draggable="true"
+        style="display: none"
       />
+    </div>
+
+    <div id="buttons">
+      <button id="flip">Flip Pieces</button>
+      <button onclick="submitConfig()" id="submit-button">
+        Submit Configuration
+      </button>
     </div>
 
     <div class="grid-container">
@@ -42,8 +79,6 @@
       <div class="grid-cell" id="cell4"></div>
       <div class="grid-cell" id="cell5"></div>
     </div>
-
-    <button onclick="submitConfig()" id="submit-button">Submit Config</button>
 
     <div class="large">
       <div id="box"></div>
