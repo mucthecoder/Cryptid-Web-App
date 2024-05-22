@@ -8,11 +8,19 @@
   <script src="javascripts/to_replay.js"></script>
 </head>
 <body>
+  <div class="navbar">
+    <img src="/images/BACK.jpeg" width="75px" height="75px" class="logo"/>
+  </div>
   <div class="card-3d-wrap">
     <div class="card-3d-content">
       <input type="file" id="fileInput" class="file-input" accept=".json">
       <button class="btn" onclick="watch()">Submit</button>
     </div>
   </div>
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
 </body>
 </html>

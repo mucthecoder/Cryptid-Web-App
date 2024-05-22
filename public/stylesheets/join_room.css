@@ -1,81 +1,122 @@
-body{
+body {
     margin: 0;
-    height: 945px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background-image: url("/images/Cryptid1.jpg");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-}
-.bigger{
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    background-image: url("../images/join.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden; /* Prevents scrolling */
 }
-#enter{
+
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0); /* Semi-transparent background */
+    padding: 10px 20px;
+    
+}
+
+.back-button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.back-button:hover {
+    color: #87ceeb; /* Light blue color on hover */
+}
+
+.header-title {
+    margin: 0 auto;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.bigger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Ensure it takes full height */
+}
+
+#mainy {
+    font-size: 100px;
+    font-weight: bold;
+    font-family: cursive;
+    color: rgb(255, 255, 255);
+    margin: 0;
+}
+
+#enter {
     font-size: 25px;
     font-weight: bold;
     color: rgb(59, 2, 73);
 }
-.some{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-#mainy{
-    font-size: 100px;
-    font-weight: bold;
-    font-family: cursive;
-    color: rgb(59, 2, 73);
-}
-#holder{
+
+#holder {
     display: flex;
     flex-direction: column;
-    border: 5px solid rgb(250, 219, 84);
+    border: 5px solid rgba(250, 219, 84, 0.8); /* Semi-transparent border */
     border-radius: 10px;
     width: 400px;
-    height: 200px;
-    background-color: rgb(250, 219, 84);
+    height: 300px;
+    background-color: rgba(250, 219, 84, 0.8); /* Semi-transparent background */
+    align-items: center; /* Center align items inside the holder */
 }
-.inners{
+
+.inners {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    width: 100%; /* Ensure it takes full width */
 }
-#room_number{
+
+#room_number {
     border: 4px solid rgb(59, 2, 73);
-    height:35px;
+    height: 35px;
     width: 80%;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
     color: rgb(59, 2, 73);
-    background-color: rgb(250, 219, 84);
+    background-color: rgba(250, 219, 84, 0.8); /* Semi-transparent background */
 }
-#room_number:focus{
-    border: 4px solid rgb(59, 2, 73);
-    height:35px;
-    width: 80%;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(59, 2, 73);
-    background-color: rgb(250, 219, 84);
+
+#room_number:focus {
+    outline: none; /* Remove default outline */
 }
-#join{
-    height:45px;
-    width:83%;
-    background-color:rgb(59, 2, 73);
-    
+
+#join {
+    height: 45px;
+    width: 83%;
+    background-color: rgb(59, 2, 73);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 20px;
 }
-#join:hover{
-    height:45px;
-    width:83%;
+
+#join:hover {
     background-color: rgb(87, 0, 72);
 }
-#join_text{
+
+#join_text {
     font-size: 20px;
     font-weight: bold;
     color: rgb(255, 208, 0);
+    margin: 0;
 }

@@ -121,8 +121,8 @@ h1 span{
   background-color: #56ABEC;
   color: white;
   box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
-  display: inline-block; /* Allows width to adjust to content */
-  min-width: 150px; /* Sets a minimum width for all buttons */
+  display: inline-block; 
+  min-width: 100%;
 }
 
 .btn:active,
