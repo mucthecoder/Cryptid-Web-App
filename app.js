@@ -12,7 +12,7 @@ var usersRouter = require('./routes/users');
 var gameRouter = require('./routes/game');
 var authRouter = require('./routes/auth.js');
 
-const userController = require("./controllers/userController")
+const userController = require("./controllers/userController");
 
 //=============== Auth =====================
 const Google_Email = require("./auth/passport.js").Google_Email;
@@ -37,7 +37,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(userController.verifyUserData);
 
 app.use(logger('dev'));
 app.use(express.json());

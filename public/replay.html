@@ -8,42 +8,20 @@
     
   </head>
   <body>
-    <!-- <div id="buttons">
-      <button id="difficulty">intro</button>
-      <button id="number">0</button>
-      <div id="inputdiv">
-        <input
-          type="text"
-          id="custom"
-          placeholder="6Numbers&A_manWillDoTheRest"
-        />
-        <button id="customNumber"><b>Submit Custom</b></button>
+    <div id="whatt">
+      <div id="notifier">This will tell you what's happening in the game</div>
+      <span style="width: 100px;"></span>
+      <div id="butts"style="height 60px">
+        <button id="next" class="actions" onclick="next()">Next</button>
+        <span style="width: 15px;"></span>
+        <button id="auto" class="actions" onclick="auto()">Auto</button>
       </div>
-    </div> -->
-    <div id="butts">
-      <!-- <button class="actions">Uhmm</button>
-      <span style="width: 10px;"></span>
-      <button class="actions">What</button> -->
     </div>
     <section>
       <article>
-        <div class="turns">
-          <div class="color red"></div>
-          <div class="color green"></div>
-          <div class="color orange"></div>
-          <div class="color blue"></div>
-          <div class="color purple"></div>
-        </div>
-        <button id="rules">Quick Reference Rules</button>
-        <div id="bigg">
-          <div id="clues">
-            <!-- <div id="clue1">Player 1 Clue</div>
-              <div id="clue2">Player 2 Clue</div>
-              <div id="clue3">Player 3 Clue</div>
-              <div id="clue4">Player 4 Clue</div>
-              <div id="clue5">Player 5 Clue</div> -->
+          <div id="clue-list">
+            <div class="single-clue">Player Clues:</div>
           </div>
-          <div id="clue-show">Press to display the clue</div>
         </div>
       </article>
 
@@ -66,9 +44,9 @@
     </div>
 
     <br />
-    <script src="javascripts/replay.js"></script>
+    
     <script src="javascripts/draw.js"></script>
-    <script src="javascripts/getBoards.js"></script>
     <script src="javascripts/button.js"></script>
+    <script src="javascripts/replay.js"></script>
   </body>
 </html>

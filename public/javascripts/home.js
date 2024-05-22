@@ -24,6 +24,7 @@ fetch('/users/getusername')
     })
     .then((data)=>{
         localStorage.setItem("cryptid-game-username",data.username);
+        document.getElementById("playerName").textContent = data.username;
     })
     .catch((err)=>{
         console.log(err);
