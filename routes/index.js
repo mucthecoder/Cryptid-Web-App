@@ -89,6 +89,16 @@ router.get('/waiting', function(req, res, next) {
   res.sendFile(filePath);
 });
 
+router.get('/review', function(req, res, next) {
+  const filePath = path.join(__dirname, "../public/to_replay.html");
+  res.sendFile(filePath);
+});
+
+router.get('/replay', function(req, res, next) {
+  const filePath = path.join(__dirname, "../public/replay.html");
+  res.sendFile(filePath);
+});
+
 // router.get('/profile', (req, res) => {
 //   if (!req.isAuthenticated() || (!req.session && !req.session.user_id )) {
 //     return res.redirect('/login');

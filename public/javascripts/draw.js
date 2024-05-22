@@ -7,59 +7,10 @@ var mapCodeValue = 0,
   imageUrls;
 
 
-var dict ={};
-
-fetch("/maps/dictionary.json")
-  .then(response => response.json())
-  .then(data => {
-    // Work with the fetched dictionary object
-    dict=data;
-  })
-  .catch(error => {
-    // Handle errors
-    console.error('Error fetching dictionary:', error);
-  });
-
-function drawIt(path) {
-  fetch(path)
-    .then((response) => response.json())
-    .then((data) => {
+function drawIt() {
+  
       //console.log(data);
-      if (goal=="local"){
-        mapCodeValue = data.mapCode;
-        let f = data.players[num_players].length;
-        //console.log(data.players[num_players]);
-        let ind = Math.floor(Math.random()*f);
-        clues = data.players[num_players][ind].rules;
-        console.log(clues);
-        hint=data.players[num_players][ind].hint;
-        console.log(hint);
-        dest=data.players[num_players][ind].destination;
-        console.log(dest);
-        for (let i=0;i<clues.length;i++){
-          clues[i]=dict[clues[i]];
-          console.log(clues[i]);
-        }
-      }
-      else{
-        let temp= sessionStorage.getItem("cryptid-game-map-code");
-        mapCodeValue=who.mapCode;
-        let f = who.players[num_players].length;
-        //console.log(data.players[num_players]);
-        let ind = 0;
-        clues = who.players[num_players][ind].rules;
-        console.log(clues);
-        hint=who.players[num_players][ind].hint;
-        console.log(hint);
-        dest=who.players[num_players][ind].destination;
-        console.log(dest);
-        for (let i=0;i<clues.length;i++){
-          clues[i]=dict[clues[i]];
-          console.log(clues[i]);
-        }
-        console.log(temp);
-        console.log(mapCodeValue);
-      }
+      mapCodeValue=who.mapCode;
       config = transformString(mapCodeValue);
 
       canvas = document.getElementById("myCanvas");
@@ -85,8 +36,7 @@ function drawIt(path) {
       ];
       //any image
       loadImages();
-    })
-    .catch((error) => console.error("Error fetching JSON:", error));
+
 }
 
 function drawIt2(str) {
@@ -118,6 +68,7 @@ function drawIt2(str) {
 }
 
 function transformString(str) {
+  console.log(str);
   var substr = str.toString().slice(0, 6);
   var transformed = [];
   console.log(substr);
@@ -287,7 +238,6 @@ function setUp() {
     
       //cell.addEventListener("click",interact);
       cell.style.backgroundColor = "#80808000";
-      hover(cell);
       column.appendChild(cell);
     }
     box.appendChild(column);
@@ -301,30 +251,3 @@ function clearBox(elementID) {
   }
 }
 
-function hover(cell) {
-  
-  cell.addEventListener("mouseenter", function () {
-    // Set background color with RGBA (red, green, blue, alpha) values only on hover
-    // Example RGBA color (light blue with 50% opacity)
-    var classesArray = Array.from(cell.classList);
-    if(classesArray.includes("neg")) this.style.backgroundColor = "rgba(255, 0, 0, 0.4)";
-    else  this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
-  });
-
-  cell.addEventListener("mouseleave", function () {
-    // Reset background color when mouse leaves
-    this.style.backgroundColor = "rgba(128, 128, 128, 0)"; // Restore initial background color on mouse leave
-  });
-}
-
-function custom_hover(cell,val) {
-  console.log(cell);
-  cell.addEventListener("mouseenter", function () {
-    if(val) this.style.backgroundColor = "rgba(255, 0, 0, 0.4)";
-    else  this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
-  });
-
-  cell.addEventListener("mouseleave", function () {
-    this.style.backgroundColor = "rgba(128, 128, 128, 0)"; 
-  });
-}
