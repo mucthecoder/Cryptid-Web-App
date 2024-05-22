@@ -1,10 +1,11 @@
-body{
+body {
     margin: 0;
-    height: 945px;
+    height: 100vh; /* Set the height of the body to the viewport height */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    background-image: url("/images/Cryptid2.jpg");
+    justify-content: flex-start; /* Align items to the top of the page */
+    align-items: center;
+    background-image: url("../images/LOOBY.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -14,19 +15,26 @@ body{
     justify-content: center;
     
 }
-#holder{
+#holder {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    
+    align-items: center;
+    margin-top: 50px; /* Add margin to space out from the title */
 }
-#starter{
-    font-size: 20px;
+#starter {
+    font-size: 30px;
     font-weight: bold;
-    background-color: green;
-    width: 130px;
-    border: 2px solid rgb(0, 70, 0);
+    background-color: rgb(226, 0, 170);
+    color: white;
+    width: 200px;
+    border: none;
+    border-radius: 20px;
+    padding: 15px 20px;
+    margin-top: 30px;
+    /* opacity: 0.5; */
 }
+
 #counter{
     font-size: 25px;
     font-weight: bold;
@@ -43,7 +51,7 @@ footer{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    background-color: yellow;
+    background-color: rgb(91, 19, 226);
 }
 #smaller{
     border: 1px solid;
@@ -55,7 +63,7 @@ footer{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    background-color: yellow;
+    background-color: rgb(50, 57, 195);
 }
 #mode{
     font-size: 20px;
@@ -75,13 +83,14 @@ header{
     justify-content: center;
     margin-top: 0;
 }
-#mainy{
+#mainy {
     font-size: 100px;
     font-weight: bold;
     font-family: cursive;
-    /* color: rgb(59, 2, 73); */
-    color: #ff0000;
+    color: #556B2F; /* Red color for the title */
+    margin-top: 50px;
 }
+
 .info{
     display: flex;
     flex-direction: row;

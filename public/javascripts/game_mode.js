@@ -1,6 +1,5 @@
 function switch_page (url){
     let dummy=sessionStorage.getItem("cryptid-num-players");
-    
     if (url==0){
         sessionStorage.setItem("cryptid-game-mode","intro");
     }
@@ -14,5 +13,21 @@ function switch_page (url){
         window.location.href="/waiting";
     }
 }
-//console.log(sessionStorage.getItem("temp","play"));
+
+
+document.getElementById("back").addEventListener("click",(e)=>{
+    let what = sessionStorage.getItem("cryptid-game-action");
+    if(what == "local"){
+        window.location.href = "/create-room";
+    }
+    else if(what == "create"){
+        window.location.href = "/custom-room";
+    }
+    else if(what == "play"){
+        window.location.href = "/home";
+    }
+    else{
+        window.location.href = "/home";
+    }
+});
 
