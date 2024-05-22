@@ -28,7 +28,7 @@ function LogIn(e){
             val1();
         }
         else{
-            localStorage.setItem("cryptid-game-username",username);
+            
             window.location.href = "/home";
         }
     })
@@ -58,7 +58,7 @@ function SignUp(e){
         alert("passwords not a match");
         return;
     }
-    console.log(password + ":::" +confpassword);
+    // console.log(password + ":::" +confpassword);
 
     fetch('/users/register',{
         method: "POST",
@@ -79,7 +79,7 @@ function SignUp(e){
             val2();
         }
         else{
-            localStorage.setItem("cryptid-game-username",username);
+            
             window.location.href = "/home";
         }
     })
@@ -87,3 +87,23 @@ function SignUp(e){
         console.log(err);
     });
 }
+const buttonLog = document.getElementsByClassName("click_2")[0];
+const buttonSign = document.getElementsByClassName("click_2")[1];
+
+buttonLog.addEventListener("click",(e)=>{
+    check(e.target);
+});
+
+buttonSign.addEventListener("click",(e)=>{
+    check(e.target);
+});
+
+function check(btn) {
+    const checkbox = document.getElementById("reg-log");
+    if (btn.textContent.trim() === "Log In") {
+      checkbox.checked = false;
+    } else {
+      checkbox.checked = true;
+    }
+  }
+  

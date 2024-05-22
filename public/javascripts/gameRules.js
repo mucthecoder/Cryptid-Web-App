@@ -132,7 +132,7 @@ function cellClicked(cellClass) {
     var shapeDiv = createPiece("square");
     var classesArray = Array.from(cell.classList);
     var classToAdd = turnList[turn];
-    
+    negate(turnList[turn],cellClass);
     if (!classesArray.includes("c"+classToAdd) && !classesArray.includes("neg")) {
       cell.classList.add("c"+turnList[turn]);
       cell.classList.add("neg");
@@ -140,7 +140,7 @@ function cellClicked(cellClass) {
       processTurn();
       cell.appendChild(shapeDiv);
     }
-    negate(turnList[turn],cellClass);
+    
   }
   else if (wrong){
     console.log("false")
@@ -406,8 +406,9 @@ function load_possible_responses(){
     });
     h.style.backgroundColor=turnList[search_turn];
     append_piece(h,uhm);
-    process_search_turn();
     append_answer(turnList[search_turn],uhm,"Y");
+    process_search_turn();
+    
     
   });
 
@@ -565,7 +566,7 @@ function finish_game(who,wha){
   console.log(`${who} wins!!!`);
   console.log(game_progress);
   let uo="";
-  if (my_colour==who){
+  if (my_colour==wha){
     uo=`YOU WIN!!!`;
   }
   else{
@@ -576,7 +577,12 @@ function finish_game(who,wha){
   s.style.color=wha;
   s.textContent=uo;
   finished=true;
-  document.getElementById("butts").replaceChildren(s);
+  document.getElementById("notifier").replaceChildren(s);
+  let f=document.createElement("button");
+  f.className="actions";
+  f.textContent="Download Game";
+  f.onclick=save_game;
+  document.getElementById("butts").replaceChildren(f);
 }
 function append_question(questioner,questioned,cell){
   let temp_event=new event(questioner,"question",cell);
@@ -598,9 +604,24 @@ function append_search(searcher,cell){
     document.getElementById("notifier").textContent=`You began search on: ${cell}`;
   }
   else{
-    document.getElementById("notifier").textContent=`${capitalizeFirstLetter(searcher)}began search on: ${cell}`;
+    document.getElementById("notifier").textContent=`${capitalizeFirstLetter(searcher)} began search on: ${cell}`;
   }
   game_progress.push(temp_event);
+}
+
+function save_game(){
+  const jsonString = JSON.stringify(game_progress, null, 2);
+
+  const blob = new Blob([jsonString], { type: "application/json" });
+
+  const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "game.json";
+    document.body.appendChild(link);
+
+    link.click();
 }
 
 function append_answer(player,cell,answer){

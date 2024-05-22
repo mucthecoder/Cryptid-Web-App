@@ -1,42 +1,34 @@
-//These are the buttons in play.html, whhich will be removed when the pages leading to play.html work
-var currentText=mode;
-var currentNumber = '0';
-var getText = '0';
-
-//console.log(getAllJsons(currentText));
-
-async function initialize() {
+const jsonDataString = sessionStorage.getItem('jsonData');
+var who={};
+var main_obj = {};
+let colors = ["red", "green", "orange", "blue", "purple"];
+if (jsonDataString) {
     try {
-        const returningJSON = await getAllJsons(currentText);
-        const {randomJsonFile} = await returningJSON.json();
-        drawIt('maps/' + currentText + '/' + randomJsonFile);
+        const jsonData = JSON.parse(jsonDataString);
+        who = jsonData[0];
+        main_obj = jsonData;
+        console.log('Retrieved JSON data from sessionStorage:', jsonData);
+
+        var currentNumber = '0';
+        var getText = '0';
+
+        for (let i = 0; i < main_obj[1].rules.length; i++) {
+            let y = document.createElement("div");
+            y.className = "single-clue";
+            y.textContent = main_obj[1].rules[i];
+            y.style.backgroundColor = colors[i];
+            document.getElementById("clue-list").appendChild(y);
+        }
     } catch (error) {
-        console.error("Error initializing:", error);
+        console.error('Error parsing JSON:', error);
+        alert("Invalid JSON: " + error.message);
+        window.location.href="/review";
     }
+} else {
+    console.log('No JSON data found in sessionStorage.');
 }
+drawIt();
 
-initialize(); 
-
-document.getElementById("legendImg").addEventListener("click", function() {
-    openModal("tiles/legend.png");
-});
-  
-document.getElementById("rules").addEventListener("click", function() {
-    openModal("tiles/refrules.png");
-});
-  
-document.getElementById("closeModal").addEventListener("click", function() {
-    closeModal();
-});
-  
-function openModal(imageSrc) {
-    document.getElementById("modalImg").src = imageSrc;
-    document.getElementById("modal").style.display = "block";
-}
-  
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
-}
 
 
   

@@ -8,7 +8,9 @@ var getText = '0';
 async function initialize() {
     try {
         const returningJSON = await getAllJsons(currentText);
+        console.log(returningJSON);
         const {randomJsonFile} = await returningJSON.json();
+        console.log(returningJSON);
         drawIt('maps/' + currentText + '/' + randomJsonFile);
     } catch (error) {
         console.error("Error initializing:", error);

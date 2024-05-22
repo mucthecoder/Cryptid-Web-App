@@ -31,23 +31,26 @@ function drawIt(path) {
       //console.log(data);
       if (goal == "local") {
         mapCodeValue = data.mapCode;
+        game_progress.push({mapCode:mapCodeValue});
         let f = data.players[num_players].length;
         //console.log(data.players[num_players]);
         let ind = Math.floor(Math.random() * f);
         clues = data.players[num_players][ind].rules;
-        console.log(clues);
+        //console.log(clues);
         hint = data.players[num_players][ind].hint;
-        console.log(hint);
+        //console.log(hint);
         dest = data.players[num_players][ind].destination;
-        console.log(dest);
+        //console.log(dest);
         for (let i = 0; i < clues.length; i++) {
           clues[i] = dict[clues[i]];
           console.log(clues[i]);
         }
-        
+        let g={rules:clues}
+        game_progress.push(g);
       } else {
         let temp = sessionStorage.getItem("cryptid-game-map-code");
         mapCodeValue = who.mapCode;
+        game_progress.push({mapCode:mapCodeValue});
         let f = who.players[num_players].length;
         //console.log(data.players[num_players]);
         let ind = 0;
@@ -62,6 +65,8 @@ function drawIt(path) {
           //console.log(clues[i]);
         }
         well();
+        let g={rules:clues}
+        game_progress.push(g);
         //console.log(temp);
         //console.log(mapCodeValue);
       }

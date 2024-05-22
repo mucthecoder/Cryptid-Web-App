@@ -3,27 +3,31 @@ var router = express.Router();
 var path = require('path');
 const fs = require('fs');
 
+const userController = require("../controllers/userController")
+const verify = userController.verifyUserData;
+
 //handle game setup 
 router.get('/', function(req, res, next) {
   const filePath = path.join(__dirname, "../public/index.html");
   res.sendFile(filePath);
 });
 
-router.get('/home', function(req, res, next) {
+router.get('/home', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/home.html");
   res.sendFile(filePath);
 });
 
-router.get('/custom-room', function(req, res, next) {
+router.get('/custom-room', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/game_room.html");
   res.sendFile(filePath);
 });
 
-router.get('/create-map', function(req, res, next) {
+router.get('/create-map', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/customplay.html");
   res.sendFile(filePath);
 });
-router.get('/replay', function(req, res, next) {
+
+router.get('/replay', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/replay.html");
   res.sendFile(filePath);
 });
@@ -65,36 +69,39 @@ router.get('/maps/normal', function(req, res, next) {
   });
 });
 
-router.get('/game-mode', function(req, res, next) {
+router.get('/game-mode', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/game_mode.html");
   res.sendFile(filePath);
 });
 
-router.get('/join-room', function(req, res, next) {
+router.get('/join-room', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/join_room.html");
   res.sendFile(filePath);
 });
 
-router.get('/create-room', function(req, res, next) {
+router.get('/create-room', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/create_room.html");
   res.sendFile(filePath);
 });
-router.get('/browse-rooms', function(req, res, next) {
+router.get('/browse-rooms', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/browse_room.html");
   res.sendFile(filePath);
 });
 
-router.get('/waiting', function(req, res, next) {
+router.get('/waiting', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/waiting.html");
   res.sendFile(filePath);
 });
 
-// router.get('/profile', (req, res) => {
-//   if (!req.isAuthenticated() || (!req.session && !req.session.user_id )) {
-//     return res.redirect('/login');
-//   }
-//   return res.redirect('/home');
-//     // res.send(`<h1>Hello ${req.user.displayName}</h1>`);
-// });
+router.get('/review', verify, function(req, res, next) {
+  const filePath = path.join(__dirname, "../public/to_replay.html");
+  res.sendFile(filePath);
+});
+
+router.get('/replay', verify, function(req, res, next) {
+  const filePath = path.join(__dirname, "../public/replay.html");
+  res.sendFile(filePath);
+});
+
 
 module.exports = router;
