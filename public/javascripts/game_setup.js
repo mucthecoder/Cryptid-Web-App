@@ -123,8 +123,9 @@ else{
         console.log("res");
         console.log(data);
         //{colour:data.colour,name:data.name,cell:data.cell,why:data.why}
-        append_answer(data.colour,data.cell,data.answer);
+        
         if(data.answer=="no"){
+            append_answer(data.colour,data.cell,"N");
             let h=createPiece("square");
             let r=document.getElementsByClassName(`cell ${data.cell}`)[0];
             r.addEventListener("mouseenter",()=>{
@@ -136,6 +137,7 @@ else{
             on_wrong(data.cell);
         }
         else if(data.answer=="yes"){
+            append_answer(data.colour,data.cell,"Y");
             let h=createPiece("circle");
             let r=document.getElementsByClassName(`cell ${data.cell}`)[0];
             r.addEventListener("mouseenter",()=>{
@@ -153,8 +155,9 @@ else{
         console.log("resp");
         console.log(data);
         //{colour:data.colour,name:data.name,cell:data.cell,why:data.why}
-        append_answer(data.colour,data.cell,data.answer);
+        
         if(data.answer=="no"){
+            append_answer(data.colour,data.cell,"N");
             let h=createPiece("square");
             let r=document.getElementsByClassName(`cell ${data.cell}`)[0];
             r.addEventListener("mouseenter",()=>{
@@ -166,6 +169,7 @@ else{
             on_wrong(data.cell);
         }
         else if(data.answer=="yes"){
+            append_answer(data.colour,data.cell,"Y");
             let h=createPiece("circle");
             let r=document.getElementsByClassName(`cell ${data.cell}`)[0];
             r.addEventListener("mouseenter",()=>{
@@ -191,8 +195,9 @@ else{
         create_search_array();
         on_search_mark(data.cell,searcher);
         start_search();
-        on_process_search_turn();
         append_search(searcher,data.cell);
+        on_process_search_turn();
+        
     });
     socket.on("wrong",(data)=>{
         console.log("wrong");
@@ -239,6 +244,8 @@ else{
         }
         //close the io connection
         socket.disconnect();
+        console.log(game_progress);
+        finish_game(data.name,data.colour);
     });
 
     socket.on("error", (error) => {

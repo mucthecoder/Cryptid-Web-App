@@ -128,7 +128,7 @@ function cellClicked(cellClass) {
     var shapeDiv = createPiece("square");
     var classesArray = Array.from(cell.classList);
     var classToAdd = turnList[turn];
-    
+    negate(turnList[turn],cellClass);
     if (!classesArray.includes("c"+classToAdd) && !classesArray.includes("neg")) {
       cell.classList.add("c"+turnList[turn]);
       cell.classList.add("neg");
@@ -136,7 +136,7 @@ function cellClicked(cellClass) {
       processTurn();
       cell.appendChild(shapeDiv);
     }
-    negate(turnList[turn],cellClass);
+    
   }
   else if (wrong){
     console.log("false")
@@ -397,8 +397,9 @@ function load_possible_responses(){
     });
     h.style.backgroundColor=turnList[search_turn];
     append_piece(h,uhm);
-    process_search_turn();
     append_answer(turnList[search_turn],uhm,"Y");
+    process_search_turn();
+    
     
   });
 
@@ -552,7 +553,7 @@ function finish_game(who,wha){
   console.log(`${who} wins!!!`);
   console.log(game_progress);
   let uo="";
-  if (my_colour==who){
+  if (my_colour==wha){
     uo=`YOU WIN!!!`;
   }
   else{
@@ -590,7 +591,7 @@ function append_search(searcher,cell){
     document.getElementById("notifier").textContent=`You began search on: ${cell}`;
   }
   else{
-    document.getElementById("notifier").textContent=`${capitalizeFirstLetter(searcher)}began search on: ${cell}`;
+    document.getElementById("notifier").textContent=`${capitalizeFirstLetter(searcher)} began search on: ${cell}`;
   }
   game_progress.push(temp_event);
 }
