@@ -181,7 +181,23 @@ function drawTowersAndShacks() {
   }
 }
 
+function addStructureToTitle(r,c, structure){
+  console.log("My config "+config[0])
+  if(Math.floor(r/3)==0){
+    if(Math.floor(c/6)==0) listOfAllTiles[config[0]][r%3][c%6]+=", "+structure;
+    else listOfAllTiles[config[1]][r%3][c%6]+=", "+structure;
+  } else if (Math.floor(r/3)==1){
+    if(Math.floor(c/6)==0) listOfAllTiles[config[2]][r%3][c%6]+=", "+structure;
+    else listOfAllTiles[config[3]][r%3][c%6]+=", "+structure;
+  } else{
+    if(Math.floor(c/6)==0) listOfAllTiles[config[4]][r%3][c%6]+=", "+structure;
+    else listOfAllTiles[config[5]][r%3][c%6]+=", "+structure;
+  }
+}
+
 function drawTower(imgUrl, r, c) {
+  addStructureToTitle(r,c,"tower");
+  console.log("I am drawing shack");
   var img = new Image();
   img.src = imgUrl;
   img.style.width = "35%";
@@ -201,6 +217,7 @@ function drawTower(imgUrl, r, c) {
 }
 
 function drawShack(imgUrl, r, c) {
+  addStructureToTitle(r,c, "shack");
   var img = new Image();
   img.src = imgUrl;
   img.style.width = "35%";
