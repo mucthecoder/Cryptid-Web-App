@@ -10,14 +10,23 @@ body {
 }
 
 .container {
-    width: 100%;
+    /* width: 100%;
     max-width: 1200px;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #02233b; /* Dark Blue */
+    background-color: #02233b;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    margin-top: 90px; /* Adjusted margin top */
+    margin-top: 90px;  */
+
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* max-width: 1200px; */
+    /* margin: 80px auto 20px; */
+    padding: 100px;
+    box-sizing: border-box;
 }
 
 .header-wrapper {
@@ -75,15 +84,31 @@ body {
 }
 
 .card {
-    background: #02233b; /* Dark Blue */
-    border: 1px solid #FFFFFF; /* White */
+    /* background: #02233b;
+    border: 1px solid #FFFFFF; 
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     width: 100%;
     max-width: 400px;
-    margin: 10px auto; /* Adjusted margin */
+    margin: 10px auto; 
     text-align: center;
+    overflow: hidden; */
+
+        
+    background-color: #02233b;
+    color: white;
+    margin: 10px;
+    border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 25em;
+    /* max-width: 400px; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border: 2px solid white;
+
 }
 
 .card-header {
@@ -135,10 +160,6 @@ body {
 }
 
 @media (max-width: 768px) {
-    .card {
-        width: 100%;
-        max-width: 100%;
-    }
 
     .navbar h1 {
         font-size: 20px; /* Adjust font size for smaller screens */

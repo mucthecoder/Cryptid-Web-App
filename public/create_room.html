@@ -9,48 +9,49 @@
     
 </head>
 <body>
-  <div class="navbar">
-      <a href="/home">
-          <img src="/images/logo.jpg" alt="Logo">
-      </a>
-      <h1>Create Local Game</h1>
-  </div>
+  <body>
+    <div class="header-wrapper">
+        <a href="/home" class="logo-link">
+          <img src="/images/BACK.jpeg" width="75px" height="75px" class="logo"/>
+        </a>
+        <div class="title-wrapper">
+            <h1 class="title">Create Local Game</h1>
+            <p class="subtitle">Select the number of players</p>
+        </div>
+    </div>
 
-  <div class="container">
-      <main>
-          <div class="row">
-              <div class="card">
-                  <div class="card-header">
-                      <h4>3 Player Game</h4>
-                  </div>
-                  <div class="card-body">
-                      <img src="/images/3p.png" alt="3 Player Game">
-                      <button type="button" class="btn" onclick="players(3)">3 Players</button>
-                  </div>
-              </div>
-              <div class="card">
-                  <div class="card-header">
-                      <h4>4 Player Game</h4>
-                  </div>
-                  <div class="card-body">
-                      <img src="/images/4p.png" alt="4 Player Game">
-                      <button type="button" class="btn" onclick="players(4)">4 Players</button>
-                  </div>
-              </div>
-          </div>
-          <div class="cols">
-              <div class="card">
-                  <div class="card-header">
-                      <h4>5 Player Game</h4>
-                  </div>
-                  <div class="card-body">
-                      <img src="/images/5p.png" alt="5 Player Game">
-                      <button type="button" class="btn" onclick="players(5)">5 Players</button>
-                  </div>
-              </div>
-          </div>
-      </main>
-  </div>
+    <div class="container">
+        <main>
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">3 Player Game</h4>
+                    </div>
+                    <div class="card-body">
+                      <img src="/images/3cryptid.jpeg" width="350" height="250" alt="Intro Game">
+                        <button type="button" class="btn" onclick="players(3)">3 Players</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">4 Player Game</h4>
+                    </div>
+                    <div class="card-body">
+                      <img src="/images/4cryptid.jpeg" width="350" height="250" alt="Intro Game">
+                        <button type="button" class="btn" onclick="players(4)">4 Players</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">5 Player Game</h4>
+                    </div>
+                    <div class="card-body">
+                      <img src="/images/5cryptids.jpeg" width="350" height="250" alt="Intro Game">
+                        <button type="button" class="btn" onclick="players(5)">5 Players</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 </body>
 </html>
-
