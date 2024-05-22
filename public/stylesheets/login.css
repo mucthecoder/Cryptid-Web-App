@@ -51,7 +51,7 @@ h6 span{
   position: relative;
   display: block;
   text-align: center;
-  width: 60px;
+  width: 99px;
   height: 16px;
   border-radius: 8px;
   padding: 0;
@@ -78,7 +78,7 @@ h6 span{
   transition: all 0.5s ease;
 }
 .checkbox:checked + label:before {
-  transform: translateX(44px) rotate(-360deg);
+  transform: translateX(80px) rotate(-360deg);
 }
 
 
@@ -337,4 +337,16 @@ h6 span{
 }
 .other a{
   background-color: #57557A;
+}
+
+.click_2{
+  cursor: pointer;
+  border: 1px solid white;
+  padding: 0.5em;
+  border-radius: 0.2em;
+  margin-right: 0.5em;
+}
+
+.click_2:hover{
+  background-color: #044a7c;
 }
