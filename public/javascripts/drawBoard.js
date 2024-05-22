@@ -353,12 +353,12 @@ function hover(cell, r,c) {
     var classesArray = Array.from(cell.classList);
     if (classesArray.includes("neg"))
       this.style.backgroundColor = "rgba(255, 0, 0, 0.4)";
-    else this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
+    else if(looking==false)this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
   });
 
   cell.addEventListener("mouseleave", function () {
     // Reset background color when mouse leaves
-    this.style.backgroundColor = "rgba(128, 128, 128, 0)"; // Restore initial background color on mouse leave
+    if(looking==false || cell!=currentHex) this.style.backgroundColor = "rgba(128, 128, 128, 0)"; // Restore initial background color on mouse leave
   });
   cell.title = rcToString(r,c);
 }
@@ -367,7 +367,7 @@ function custom_hover(cell, val) {
   console.log(cell);
   cell.addEventListener("mouseenter", function () {
     if (val) this.style.backgroundColor = "rgba(255, 0, 0, 0.4)";
-    else this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
+    else if(looking==false) this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
   });
 
   cell.addEventListener("mouseleave", function () {
