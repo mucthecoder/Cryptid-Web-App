@@ -1,6 +1,5 @@
 const User = require("../models/user.model.js");
 const bcrypt = require("bcrypt");
-var path = require('path');
 const nodemailer = require("nodemailer");
 
 const login = async function(req, res) {
@@ -284,8 +283,6 @@ const verifyUserData = (req, res, next) => {
   next();
 };
 
-
-// Logout function
 const logout = function(req, res) {
   try {
       req.session.destroy(err => {
@@ -304,7 +301,6 @@ const logout = function(req, res) {
       res.status(500).json({ message: "Server error" });
   }
 }
-
 
 module.exports = {
     login,
