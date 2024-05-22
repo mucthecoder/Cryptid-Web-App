@@ -241,8 +241,7 @@ const usersendemail = (req,res)=>{
         return res.status(500).json({ message: "server error" });
     });
   
-    const filePath = path.join(__dirname, "../public/index.html");
-    res.sendFile(filePath);
+    res.redirect("/");
 }
 
 async function sendUserEmail(htmlContent) {
@@ -273,19 +272,43 @@ async function sendUserEmail(htmlContent) {
 }
 
 const verifyUserData = (req, res, next) => {
+  // Check if the session exists and if the user is logged in
   if (!req.session || !req.session.user_id) {
-      if (req._parsedUrl.pathname !== "/users/login") {
-        // const filePath = path.join(__dirname, "../public/login.html");
-        // return res.sendFile(filePath)
-      }
+    // Check if the current path is neither the login path nor the home path
+    if (req._parsedUrl.pathname !== "/users/login" && req._parsedUrl.pathname !== "/") {
+      // Redirect to the login page
+      return res.redirect('/users/login');
+    }
   }
-  // If user is authenticated or already on the login page, proceed to the next middleware
+  // If the user is authenticated or already on the login or home page, proceed to the next middleware
   next();
 };
 
 
+// Logout function
+const logout = function(req, res) {
+  try {
+      req.session.destroy(err => {
+          if (err) {
+              console.log(err);
+              return res.status(500).json({ message: "Server error" });
+          }
+          
+          Object.keys(req.cookies).forEach(cookieName => {
+              res.clearCookie(cookieName);
+          });
+          res.redirect('/');
+      });
+  } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+  }
+}
+
+
 module.exports = {
     login,
+    logout,
     signup,
     postforgot,
     postforgotcode,
