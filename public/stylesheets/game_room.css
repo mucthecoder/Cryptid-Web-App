@@ -1,0 +1,123 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #02233b; /* Change the background color as needed */
+    color: white; /* Change the text color as needed */
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #02233b;
+    padding: 10px 20px;
+    border-bottom: 1px solid white; /* Add a white line under the navbar */
+}
+
+.logo {
+    width: 75px;
+    height: 75px;
+    margin: 10px;
+}
+
+.heading {
+    margin: 0 auto; /* Center the heading */
+    font-size: 24px; /* Increase the font size */
+}
+
+.icon-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+}
+
+.container {
+    /* display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 80px auto 20px;
+    padding: 20px;
+    box-sizing: border-box; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* max-width: 1200px; */
+    /* margin: 80px auto 20px; */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card {
+    /* background-color: #02233b;
+    color: white; 
+    margin: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(50% - 20px); 
+    max-width: 400px; 
+    display: flex; */
+    background-color: #02233b;
+    color: white;
+    margin: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 25em;
+    /* max-width: 400px; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border: 2px solid white;
+}
+
+.card-body {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.btn {
+    border: 2px solid #007bff; /* Change the button border color as needed */
+    border-radius: 20px; /* Add border-radius to make the buttons curved */
+    color: #007bff; /* Change the button text color as needed */
+    background-color: transparent;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background-color: #007bff; /* Change the button hover background color as needed */
+    color: #fff; /* Change the button hover text color as needed */
+}
+
+
+.card img {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* .card {
+        width: calc(100% - 20px);
+    } */
+}
