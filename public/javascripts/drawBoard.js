@@ -232,25 +232,25 @@ function drawTowersAndShacks() {
   coordinates = transformString2(mapCodeValue);
   console.log(coordinates);
   if (coordinates.length == 12) {
-    drawTower("tiles/s1.png", coordinates[0], coordinates[1]); // Replace "tower-image-url" with actual tower image URL
-    drawTower("tiles/s2.png", coordinates[2], coordinates[3]); // Replace "tower-image-url" with actual tower image URL
-    drawTower("tiles/s3.png", coordinates[4], coordinates[5]); // Replace "tower-image-url" with actual tower image URL
-    drawShack("tiles/p1.png", coordinates[6], coordinates[7]); // Replace "shack-image-url" with actual shack image URL
-    drawShack("tiles/p2.png", coordinates[8], coordinates[9]); // Replace "shack-image-url" with actual shack image URL
-    drawShack("tiles/p3.png", coordinates[10], coordinates[11]); // Replace "shack-image-url" with actual shack image URL
+    drawTower("tiles/s1.png", coordinates[0], coordinates[1], "standing stone"); // Replace "tower-image-url" with actual tower image URL
+    drawTower("tiles/s2.png", coordinates[2], coordinates[3], "standing stone"); // Replace "tower-image-url" with actual tower image URL
+    drawTower("tiles/s3.png", coordinates[4], coordinates[5], "standing stone"); // Replace "tower-image-url" with actual tower image URL
+    drawShack("tiles/p1.png", coordinates[6], coordinates[7], "shack"); // Replace "shack-image-url" with actual shack image URL
+    drawShack("tiles/p2.png", coordinates[8], coordinates[9], "shack"); // Replace "shack-image-url" with actual shack image URL
+    drawShack("tiles/p3.png", coordinates[10], coordinates[11], "shack"); // Replace "shack-image-url" with actual shack image URL
   } else {
-    drawTower("tiles/s1.png", coordinates[0], coordinates[1]); // Replace "tower-image-url" with actual tower image URL
-    drawTower("tiles/s2.png", coordinates[2], coordinates[3]); // Replace "tower-image-url" with actual tower image URL
-    drawTower("tiles/s3.png", coordinates[4], coordinates[5]); // Replace "tower-image-url" with actual tower image URL
-    drawTower("tiles/s4.png", coordinates[6], coordinates[7]); // Replace "tower-image-url" with actual tower image URL
-    drawShack("tiles/p1.png", coordinates[8], coordinates[9]); // Replace "shack-image-url" with actual shack image URL
-    drawShack("tiles/p2.png", coordinates[10], coordinates[11]); // Replace "shack-image-url" with actual shack image URL
-    drawShack("tiles/p3.png", coordinates[12], coordinates[13]); // Replace "shack-image-url" with actual shack image URL
-    drawShack("tiles/p4.png", coordinates[14], coordinates[15]); // Replace "shack-image-url" with actual shack image URL
+    drawTower("tiles/s1.png", coordinates[0], coordinates[1], "standing stone"); // Replace "tower-image-url" with actual tower image URL
+    drawTower("tiles/s2.png", coordinates[2], coordinates[3], "standing stone"); // Replace "tower-image-url" with actual tower image URL
+    drawTower("tiles/s3.png", coordinates[4], coordinates[5], "standing stone"); // Replace "tower-image-url" with actual tower image URL
+    drawTower("tiles/s4.png", coordinates[6], coordinates[7], "standing stone"); // Replace "tower-image-url" with actual tower image URL
+    drawShack("tiles/p1.png", coordinates[8], coordinates[9]), "shack"; // Replace "shack-image-url" with actual shack image URL
+    drawShack("tiles/p2.png", coordinates[10], coordinates[11], "shack"); // Replace "shack-image-url" with actual shack image URL
+    drawShack("tiles/p3.png", coordinates[12], coordinates[13], "shack"); // Replace "shack-image-url" with actual shack image URL
+    drawShack("tiles/p4.png", coordinates[14], coordinates[15], "shack"); // Replace "shack-image-url" with actual shack image URL
   }
 }
 
-function drawTower(imgUrl, r, c) {
+function drawTower(imgUrl, r, c,what) {
   var img = new Image();
   img.src = imgUrl;
   img.style.width = "35%";
@@ -261,10 +261,15 @@ function drawTower(imgUrl, r, c) {
     // Find all cells with the specified class
     var cells = document.getElementsByClassName(cellClass);
     // Iterate over all found cells (in case there are multiple cells with the same class)
+    // cells[0].classList.add(what.split(" ")[0]);
+    // cells[0].classList.add(what.split(" ")[1]);
+    // cell[0].setAttribute("tt","ss");
+    // console.log(cells[0]);
     for (var i = 0; i < cells.length; i++) {
       var cell = cells[i];
       // Append the tower image to each found cell
       cell.appendChild(img);
+      // cell[0].classList.add(`${what}`);
     }
   };
 }
