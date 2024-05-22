@@ -2,15 +2,31 @@ body {
     display: flex;
     flex-direction: column;
     padding: 5px 0;
-    height: 100vh;
+    /* height: 100vh; */
     align-items: center;
     background-color: #efd29f;
-    overflow: hidden;
-    justify-content:center;
+    /* overflow: hidden; */
     margin-left: 0;
     margin-right: 0;
   }
-  
+  #whatt{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  #notifier{
+    width: 500px;
+    height:60px;
+    background-color: #bbb;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    border: 2px solid;
+    border-radius: 10px;
+  }
   #buttons {
     display: flex;
     flex-direction: row;
@@ -20,11 +36,14 @@ body {
     flex-wrap: nowrap;
   }
   #butts{
+    width: 500px;
+    height:80px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     margin: 0px 0px 20px 0px;
-    height: 10%;
+    min-height: 10%;
+    
   }
   .circs{
     height:60px;
@@ -219,6 +238,22 @@ body {
     width: 100%;
     height: 70%;
     margin-top: 10%;
+  }
+  #clue-list{
+    display: flex;
+    flex-direction: column;
+    background-color: #61004c;
+    width: 350px;
+  }
+  .single-clue{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: inherit;
+    height:min-content;
+    font-size: 20px;
+    border: 2px solid;
   }
   #clues{
     display: flex;

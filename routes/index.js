@@ -26,6 +26,7 @@ router.get('/create-map', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/customplay.html");
   res.sendFile(filePath);
 });
+
 router.get('/replay', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/replay.html");
   res.sendFile(filePath);
@@ -89,6 +90,16 @@ router.get('/browse-rooms', verify, function(req, res, next) {
 
 router.get('/waiting', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/waiting.html");
+  res.sendFile(filePath);
+});
+
+router.get('/review', verify, function(req, res, next) {
+  const filePath = path.join(__dirname, "../public/to_replay.html");
+  res.sendFile(filePath);
+});
+
+router.get('/replay', verify, function(req, res, next) {
+  const filePath = path.join(__dirname, "../public/replay.html");
   res.sendFile(filePath);
 });
 
