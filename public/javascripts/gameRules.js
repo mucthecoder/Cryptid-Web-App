@@ -1,4 +1,8 @@
 //should implement the game rules and let us play, ideally
+
+currentHex=null;
+looking=false;
+
 let num=sessionStorage.getItem("cryptid-num-players");
 round = 0;
 turnList = ["red", "green", "orange", "blue","purple"];
@@ -165,7 +169,9 @@ function cellClicked(cellClass) {
     uhm=cellClass;
     let e=document.getElementsByClassName(cellClass)[0];
     load_possible_actions();
-    
+    looking=true;
+    currentHex=cell;
+    currentHex.style.backgroundColor='rgba(0,0,0,0.7)';
   }
   
 }
@@ -178,6 +184,7 @@ function load_possible_actions(){
     console.log("Questioning");
     bq=turn;
     questioning=true;
+    looking=true;
     question_mark(uhm);
     load_question_options();
   });
@@ -195,6 +202,7 @@ function load_possible_actions(){
     search_turn=turn;
     search_count=0;
     searching=true;
+    looking=true;
     create_search();
     search_mark(uhm);
     start_search();
@@ -393,6 +401,7 @@ function load_possible_responses(){
     let h=createPiece("circle");
     let r=document.getElementsByClassName(uhm)[0];
     r.addEventListener("mouseenter",()=>{
+      if(looking==false)
       r.style.backgroundColor="rgba(0, 255, 0, 0.4)";
     });
     h.style.backgroundColor=turnList[search_turn];
@@ -423,6 +432,8 @@ function done_question(){
   //   document.getElementsByClassName(turnList[i])[0].style.backgroundColor = "";
   // }
   questioning=false;
+  looking=false;
+  currentHex.style.backgroundColor='';
   processTurn();
   document.getElementById("butts").replaceChildren();
 }
@@ -434,6 +445,8 @@ function done_search(){
   processTurn();
   document.getElementById("butts").replaceChildren();
   searching=false;
+  looking=false;
+  currentHex.style.backgroundColor='';
   search_array=[];
   
 }
