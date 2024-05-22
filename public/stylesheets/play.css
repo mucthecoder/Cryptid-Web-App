@@ -12,7 +12,8 @@ body {
 #whatt{
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content:space-between;
+  width: 100%;
 }
 
 #buttons {
@@ -224,8 +225,7 @@ canvas {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 70%;
-  margin-top: 10%;
+  margin-top: 5%;
 }
 #clues{
   display: flex;
@@ -252,6 +252,7 @@ canvas {
   font-weight: bold;
   border: 2px solid;
   border-radius: 10px;
+  margin-left: 3%;
 }
 
 .clue{
@@ -290,7 +291,6 @@ canvas {
 }
 #clue-show{
   width: inherit;
-  flex: 10;
   border-left: 2px solid;
   border-right: 2px solid;
   border-bottom: 2px solid;
@@ -307,32 +307,37 @@ canvas {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  height: 10%;
+  border: 1px solid black;
+  border-radius:10px ;
 }
 
 .color{
-  width: 15%;
-  aspect-ratio: 1/1;
-  border-radius: 50%;
+  /* width: 15%; */
+  flex: 1;
+  /* aspect-ratio: 1/1; */
+  height: 100%;
+  border-radius: 10px;
 }
 
 .red{
-  border: 2px solid red;
+ 
 }
 
 .green{
-  border: 2px solid green;
+ 
 }
 
 .orange{
-  border: 2px solid orange;
+  
 }
 
 .blue{
-  border: 2px solid blue;
+ 
 }
 
 .purple{
-  border: 2px solid purple;
+ 
 }
 
 article{
@@ -349,7 +354,7 @@ article{
   width: 100%;
   min-height: 10%;
   background-color: #3d7bb6;
-  margin-top: 10%;
+  margin-top: 5%;
   font-size: 1.3rem;
 }
 
@@ -367,6 +372,18 @@ article{
   background-color: #3d7bb6;
   margin-top: 15px;
   display: none;
+}
+
+#cluelist{
+  height: 60%;
+  background-color: #bbb;
+  width: 100%;
+  margin-top: 5%;
+  overflow-y: scroll;
+}
+
+#cluelist label{
+  font-size: 1.5rem;
 }
 
 @media (max-width: 900px) {
@@ -396,12 +413,12 @@ article{
     padding: 0 10px;
   }
 
-  #rules{
+  #cluelist{
     display: none;
   }
 
-  #bigg{
-    margin-top: 15px;
+  #rules{
+    display: none;
   }
 
   #clue-show{
@@ -410,14 +427,7 @@ article{
 
   .turns{
     border: 1px solid black;
-  }
-
-  .turns div{
-    flex:1;
-    border-radius: 10%;
-    height: 30px ;
-    aspect-ratio: auto;
-    border: 0px;
+    height: 30px;
   }
 
   #legendButt{

@@ -24,13 +24,16 @@ thingImage = [
 ];
 counter = 0;
 mapstring = "";
-arrayOfEverything=[];
+arrayOfEverything = [];
 
 document.addEventListener("DOMContentLoaded", () => {
   const images = document.querySelectorAll(".image-row img");
   const cells = document.querySelectorAll(".grid-cell");
   const imageRow = document.getElementById("image-row");
-  // 6-length array to track images in cells
+  const flipButton = document.getElementById("flip");
+
+  // Set to track images currently in cells
+  //const imagesInCells = new Set();
 
   // Function to handle drag start event
   images.forEach((img) => {
@@ -40,20 +43,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Function to handle drag over event for grid cells and image row
+  // Function to handle drag over event for grid cells
   const handleDragOver = (e) => {
     e.preventDefault();
     e.currentTarget.classList.add("over");
     console.log("Drag over:", e.currentTarget.id);
   };
 
-  // Function to handle drag leave event for grid cells and image row
+  // Function to handle drag leave event for grid cells
   const handleDragLeave = (e) => {
     e.currentTarget.classList.remove("over");
     console.log("Drag leave:", e.currentTarget.id);
   };
 
-  // Function to handle drop event for grid cells and image row
+  // Function to handle drop event for grid cells
   const handleDrop = (e) => {
     e.preventDefault();
     e.currentTarget.classList.remove("over");
@@ -61,28 +64,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const img = document.getElementById(imgId);
     console.log("Dropped:", imgId, "into", e.currentTarget.id);
     if (img) {
-      // If dropping into a grid cell
       if (e.currentTarget.classList.contains("grid-cell")) {
         // Get the cell index
         const cellIndex = Array.from(cells).indexOf(e.currentTarget);
         if (e.currentTarget.children.length === 0) {
-          // Update the tracking array
-          const prevCellIndex = cellImageArray.indexOf(imgId);
-          if (prevCellIndex !== -1) {
-            cellImageArray[prevCellIndex] = null;
-          }
-          cellImageArray[cellIndex] = imgId.substring(3);
-          e.currentTarget.appendChild(img);
+          // Clone the image and append it to the cell
+          const clonedImg = img.cloneNode(true);
+          clonedImg.id = imgId + "-clone";
+          e.currentTarget.appendChild(clonedImg);
+
+          // Update the tracking array and set
+          //const prevCellIndex = cellImageArray.indexOf(imgId);
+          // if (prevCellIndex !== -1) {
+          //     //cellImageArray[prevCellIndex] = null;
+          //     imagesInCells.delete(imgId);
+          // }
+          cellImageArray[cellIndex] = imgId;
+          //imagesInCells.add(imgId);
         } else {
           console.log("Cell is not empty:", e.currentTarget.id);
         }
-      } else if (e.currentTarget === imageRow) {
-        // If dropping back to the image row
-        const prevCellIndex = cellImageArray.indexOf(imgId);
-        if (prevCellIndex !== -1) {
-          cellImageArray[prevCellIndex] = null;
+      } else {
+        console.log("Dropping into an invalid area:", e.currentTarget.id);
+        if (!e.currentTarget.classList.contains("image-row")) {
+          // If image is dropped outside the cells, remove it
+          const prevCellIndex = cellImageArray.indexOf(imgId);
+          if (prevCellIndex !== -1) {
+            cellImageArray[prevCellIndex] = null;
+            imagesInCells.delete(imgId);
+          }
+          img.remove();
         }
-        imageRow.appendChild(img);
       }
     } else {
       console.error("Image element not found for ID:", imgId);
@@ -97,15 +109,44 @@ document.addEventListener("DOMContentLoaded", () => {
     cell.addEventListener("drop", handleDrop);
   });
 
-  // Add event listeners for image row
-  imageRow.addEventListener("dragover", handleDragOver);
-  imageRow.addEventListener("dragleave", handleDragLeave);
-  imageRow.addEventListener("drop", handleDrop);
+  // Flip button functionality
+  flipButton.addEventListener("click", () => {
+    const firstSet = document.querySelectorAll(
+      "#img0, #img1, #img2, #img3, #img4, #img5"
+    );
+    const secondSet = document.querySelectorAll(
+      "#img6, #img7, #img8, #img9, #img10, #img11"
+    );
+
+    firstSet.forEach((img) => {
+      if (true) {
+        img.style.display = img.style.display === "none" ? "inline" : "none";
+      }
+    });
+
+    secondSet.forEach((img) => {
+      if (true) {
+        img.style.display = img.style.display === "none" ? "inline" : "none";
+      }
+    });
+
+    // Track the visibility state of the first set
+    // const isFirstSetVisible = Array.from(firstSet).every(img => img.style.display !== 'none');
+    // if (isFirstSetVisible) {
+    //     firstSet.forEach(img => img.style.display = 'none');
+    //     secondSet.forEach(img => img.style.display = 'inline');
+    // } else {
+    //     firstSet.forEach(img => img.style.display = 'inline');
+    //     secondSet.forEach(img => img.style.display = 'none');
+    // }
+  });
 });
 
 function submitConfig() {
+  console.log(cellImageArray);
   if (!cellImageArray.includes(null)) {
     cellImageArray.forEach((str) => {
+      str = str.substring(3);
       if (parseInt(str) < 9) mapstring += parseInt(str) + 1;
       else if (str == "9") mapstring += "A";
       else if (str == "10") mapstring += "B";
@@ -114,6 +155,7 @@ function submitConfig() {
     console.log("here is the mapstring" + mapstring);
 
     document.getElementById("image-row").remove();
+    document.getElementById("flip").remove();
     document.querySelector(".grid-container").remove();
     document.getElementById("submit-button").remove();
 
@@ -138,21 +180,28 @@ function createButton(text, clickHandler) {
 function cellClicked(cellClass) {
   var cells = document.getElementsByClassName(cellClass);
   var cell = cells[0];
-  if (counter != "done" ) {
+  if (counter != "done") {
     const img = document.createElement("img");
     img.src = "tiles/" + thingImage[counter];
     img.style.width = "20px";
     img.style.height = "20px";
     cell.appendChild(img);
-    newcounter=processCounter();
+    newcounter = processCounter();
     mapstring += processCellClass(cellClass);
 
     document.getElementById("buttons").innerHTML = "";
-    const img2 = document.createElement("img");
-    img2.src = "tiles/" + thingImage[newcounter];
-    img2.style.width = "50px";
-    img2.style.height = "50px"; // Replace 'path/to/your/image.png' with the actual path to your image
-    document.getElementById("buttons").appendChild(img2);
+    console.log("here lies counter "+counter);
+    if (counter != "done") {
+      const img2 = document.createElement("img");
+      img2.src = "tiles/" + thingImage[newcounter];
+      img2.style.width = "50px";
+      img2.style.height = "50px"; // Replace 'path/to/your/image.png' with the actual path to your image
+      document.getElementById("buttons").appendChild(img2);
+    } else {
+      const textElement = document.createElement("p");
+      textElement.textContent = "Pick destination";
+      document.getElementById("buttons").appendChild(textElement);
+    }
     console.log("mapstring so far" + mapstring);
   } else {
     addButtons();
@@ -163,150 +212,151 @@ function cellClicked(cellClass) {
 }
 
 function customButtonClickHandler() {
-    console.log("Custom Button clicked");
-    // Your code for the custom button click handler
-    // Call the function defined elsewhere
-    const inputs = document.querySelectorAll("#buttons input[type='text']");
-    // Initialize an array to store the values
+  console.log("Custom Button clicked");
+  // Your code for the custom button click handler
+  // Call the function defined elsewhere
+  const inputs = document.querySelectorAll("#buttons input[type='text']");
+  // Initialize an array to store the values
 
-    // Iterate over each input and add its value to the array
-    inputs.forEach(input => {
-        arrayOfEverything.push(input.value);
-    });
+  // Iterate over each input and add its value to the array
+  inputs.forEach((input) => {
+    arrayOfEverything.push(input.value);
+    // Clear the input value
+    input.value = "";
+  });
 
-    // Log the array of values
-    console.log("Values:", arrayOfEverything);
+  // Log the array of values
+  console.log("Values:", arrayOfEverything);
 
-    // Extract values from inputs
-    const mapCode = arrayOfEverything[0];
-    const mode = arrayOfEverything[1];
-    const destination = arrayOfEverything[2];
-    const numberOfPlayers = arrayOfEverything[3];
-    players = {};
-    const rules = []; 
+  // Extract values from inputs
+  const mapCode = arrayOfEverything[0];
+  const mode = arrayOfEverything[1];
+  const destination = arrayOfEverything[2];
+  const numberOfPlayers = arrayOfEverything[3];
+  players = {};
+  const rules = [];
 
-    // Construct players object
-    for (let i = 0; i < numberOfPlayers; i++) {
-        rules.push(arrayOfEverything[4+i]);   
-    }
-    players = { [numberOfPlayers]:[{destination, rules}]};
+  // Construct players object
+  for (let i = 0; i < numberOfPlayers; i++) {
+    rules.push(arrayOfEverything[4 + i]);
+  }
+  players = { [numberOfPlayers]: [{ destination, rules }] };
 
-    // Construct final JSON object
-    const customMap = {
-        mapCode,
-        mode,
-        key: mapCode,
-        players
-    };
+  // Construct final JSON object
+  const customMap = {
+    mapCode,
+    mode,
+    key: mapCode,
+    players,
+  };
 
-    // Convert JSON to string
-    const jsonString = JSON.stringify(customMap, null, 2);
+  // Convert JSON to string
+  const jsonString = JSON.stringify(customMap, null, 2);
 
-    // Create a blob from the JSON string
-    const blob = new Blob([jsonString], { type: "application/json" });
+  // Create a blob from the JSON string
+  const blob = new Blob([jsonString], { type: "application/json" });
 
-    // Create a URL for the blob
-    const url = window.URL.createObjectURL(blob);
+  // Create a URL for the blob
+  const url = window.URL.createObjectURL(blob);
 
-    // Create a link element to trigger the download
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "custommap.json";
-    document.body.appendChild(link);
+  // Create a link element to trigger the download
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "custommap.json";
+  document.body.appendChild(link);
 
-    // Trigger the download
-    link.click();
+  // Trigger the download
+  link.click();
 
-    // Cleanup
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+  // Cleanup
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
 
-    console.log("Custom map JSON downloaded");
+  console.log("Custom map JSON downloaded");
 }
 
 function button3ClickHandler() {
-    console.log("Button 3 clicked");
-    // Your code for button 3 click handler
-    arrayOfEverything.push(3);
-    const buttonsDiv = document.getElementById("buttons");
-    buttonsDiv.innerHTML = "";
+  console.log("Button 3 clicked");
+  // Your code for button 3 click handler
+  arrayOfEverything.push(3);
+  const buttonsDiv = document.getElementById("buttons");
+  buttonsDiv.innerHTML = "";
 
-    // Add three text inputs
-    for (let i = 0; i < 3; i++) {
-        const input = document.createElement("input");
-        input.type = "text";
-        buttonsDiv.appendChild(input);
-    }
+  // Add three text inputs
+  for (let i = 0; i < 3; i++) {
+    const input = document.createElement("input");
+    input.type = "text";
+    buttonsDiv.appendChild(input);
+  }
 
-    // Add a button
-    const customButton = document.createElement("button");
-    customButton.textContent = "Custom Button";
-    customButton.onclick = customButtonClickHandler;
-    buttonsDiv.appendChild(customButton);
+  // Add a button
+  const customButton = document.createElement("button");
+  customButton.textContent = "Custom Button";
+  customButton.onclick = customButtonClickHandler;
+  buttonsDiv.appendChild(customButton);
 }
 
 function button4ClickHandler() {
-    console.log("Button 4 clicked");
-    // Your code for button 4 click handler
-    arrayOfEverything.push(4);
-    const buttonsDiv = document.getElementById("buttons");
-    buttonsDiv.innerHTML = "";
+  console.log("Button 4 clicked");
+  // Your code for button 4 click handler
+  arrayOfEverything.push(4);
+  const buttonsDiv = document.getElementById("buttons");
+  buttonsDiv.innerHTML = "";
 
-    // Add three text inputs
-    for (let i = 0; i < 4; i++) {
-        const input = document.createElement("input");
-        input.type = "text";
-        buttonsDiv.appendChild(input);
-    }
+  // Add three text inputs
+  for (let i = 0; i < 4; i++) {
+    const input = document.createElement("input");
+    input.type = "text";
+    buttonsDiv.appendChild(input);
+  }
 
-    // Add a button
-    const customButton = document.createElement("button");
-    customButton.textContent = "Custom Button";
-    customButton.onclick = customButtonClickHandler;
-    buttonsDiv.appendChild(customButton);
+  // Add a button
+  const customButton = document.createElement("button");
+  customButton.textContent = "Custom Button";
+  customButton.onclick = customButtonClickHandler;
+  buttonsDiv.appendChild(customButton);
 }
 
 function button5ClickHandler() {
-    console.log("Button 5 clicked");
-    // Your code for button 5 click handler
-    arrayOfEverything.push(5);
-    const buttonsDiv = document.getElementById("buttons");
-    buttonsDiv.innerHTML = "";
+  console.log("Button 5 clicked");
+  // Your code for button 5 click handler
+  arrayOfEverything.push(5);
+  const buttonsDiv = document.getElementById("buttons");
+  buttonsDiv.innerHTML = "";
 
-    // Add three text inputs
-    for (let i = 0; i < 5; i++) {
-        const input = document.createElement("input");
-        input.type = "text";
-        buttonsDiv.appendChild(input);
-    }
+  // Add three text inputs
+  for (let i = 0; i < 5; i++) {
+    const input = document.createElement("input");
+    input.type = "text";
+    buttonsDiv.appendChild(input);
+  }
 
-    // Add a button
-    const customButton = document.createElement("button");
-    customButton.textContent = "Custom Button";
-    customButton.onclick = customButtonClickHandler;
-    buttonsDiv.appendChild(customButton);
+  // Add a button
+  const customButton = document.createElement("button");
+  customButton.textContent = "Custom Button";
+  customButton.onclick = customButtonClickHandler;
+  buttonsDiv.appendChild(customButton);
 }
 
-
 function addButtons() {
-    const buttonsDiv = document.getElementById("buttons");
-    buttonsDiv.innerHTML = "";
+  const buttonsDiv = document.getElementById("buttons");
+  buttonsDiv.innerHTML = "";
 
-    // Create and append buttons
-    const button3 = createButton("3", button3ClickHandler);
-    const button4 = createButton("4", button4ClickHandler);
-    const button5 = createButton("5", button5ClickHandler);
+  // Create and append buttons
+  const button3 = createButton("3", button3ClickHandler);
+  const button4 = createButton("4", button4ClickHandler);
+  const button5 = createButton("5", button5ClickHandler);
 
-    buttonsDiv.appendChild(button3);
-    buttonsDiv.appendChild(button4);
-    buttonsDiv.appendChild(button5);
+  buttonsDiv.appendChild(button3);
+  buttonsDiv.appendChild(button4);
+  buttonsDiv.appendChild(button5);
 }
 
 function createButton(text, clickHandler) {
-    const button = document.createElement("button");
-    button.textContent = text;
-    button.onclick = clickHandler;
-    return button;
+  const button = document.createElement("button");
+  button.textContent = text;
+  button.onclick = clickHandler;
+  return button;
 }
 
 function processCellClass(cellClass) {
