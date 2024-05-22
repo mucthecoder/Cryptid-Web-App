@@ -5,7 +5,7 @@ desert = "desert";
 swamp = "swamp";
 forest = "forest";
 mountain = "mountain";
-bear= "bear terriotry";
+bear= "bear territory";
 couger= "cougar territory";
 tile1 = [
   [water, water, water, water, forest, forest],
@@ -25,16 +25,16 @@ tile3 = [
 tile4 = [
   [desert, desert, mountain, mountain, mountain, mountain],
   [desert, desert, mountain, water, water, water+", "+couger],
-  [desert, desert, desert, forest, forest, forest],
+  [desert, desert, desert, forest, forest, forestr+", "+couger],
 ];
 tile5 = [
   [swamp, swamp, swamp, mountain, mountain, mountain],
-  [swamp, desert, desert, water, mountain, mountain],
-  [desert, desert, water, water, water, water],
+  [swamp, desert, desert, water, mountain, mountain+", "+bear],
+  [desert, desert, water, water, water+", "+bear, water+", "+bear],
 ];
 tile6 = [
   [desert+", "+bear, desert, swamp, swamp, swamp, forest],
-  [mountain, mountain, swamp, swamp, forest, forest],
+  [mountain+", "+bear, mountain, swamp, swamp, forest, forest],
   [mountain, water, water, water, water, forest],
 ];
 tile7 = [
@@ -53,19 +53,19 @@ tile9 = [
   [water, forest, forest, forest, swamp, swamp],
 ];
 tile10 = [
-  [forest+", "+couger, forest, forest, desert, desert, desert+", "+couger],
-  [water+", "+couger, water, water, mountain, desert+", "+couger, desert+", "+couger],
+  [forest+", "+couger, forest, forest, desert, desert, desert],
+  [water+", "+couger, water, water, mountain, desert, desert],
   [mountain, mountain, mountain, mountain, desert, desert],
 ];
 tile11 = [
-  [water, water, water, water, desert, desert],
-  [mountain, mountain, water, desert, desert, swamp],
+  [water+", "+bear, water+", "+bear, water, water, desert, desert],
+  [mountain+", "+bear, mountain, water, desert, desert, swamp],
   [mountain, mountain, mountain, swamp, swamp, swamp],
 ];
 tile12 = [
   [forest, water, water, water, water, mountain],
-  [forest, forest, swamp, swamp, mountain, mountain],
-  [forest, swamp, swamp, swamp, desert, desert],
+  [forest, forest, swamp, swamp, mountain, mountain+", "+bear],
+  [forest, swamp, swamp, swamp, desert, desert+", "+bear],
 ];
 
 listOfAllTiles=[tile1,tile2, tile3, tile4,tile5, tile6, tile7, tile8, tile9, tile10, tile11, tile12]
