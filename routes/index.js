@@ -98,6 +98,11 @@ router.get('/upload-custom', verify, function(req, res, next) {
   res.sendFile(filePath);
 });
 
+router.get('/play-custom', verify, function(req, res, next) {
+  const filePath = path.join(__dirname, "../public/play_custom.html");
+  res.sendFile(filePath);
+});
+
 router.get('/waiting', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/waiting.html");
   res.sendFile(filePath);
