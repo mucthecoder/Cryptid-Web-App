@@ -251,9 +251,7 @@ function drawTowersAndShacks() {
   updateTitles();
 }
 
-<<<<<<< HEAD
-function drawTower(imgUrl, r, c,what) {
-=======
+
 function updateTitles() {
   // Loop through all cells and update their titles
   for (let col = 0; col < 12; col++) {
@@ -270,7 +268,6 @@ function updateTitles() {
 
 function drawTower(imgUrl, r, c) {
   addStructureToTitle(r,c, "tower");
->>>>>>> 9b6871cfa2694d90c4495ce111e93b1285ab49f9
   var img = new Image();
   img.src = imgUrl;
   img.style.width = "35%";
