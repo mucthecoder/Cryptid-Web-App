@@ -248,9 +248,29 @@ function drawTowersAndShacks() {
     drawShack("tiles/p3.png", coordinates[12], coordinates[13], "shack"); // Replace "shack-image-url" with actual shack image URL
     drawShack("tiles/p4.png", coordinates[14], coordinates[15], "shack"); // Replace "shack-image-url" with actual shack image URL
   }
+  updateTitles();
 }
 
+<<<<<<< HEAD
 function drawTower(imgUrl, r, c,what) {
+=======
+function updateTitles() {
+  // Loop through all cells and update their titles
+  for (let col = 0; col < 12; col++) {
+    for (let row = 0; row < 9; row++) {
+      const cellClass = `${row},${col}`;
+      const cells = document.getElementsByClassName(cellClass);
+      const cellTitle = rcToString(row, col);
+      var cell = cells[0];
+      cell.title = cellTitle;
+    }
+  }
+}
+
+
+function drawTower(imgUrl, r, c) {
+  addStructureToTitle(r,c, "tower");
+>>>>>>> 9b6871cfa2694d90c4495ce111e93b1285ab49f9
   var img = new Image();
   img.src = imgUrl;
   img.style.width = "35%";
@@ -274,7 +294,23 @@ function drawTower(imgUrl, r, c,what) {
   };
 }
 
+function addStructureToTitle(r,c, structure){
+  if(Math.floor(r/3)==0){
+    if(Math.floor(c/6)==0) listOfAllTiles[config[0]][r%3][c%6]+=", "+structure;
+    else listOfAllTiles[config[1]][r%3][c%6]+=", "+structure;
+  } else if (Math.floor(r/3)==1){
+    if(Math.floor(c/6)==0) listOfAllTiles[config[2]][r%3][c%6]+=", "+structure;
+    else listOfAllTiles[config[3]][r%3][c%6]+=", "+structure;
+  } else{
+    if(Math.floor(c/6)==0) listOfAllTiles[config[4]][r%3][c%6]+=", "+structure;
+    else listOfAllTiles[config[5]][r%3][c%6]+=", "+structure;
+  }
+  console.log(listOfAllTiles[config[0]]);
+}
+
 function drawShack(imgUrl, r, c) {
+  addStructureToTitle(r,c,"shack");
+  console.log("i am drawing shack");
   var img = new Image();
   img.src = imgUrl;
   img.style.width = "35%";
