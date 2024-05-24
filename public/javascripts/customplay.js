@@ -214,7 +214,7 @@ function cellClicked(cellClass) {
 }
 
 function customButtonClickHandler() {
-  console.log("Download clicked");
+  console.log("Play clicked");
   // Your code for the custom button click handler
   // Call the function defined elsewhere
   const inputs = document.querySelectorAll("#buttons input[type='text']");
@@ -275,6 +275,8 @@ function customButtonClickHandler() {
   window.URL.revokeObjectURL(url);
 
   console.log("Custom map JSON downloaded");
+
+  window.location.href = "/upload-custom"; 
 }
 
 function playButtonClickHandler() {
@@ -357,14 +359,14 @@ function button3ClickHandler() {
 
   // Add a button
   const customButton = document.createElement("button");
-  customButton.textContent = "Download";
+  customButton.textContent = "Play";
   customButton.onclick = customButtonClickHandler;
   buttonsDiv.appendChild(customButton);
 
-  const playButton = document.createElement("button");
-  playButton.textContent = "Play";
-  playButton.onclick = playButtonClickHandler;
-  buttonsDiv.appendChild(playButton);
+  // const playButton = document.createElement("button");
+  // playButton.textContent = "Play";
+  // playButton.onclick = playButtonClickHandler;
+  // buttonsDiv.appendChild(playButton);
 }
 
 function button4ClickHandler() {
@@ -383,14 +385,14 @@ function button4ClickHandler() {
 
   // Add a button
   const customButton = document.createElement("button");
-  customButton.textContent = "Download";
+  customButton.textContent = "Play";
   customButton.onclick = customButtonClickHandler;
   buttonsDiv.appendChild(customButton);
 
-  const playButton = document.createElement("button");
-  playButton.textContent = "Play";
-  playButton.onclick = playButtonClickHandler;
-  buttonsDiv.appendChild(playButton);
+  // const playButton = document.createElement("button");
+  // playButton.textContent = "Play";
+  // playButton.onclick = playButtonClickHandler;
+  // buttonsDiv.appendChild(playButton);
 }
 
 function button5ClickHandler() {
@@ -409,14 +411,14 @@ function button5ClickHandler() {
 
   // Add a button
   const customButton = document.createElement("button");
-  customButton.textContent = "Donwload";
+  customButton.textContent = "Play";
   customButton.onclick = customButtonClickHandler;
   buttonsDiv.appendChild(customButton);
 
-  const playButton = document.createElement("button");
-  playButton.textContent = "Play";
-  playButton.onclick = playButtonClickHandler;
-  buttonsDiv.appendChild(playButton);
+  // const playButton = document.createElement("button");
+  // playButton.textContent = "Play";
+  // playButton.onclick = playButtonClickHandler;
+  // buttonsDiv.appendChild(playButton);
 }
 
 function addButtons() {
