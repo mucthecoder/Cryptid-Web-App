@@ -25,10 +25,9 @@ function LogIn(e){
     })
     .then((res)=>{
         if(res.status!== 200){
-            val1();
+            val1("");
         }
         else{
-            
             window.location.href = "/home";
         }
     })
