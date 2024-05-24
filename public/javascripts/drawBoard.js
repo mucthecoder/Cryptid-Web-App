@@ -231,22 +231,26 @@ function drawTowersAndShacks() {
   console.log("I got this far");
   coordinates = transformString2(mapCodeValue);
   console.log(coordinates);
+  const WHITE = "white"; 
+  const GREEN = "green"; 
+  const BLUE = "blue"; 
+  const BLACK = "black"; 
   if (coordinates.length == 12) {
-    drawTower("tiles/s1.png", coordinates[0], coordinates[1]); // Replace "tower-image-url" with actual tower image URL
-    drawTower("tiles/s2.png", coordinates[2], coordinates[3]); // Replace "tower-image-url" with actual tower image URL
-    drawTower("tiles/s3.png", coordinates[4], coordinates[5]); // Replace "tower-image-url" with actual tower image URL
-    drawShack("tiles/p1.png", coordinates[6], coordinates[7]); // Replace "shack-image-url" with actual shack image URL
-    drawShack("tiles/p2.png", coordinates[8], coordinates[9]); // Replace "shack-image-url" with actual shack image URL
-    drawShack("tiles/p3.png", coordinates[10], coordinates[11]); // Replace "shack-image-url" with actual shack image URL
+    drawTower("tiles/s1.png", coordinates[0], coordinates[1], WHITE); // Replace "tower-image-url" with actual tower image URL
+    drawTower("tiles/s2.png", coordinates[2], coordinates[3], GREEN); // Replace "tower-image-url" with actual tower image URL
+    drawTower("tiles/s3.png", coordinates[4], coordinates[5], BLUE); // Replace "tower-image-url" with actual tower image URL
+    drawShack("tiles/p1.png", coordinates[6], coordinates[7], WHITE); // Replace "shack-image-url" with actual shack image URL
+    drawShack("tiles/p2.png", coordinates[8], coordinates[9], GREEN); // Replace "shack-image-url" with actual shack image URL
+    drawShack("tiles/p3.png", coordinates[10], coordinates[11], BLUE); // Replace "shack-image-url" with actual shack image URL
   } else {
-    drawTower("tiles/s1.png", coordinates[0], coordinates[1]); // Replace "tower-image-url" with actual tower image URL
-    drawTower("tiles/s2.png", coordinates[2], coordinates[3]); // Replace "tower-image-url" with actual tower image URL
-    drawTower("tiles/s3.png", coordinates[4], coordinates[5]); // Replace "tower-image-url" with actual tower image URL
-    drawTower("tiles/s4.png", coordinates[6], coordinates[7]); // Replace "tower-image-url" with actual tower image URL
-    drawShack("tiles/p1.png", coordinates[8], coordinates[9]); // Replace "shack-image-url" with actual shack image URL
-    drawShack("tiles/p2.png", coordinates[10], coordinates[11]); // Replace "shack-image-url" with actual shack image URL
-    drawShack("tiles/p3.png", coordinates[12], coordinates[13]); // Replace "shack-image-url" with actual shack image URL
-    drawShack("tiles/p4.png", coordinates[14], coordinates[15]); // Replace "shack-image-url" with actual shack image URL
+    drawTower("tiles/s1.png", coordinates[0], coordinates[1], WHITE); // Replace "tower-image-url" with actual tower image URL
+    drawTower("tiles/s2.png", coordinates[2], coordinates[3], GREEN); // Replace "tower-image-url" with actual tower image URL
+    drawTower("tiles/s3.png", coordinates[4], coordinates[5], BLUE); // Replace "tower-image-url" with actual tower image URL
+    drawTower("tiles/s4.png", coordinates[6], coordinates[7], BLACK); // Replace "tower-image-url" with actual tower image URL
+    drawShack("tiles/p1.png", coordinates[8], coordinates[9], WHITE); // Replace "shack-image-url" with actual shack image URL
+    drawShack("tiles/p2.png", coordinates[10], coordinates[11], GREEN); // Replace "shack-image-url" with actual shack image URL
+    drawShack("tiles/p3.png", coordinates[12], coordinates[13], BLUE); // Replace "shack-image-url" with actual shack image URL
+    drawShack("tiles/p4.png", coordinates[14], coordinates[15], BLACK); // Replace "shack-image-url" with actual shack image URL
   }
   updateTitles();
 }
@@ -265,8 +269,8 @@ function updateTitles() {
 }
 
 
-function drawTower(imgUrl, r, c) {
-  addStructureToTitle(r,c, "tower");
+function drawTower(imgUrl, r, c, color) {
+  addStructureToTitle(r,c, "standing stone " + color + " structure");
   var img = new Image();
   img.src = imgUrl;
   img.style.width = "35%";
@@ -299,8 +303,8 @@ function addStructureToTitle(r,c, structure){
   console.log(listOfAllTiles[config[0]]);
 }
 
-function drawShack(imgUrl, r, c) {
-  addStructureToTitle(r,c,"shack");
+function drawShack(imgUrl, r, c, color) {
+  addStructureToTitle(r,c, "shack " + color +  " structure");
   console.log("i am drawing shack");
   var img = new Image();
   img.src = imgUrl;
