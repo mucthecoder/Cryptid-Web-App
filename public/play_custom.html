@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="stylesheets/play.css" />
+  </head>
+  <body>
+    <div id="whatt">
+      <div id="notifier">This will tell you what's happening in the game</div>
+      <div id="butts"></div>
+      <span style="width: 100px"></span>
+    </div>
+    <section>
+      <article>
+        <div class="turns">
+          <div class="color red"></div>
+          <div class="color green"></div>
+          <div class="color orange"></div>
+          <div class="color blue"></div>
+          <div class="color purple"></div>
+        </div>
+        <button id="rules">Quick Reference Rules</button>
+        <div id="bigg">
+          <div id="clues">
+            <!-- <div id="clue1">Player 1 Clue</div>
+              <div id="clue2">Player 2 Clue</div>
+              <div id="clue3">Player 3 Clue</div>
+              <div id="clue4">Player 4 Clue</div>
+              <div id="clue5">Player 5 Clue</div> -->
+          </div>
+          <div id="clue-show">Press to display the clue</div>
+        </div>
+        <div id="cluelist"></div>
+        <button id="legendButt" class="legendImg">Legend</button>
+      </article>
+
+      <article id="specialarticle">
+        <div class="large">
+          <div id="box"></div>
+          <canvas width="600" height="600" id="myCanvas"> </canvas>
+        </div>
+      </article>
+
+      <article id="pdf">
+        <img src="tiles/legend.png" alt="" class="legendImg" />
+        <!-- <img src="tiles/refrules.png" alt="" id="rulesImg"> -->
+      </article>
+    </section>
+
+    <div id="modal">
+      <img id="modalImg" src="" alt="" />
+      <span id="closeModal">&times;</span>
+    </div>
+
+    <br />
+
+    <script src="javascripts/cluelist.js"></script>
+    <script src="javascripts/machinelearning.js"></script>
+    <script src="javascripts/draw_custom.js"></script>
+    <script src="javascripts/custom_buttons.js"></script>
+    <script src="javascripts/custom_game.js"></script>
+  </body>
+</html>

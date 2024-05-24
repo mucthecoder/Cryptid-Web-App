@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="navbar">
-    <img src="images/BACK.jpeg" width="75px" height="75px" class="logo"/>
+    <img src="images/BACK.jpeg" width="75px" onclick="goBack()" height="75px" class="logo"/>
   </div>
   <div class="container">
     <button class="action-button" onclick="createMap()">Create Map</button>
@@ -19,12 +19,10 @@
       window.history.back();
     }
     function createMap() {
-    
-      alert("Create Map button clicked!");
+      window.location.href="/create-map";
     }
     function uploadMap() {
-     
-      alert("Upload Map button clicked!");
+      window.location.href="/upload-custom";
     }
   </script>
 </body>

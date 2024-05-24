@@ -1,67 +1,109 @@
 let i=2;
+let actionHistory = [];
+let playing=false;
 
-function next(){
-    let shape="";
-    let colour="";
-    if (i>=main_obj.length-1){
-        let g=document.getElementById("auto");
-        g.textContent="Auto";
+function next() {
+    let shape = "";
+    let colour = "";
+    if (i >= main_obj.length - 1) {
+        let g = document.getElementById("auto");
+        g.textContent = "Auto";
         g.parentNode.removeChild(g);
-        g=document.getElementById("next");
-        g.textContent="Restart";
-        g.onclick=function(){
+        g = document.getElementById("next");
+        g.textContent = "Restart";
+        g.onclick = function() {
             restart();
         }
     }
-    if (main_obj[i].action=="negate"){
-        shape="square";
-        colour=main_obj[i].player;
-        document.getElementById("notifier").textContent=`${capitalizeFirstLetter(main_obj[i].player)} negated ${main_obj[i].cell}`;
+
+    let action = main_obj[i];
+    let notifierText = "";
+
+    if (action.action == "negate") {
+        shape = "square";
+        colour = action.player;
+        notifierText = `${capitalizeFirstLetter(action.player)} negated ${action.cell}`;
     }
-    if (main_obj[i].action=="search"){
-        shape="circle";
-        colour=main_obj[i].player;
-        document.getElementById("notifier").textContent=`${capitalizeFirstLetter(main_obj[i].player)} began a search on ${main_obj[i].cell}`;
+    if (action.action == "search") {
+        shape = "circle";
+        colour = action.player;
+        notifierText = `${capitalizeFirstLetter(action.player)} began a search on ${action.cell}`;
     }
-    if (main_obj[i].action=="question"){
-        shape="circle";
-        colour="black";
-        document.getElementById("notifier").textContent=`${capitalizeFirstLetter(main_obj[i].player)} questioned ${capitalizeFirstLetter(main_obj[i].questioned)} on ${main_obj[i].cell}`;
+    if (action.action == "question") {
+        shape = "circle";
+        colour = "black";
+        notifierText = `${capitalizeFirstLetter(action.player)} questioned ${capitalizeFirstLetter(action.questioned)} on ${action.cell}`;
     }
-    if (main_obj[i].action=="answer"&&main_obj[i].answer=="Y"){
-        shape="circle";
-        colour=main_obj[i].player;
-        document.getElementById("notifier").textContent=`${capitalizeFirstLetter(main_obj[i].player)} answered YES on ${main_obj[i].cell}`;
+    if (action.action == "answer" && action.answer == "Y") {
+        shape = "circle";
+        colour = action.player;
+        notifierText = `${capitalizeFirstLetter(action.player)} answered YES on ${action.cell}`;
     }
-    if (main_obj[i].action=="answer"&&main_obj[i].answer=="N"){
-        shape="square";
-        colour=main_obj[i].player;
-        document.getElementById("notifier").textContent=`${capitalizeFirstLetter(main_obj[i].player)} answered NO on ${main_obj[i].cell}`;
+    if (action.action == "answer" && action.answer == "N") {
+        shape = "square";
+        colour = action.player;
+        notifierText = `${capitalizeFirstLetter(action.player)} answered NO on ${action.cell}`;
     }
-    h=createPiece(shape);
-    h.style.backgroundColor=colour;
-    replace_with(h,main_obj[i].cell);
+    actionHistory.push({
+        index: i,
+        action: action,
+        shape: shape,
+        colour: colour,
+        cellContent: document.getElementsByClassName(`cell ${action.cell}`)[0].innerHTML
+    });
+
+    let h = createPiece(shape);
+    h.style.backgroundColor = colour;
+    replace_with(h, action.cell);
+    document.getElementById("notifier").textContent = notifierText;
     i++;
 }
+
+function undo() {
+    if (actionHistory.length === 0) return;
+    let lastAction = actionHistory.pop();
+    document.getElementsByClassName(`cell ${lastAction.action.cell}`)[0].innerHTML = lastAction.cellContent;
+    document.getElementById("notifier").textContent = "";
+    i = lastAction.index;
+}
+
+
 function auto() { 
-    document.getElementById("auto").onclick=function(){}
-    if (i <= main_obj.length - 1) {
+    if (i <= main_obj.length - 1 && playing) {
         setTimeout(() => {
-            next();
+            if (playing){
+            next();}
             auto();
         }, 2000);
-    }
-    else{
-        let g=document.getElementById("auto");
-        g.textContent="Auto";
-        g.parentNode.removeChild(g);
-        g=document.getElementById("next");
-        g.textContent="Restart";
-        g.onclick=function(){
-            restart();
+    } else if (i >= main_obj.length && !playing) { // Added condition to stop when reaching end
+        let g = document.getElementById("auto");
+        if (g) {
+            g.textContent = "Auto";
+            g.parentNode.removeChild(g);
+            let nextButton = document.getElementById("next");
+            if (nextButton) {
+                nextButton.textContent = "Restart";
+                nextButton.onclick = function() {
+                    restart();
+                }
+            }
         }
     }
 }
+
+function toggle() {
+    console.log("toggle called");
+    playing = !playing; // Toggle the playing state
+    console.log(playing);
+    let autoButton = document.getElementById("auto");
+    if (autoButton) {
+        autoButton.textContent = playing ? "Pause" : "Play"; // Update button text
+    }
+    if (playing) {
+        auto(); // Start auto-play if playing
+    }
+}
+
 function restart(){
     for (let j=2;j<main_obj.length;j++){
         let e=document.getElementsByClassName(`cell ${main_obj[j].cell}`)[0];
@@ -76,16 +118,14 @@ function restart(){
     g.textContent="Auto";
     g.id="auto";
     g.className="actions";
-    g.onclick=auto;
+    g.onclick=toggle;
     document.getElementById("butts").appendChild(g);
     g=document.getElementById("next");
     g.textContent="Next";
     g.onclick=next;
 }
 
-function undo(){
 
-}
 function replace_with(what,where){
     let e=document.getElementsByClassName(`cell ${where}`)[0];
     for (let i=e.children.length-1;i>=0;i--){
