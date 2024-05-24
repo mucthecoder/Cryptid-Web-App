@@ -88,6 +88,16 @@ router.get('/browse-rooms', verify, function(req, res, next) {
   res.sendFile(filePath);
 });
 
+router.get('/custom-options', verify, function(req, res, next) {
+  const filePath = path.join(__dirname, "../public/select_page.html");
+  res.sendFile(filePath);
+});
+
+router.get('/upload-custom', verify, function(req, res, next) {
+  const filePath = path.join(__dirname, "../public/upload.html");
+  res.sendFile(filePath);
+});
+
 router.get('/waiting', verify, function(req, res, next) {
   const filePath = path.join(__dirname, "../public/waiting.html");
   res.sendFile(filePath);
