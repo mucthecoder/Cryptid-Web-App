@@ -26,6 +26,8 @@ counter = 0;
 mapstring = "";
 arrayOfEverything = [];
 
+let spheJsonString =null;
+
 document.addEventListener("DOMContentLoaded", () => {
   const images = document.querySelectorAll(".image-row img");
   const cells = document.querySelectorAll(".grid-cell");
@@ -212,7 +214,7 @@ function cellClicked(cellClass) {
 }
 
 function customButtonClickHandler() {
-  console.log("Custom Button clicked");
+  console.log("Download clicked");
   // Your code for the custom button click handler
   // Call the function defined elsewhere
   const inputs = document.querySelectorAll("#buttons input[type='text']");
@@ -275,6 +277,70 @@ function customButtonClickHandler() {
   console.log("Custom map JSON downloaded");
 }
 
+function playButtonClickHandler() {
+  console.log("play clicked, saved json to variable spheJsonString");
+  // Your code for the custom button click handler
+  // Call the function defined elsewhere
+  const inputs = document.querySelectorAll("#buttons input[type='text']");
+  // Initialize an array to store the values
+
+  // Iterate over each input and add its value to the array
+  inputs.forEach((input) => {
+    arrayOfEverything.push(input.value);
+    // Clear the input value
+    input.value = "";
+  });
+
+  // Log the array of values
+  console.log("Values:", arrayOfEverything);
+
+  // Extract values from inputs
+  const mapCode = arrayOfEverything[0];
+  const mode = arrayOfEverything[1];
+  const destination = arrayOfEverything[2];
+  const numberOfPlayers = arrayOfEverything[3];
+  players = {};
+  const rules = [];
+
+  // Construct players object
+  for (let i = 0; i < numberOfPlayers; i++) {
+    rules.push(arrayOfEverything[4 + i]);
+  }
+  players = { [numberOfPlayers]: [{ destination, rules }] };
+
+  // Construct final JSON object
+  const customMap = {
+    mapCode,
+    mode,
+    key: mapCode,
+    players,
+  };
+
+  // Convert JSON to string
+  spheJsonString = JSON.stringify(customMap, null, 2);
+  console.log(spheJsonString);
+  // Create a blob from the JSON string
+  // const blob = new Blob([jsonString], { type: "application/json" });
+
+  // // Create a URL for the blob
+  // const url = window.URL.createObjectURL(blob);
+
+  // // Create a link element to trigger the download
+  // const link = document.createElement("a");
+  // link.href = url;
+  // link.download = "custommap.json";
+  // document.body.appendChild(link);
+
+  // // Trigger the download
+  // link.click();
+
+  // // Cleanup
+  // document.body.removeChild(link);
+  // window.URL.revokeObjectURL(url);
+
+  // console.log("Custom map JSON downloaded");
+}
+
 function button3ClickHandler() {
   console.log("Button 3 clicked");
   // Your code for button 3 click handler
@@ -291,9 +357,14 @@ function button3ClickHandler() {
 
   // Add a button
   const customButton = document.createElement("button");
-  customButton.textContent = "Custom Button";
+  customButton.textContent = "Download";
   customButton.onclick = customButtonClickHandler;
   buttonsDiv.appendChild(customButton);
+
+  const playButton = document.createElement("button");
+  playButton.textContent = "Play";
+  playButton.onclick = playButtonClickHandler;
+  buttonsDiv.appendChild(playButton);
 }
 
 function button4ClickHandler() {
@@ -312,9 +383,14 @@ function button4ClickHandler() {
 
   // Add a button
   const customButton = document.createElement("button");
-  customButton.textContent = "Custom Button";
+  customButton.textContent = "Download";
   customButton.onclick = customButtonClickHandler;
   buttonsDiv.appendChild(customButton);
+
+  const playButton = document.createElement("button");
+  playButton.textContent = "Play";
+  playButton.onclick = playButtonClickHandler;
+  buttonsDiv.appendChild(playButton);
 }
 
 function button5ClickHandler() {
@@ -333,9 +409,14 @@ function button5ClickHandler() {
 
   // Add a button
   const customButton = document.createElement("button");
-  customButton.textContent = "Custom Button";
+  customButton.textContent = "Donwload";
   customButton.onclick = customButtonClickHandler;
   buttonsDiv.appendChild(customButton);
+
+  const playButton = document.createElement("button");
+  playButton.textContent = "Play";
+  playButton.onclick = playButtonClickHandler;
+  buttonsDiv.appendChild(playButton);
 }
 
 function addButtons() {
