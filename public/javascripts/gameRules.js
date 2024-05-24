@@ -165,7 +165,7 @@ function cellClicked(cellClass) {
   else if(searching||questioning){
     console.log("Can't do that during a search");
   }
-  else{
+  else if(looking==false){
     uhm=cellClass;
     let e=document.getElementsByClassName(cellClass)[0];
     load_possible_actions();
@@ -454,9 +454,8 @@ function done_search(){
 
 function createPiece(shape) {
   var shapeDiv = document.createElement("div");
-  shapeDiv.style.width = "20%"; // Adjust width as needed
+  shapeDiv.style.width = "25%"; // Adjust width as needed
   shapeDiv.style.aspectRatio= "1/1"; // Adjust height as needed
-  shapeDiv.style.height = "20%";
   shapeDiv.style.backgroundColor = turnList[turn];
   if (shape == "square") {
     shapeDiv.classList.add("square");
