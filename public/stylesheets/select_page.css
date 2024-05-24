@@ -1,0 +1,69 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('../images/back.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); 
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .back-button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .back-button:hover {
+    color: #87ceeb;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .action-button {
+    border-radius: 50px;
+    height: 44px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 200ms linear;
+    padding: 0 30px;
+    letter-spacing: 1px;
+    text-align: center;
+    border: none;
+    background: blue;
+    color: white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .action-button:hover {
+    background: linear-gradient(45deg, #7f7bfe,#7f7bfe);
+  }
+  
