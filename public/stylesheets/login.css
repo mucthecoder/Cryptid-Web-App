@@ -272,8 +272,8 @@ h6 span{
 
 .logo {
 	position: absolute;
-	top: 20px;
-	left: 15px;
+	top: 10px;
+	left: 10px;
 	display: block;
 	z-index: 100;
 	transition: all 250ms linear;
@@ -360,4 +360,13 @@ h6 span{
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+
+@media (max-width: 700px) {
+  .logo img {
+    height: 50px;
+    width: auto;
+    display: block;
+  }
 }
