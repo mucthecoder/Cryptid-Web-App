@@ -203,14 +203,21 @@ function cellClicked(cellClass) {
     console.log("Can't do that during a search");
   }
   else if(looking==false){
+    document.getElementsByClassName(`cell ${uhm}`)[0].style.backgroundColor="";
+    document.getElementsByClassName(`cell ${uhm}`)[0].removeEventListener("mouseleave",mousego);
     uhm=cellClass;
     let e=document.getElementsByClassName(cellClass)[0];
     load_possible_actions();
-    looking=true;
+    looking=false;
     currentHex=cell;
-    currentHex.style.backgroundColor='rgba(0,0,0,0.7)';
+    //currentHex.style.backgroundColor='rgba(0,0,0,0.7)';
+    currentHex.addEventListener("mouseleave",mousego);
   }
   
+}
+
+function mousego(event){
+  event.target.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
 }
 
 function load_possible_actions(){
@@ -474,6 +481,8 @@ function done_question(){
   currentHex.style.backgroundColor='';
   processTurn();
   document.getElementById("butts").replaceChildren();
+  document.getElementsByClassName(`cell ${uhm}`)[0].style.backgroundColor="";
+    document.getElementsByClassName(`cell ${uhm}`)[0].removeEventListener("mouseleave",mousego);
 }
 
 function done_search(){
@@ -486,7 +495,8 @@ function done_search(){
   looking=false;
   currentHex.style.backgroundColor='';
   search_array=[];
-  
+  document.getElementsByClassName(`cell ${uhm}`)[0].style.backgroundColor="";
+    document.getElementsByClassName(`cell ${uhm}`)[0].removeEventListener("mouseleave",mousego);
 }
 
 function createPiece(shape) {

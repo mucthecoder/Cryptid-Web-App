@@ -42,5 +42,7 @@ function closeModal() {
     document.getElementById("modal").style.display = "none";
 }
 
-
+function leave(){
+    window.history.back();
+}
   
