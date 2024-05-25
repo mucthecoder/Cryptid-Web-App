@@ -10,7 +10,7 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: #02233b;
-    padding: 10px 20px;
+    padding: 10px 5px;
     border-bottom: 1px solid white; /* Add a white line under the navbar */
 }
 
@@ -37,40 +37,22 @@ body {
 }
 
 .container {
-    /* display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 1200px;
-    margin: 80px auto 20px;
-    padding: 20px;
-    box-sizing: border-box; */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* max-width: 1200px; */
-    /* margin: 80px auto 20px; */
     padding: 20px;
     box-sizing: border-box;
+    gap: 10px;
 }
 
 .card {
-    /* background-color: #02233b;
-    color: white; 
-    margin: 10px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: calc(50% - 20px); 
-    max-width: 400px; 
-    display: flex; */
     background-color: #02233b;
     color: white;
-    margin: 10px;
+    /* margin: 10px; */
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 25em;
-    /* max-width: 400px; */
+    width: 20em;
     display: flex;
     justify-content: center;
     flex-direction: column;

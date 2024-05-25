@@ -1,13 +1,11 @@
 body {
   display: flex;
   flex-direction: column;
-  padding: 5px 0;
-  min-height: 100vh;
+  padding: 0px;
+  margin: 0px;
   align-items: center;
   background-color: #efd29f;
   justify-content:center;
-  margin-left: 0;
-  margin-right: 0;
 }
 #whatt{
   display: flex;
@@ -32,7 +30,6 @@ body {
   justify-content: center;
   margin: 0px 0px 20px 0px;
   min-height: 10%;
-  
 }
 .circs{
   height:60px;
@@ -235,6 +232,7 @@ canvas {
   width: 100%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  cursor: pointer;
 }
 
 #clues div:first-child {
@@ -412,6 +410,10 @@ article{
 }
 
 @media (max-width: 700px) {
+  body{
+    display: flex;
+    flex-direction: column;
+  }
   section {
     flex-direction: column-reverse;
   }
