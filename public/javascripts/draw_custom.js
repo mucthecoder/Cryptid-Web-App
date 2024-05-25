@@ -1,42 +1,95 @@
 var mapCodeValue = 0,
-  config = 0,clues,hint,dest,
+  config = 0,
+  clues,
+  hint,
+  dest,
   canvas,
   ctx,
   gridSize,
   cellSize,
   imageUrls;
 
+const game_progress=[];
+tilePos = [null, null, null, null, null, null];
 
-function drawIt() {
-  
-      //console.log(data);
-      mapCodeValue=who.mapCode;
-      config = transformString(mapCodeValue);
+fetch("/maps/dictionary.json")
+  .then((response) => response.json())
+  .then((data) => {
+    // Work with the fetched dictionary object
+    dict = data;
+  })
+  .catch((error) => {
+    // Handle errors
+    console.error("Error fetching dictionary:", error);
+  });
 
-      canvas = document.getElementById("myCanvas");
-      ctx = canvas.getContext("2d");
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      clearBox("box");
+function drawIt(data) {
+    try {
+        console.log(data.players);
+        mapCodeValue = data.mapCode;
+        game_progress.push({ mapCode: mapCodeValue });
 
-      // Define the grid layout
-      gridSize = { rows: 3, cols: 2 };
-      cellSize = {
-        width: canvas.width / gridSize.cols,
-        height: canvas.height / gridSize.rows,
-      };
+        // Handle the number of players
+        let num_players = 0;
+        for (let i = 3; i < 6; i++) {
+            if (i in data.players) {
+                num_players = i;
+                sessionStorage.setItem("cryptid-num-players", i);
+            }
+        }
+        console.log(num_players);
+        // Ensure that destination and rules exist for the determined number of players
+        if (!data.players || !data.players[num_players]) {
+            throw new Error("Invalid player data");
+        }
 
-      // List of image URLs
-      imageUrls = [
-        "tiles/" + config[0] + ".png",
-        "tiles/" + config[1] + ".png",
-        "tiles/" + config[2] + ".png",
-        "tiles/" + config[3] + ".png",
-        "tiles/" + config[4] + ".png",
-        "tiles/" + config[5] + ".png",
-      ];
-      //any image
-      loadImages();
+        dest = data.players[num_players][0].destination;
+        clues = data.players[num_players][0].rules;
+        let g = { rules: clues };
+        game_progress.push(g);
 
+        // Transform map code value
+        config = transformString(mapCodeValue);
+
+        // Get canvas context and clear the canvas
+        canvas = document.getElementById("myCanvas");
+        ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        clearBox("box");
+
+        // Define the grid layout
+        gridSize = { rows: 3, cols: 2 };
+        cellSize = {
+            width: canvas.width / gridSize.cols,
+            height: canvas.height / gridSize.rows,
+        };
+
+        // List of image URLs
+        imageUrls = [
+            "tiles/" + config[0] + ".png",
+            "tiles/" + config[1] + ".png",
+            "tiles/" + config[2] + ".png",
+            "tiles/" + config[3] + ".png",
+            "tiles/" + config[4] + ".png",
+            "tiles/" + config[5] + ".png",
+        ];
+
+        tilePos = [
+            config[0],
+            config[1],
+            config[2],
+            config[3],
+            config[4],
+            config[5],
+        ];
+        console.log("done with drawIt, somewhat");
+
+        // Load the images
+        loadImages();
+        console.log("me");
+    } catch (error) {
+        alert("Invalid JSON"+error.message);
+    }
 }
 
 function drawIt2(str) {
@@ -68,7 +121,6 @@ function drawIt2(str) {
 }
 
 function transformString(str) {
-  console.log(str);
   var substr = str.toString().slice(0, 6);
   var transformed = [];
   console.log(substr);
@@ -111,7 +163,7 @@ function transformString2(str) {
 // Function to load images onto the canvas
 function loadImages() {
   var imagesLoaded = 0;
-
+    console.log(imageUrls);
   imageUrls.forEach(function (url, index) {
     var img = new Image();
     img.src = url;
@@ -143,8 +195,9 @@ function loadImages() {
           cellSize.width,
           cellSize.height
         );
+        console.log("This is my ratio" + col * cellSize.width);
       }
-
+      console.log("incrementing");
       imagesLoaded++;
       if (imagesLoaded === imageUrls.length) {
         console.log("i passed");
@@ -179,9 +232,25 @@ function drawTowersAndShacks() {
     drawShack("tiles/p3.png", coordinates[12], coordinates[13]); // Replace "shack-image-url" with actual shack image URL
     drawShack("tiles/p4.png", coordinates[14], coordinates[15]); // Replace "shack-image-url" with actual shack image URL
   }
+  updateTitles();
 }
 
+function updateTitles() {
+  // Loop through all cells and update their titles
+  for (let col = 0; col < 12; col++) {
+    for (let row = 0; row < 9; row++) {
+      const cellClass = `${row},${col}`;
+      const cells = document.getElementsByClassName(cellClass);
+      const cellTitle = rcToString(row, col);
+      var cell = cells[0];
+      cell.title = cellTitle;
+    }
+  }
+}
+
+
 function drawTower(imgUrl, r, c) {
+  addStructureToTitle(r,c, "tower");
   var img = new Image();
   img.src = imgUrl;
   img.style.width = "35%";
@@ -200,7 +269,23 @@ function drawTower(imgUrl, r, c) {
   };
 }
 
+function addStructureToTitle(r,c, structure){
+  if(Math.floor(r/3)==0){
+    if(Math.floor(c/6)==0) listOfAllTiles[config[0]][r%3][c%6]+=", "+structure;
+    else listOfAllTiles[config[1]][r%3][c%6]+=", "+structure;
+  } else if (Math.floor(r/3)==1){
+    if(Math.floor(c/6)==0) listOfAllTiles[config[2]][r%3][c%6]+=", "+structure;
+    else listOfAllTiles[config[3]][r%3][c%6]+=", "+structure;
+  } else{
+    if(Math.floor(c/6)==0) listOfAllTiles[config[4]][r%3][c%6]+=", "+structure;
+    else listOfAllTiles[config[5]][r%3][c%6]+=", "+structure;
+  }
+  console.log(listOfAllTiles[config[0]]);
+}
+
 function drawShack(imgUrl, r, c) {
+  addStructureToTitle(r,c,"shack");
+  console.log("i am drawing shack");
   var img = new Image();
   img.src = imgUrl;
   img.style.width = "35%";
@@ -220,6 +305,20 @@ function drawShack(imgUrl, r, c) {
 }
 // Call the function to load images
 
+function rcToString(r,c){
+  console.log("My config "+config[0])
+  if(Math.floor(r/3)==0){
+    if(Math.floor(c/6)==0) return listOfAllTiles[config[0]][r%3][c%6];
+    else return listOfAllTiles[config[1]][r%3][c%6];
+  } else if (Math.floor(r/3)==1){
+    if(Math.floor(c/6)==0) return listOfAllTiles[config[2]][r%3][c%6];
+    else return listOfAllTiles[config[3]][r%3][c%6];
+  } else{
+    if(Math.floor(c/6)==0) return listOfAllTiles[config[4]][r%3][c%6];
+    else return listOfAllTiles[config[5]][r%3][c%6];
+  }
+}
+
 // Add this code after defining the canvas and context variables
 
 function setUp() {
@@ -232,12 +331,19 @@ function setUp() {
       column.classList.add("cdown-2");
     }
     for (let row = 0; row < 9; row++) {
-      const cell = document.createElement("div");
-      cell.classList.add("cell");
-      cell.classList.add(`${row},${col}`);
-    
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.classList.add(`${row},${col}`);
+      
+        cell.onclick = function () {
+          cellClicked(`${row},${col}`);
+          //on_starter(`${row},${col}`);
+          // row//3 col//2
+        };
+      
       //cell.addEventListener("click",interact);
       cell.style.backgroundColor = "#80808000";
+      hover(cell, row, col);
       column.appendChild(cell);
     }
     box.appendChild(column);
@@ -251,3 +357,32 @@ function clearBox(elementID) {
   }
 }
 
+function hover(cell, r,c) {
+  cell.addEventListener("mouseenter", function () {
+    // Set background color with RGBA (red, green, blue, alpha) values only on hover
+    // Example RGBA color (light blue with 50% opacity)
+    var classesArray = Array.from(cell.classList);
+    if (classesArray.includes("neg"))
+      this.style.backgroundColor = "rgba(255, 0, 0, 0.4)";
+    else if(looking==false)this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
+  });
+
+  cell.addEventListener("mouseleave", function () {
+    // Reset background color when mouse leaves
+    if(looking==false || cell!=currentHex) this.style.backgroundColor = "rgba(128, 128, 128, 0)"; // Restore initial background color on mouse leave
+  });
+  cell.title = rcToString(r,c);
+}
+
+function custom_hover(cell, val) {
+  console.log(cell);
+  cell.addEventListener("mouseenter", function () {
+    if (val) this.style.backgroundColor = "rgba(255, 0, 0, 0.4)";
+    else if(looking==false) this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
+  });
+
+  cell.addEventListener("mouseleave", function () {
+    this.style.backgroundColor = "rgba(128, 128, 128, 0)";
+  });
+  cell.title = "cell";
+}

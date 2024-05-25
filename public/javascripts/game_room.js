@@ -11,5 +11,5 @@ function join(){
 }
 function browse(){
     console.log("coming soon");
-    window.location.href="/create-map";
+    window.location.href="/custom-options";
 }
