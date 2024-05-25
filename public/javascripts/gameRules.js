@@ -1084,4 +1084,3 @@ function on_game_start(player){
     document.getElementById("notifier").textContent=`You are ${capitalizeFirstLetter(my_colour)}, ${capitalizeFirstLetter(player)}'s Turn`;
   }
 }
-
