@@ -12,9 +12,9 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
         res.redirect('/home');
 });
 
-router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+router.get('/github', passport.authenticate('github', { scope: ['email'] }));
 
-router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/users/login' }),
+router.get('/github/callback', passport.authenticate('github', { failureRedirect: '/users/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
     req.session.user_id = req.user._id;
