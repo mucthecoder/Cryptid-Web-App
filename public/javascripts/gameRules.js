@@ -151,13 +151,13 @@ function cellClicked(cellClass) {
 // ================================================================================================================================
 // ================================================================================================================================
 // ================================================================================================================================
-  console.log("============================================================");
+  // console.log("============================================================");
   // Helper function to check adjacent cells
   function checkAdjacent(r, c,withinFeature) {
     if (r < 0 || r > 8 || c < 0 || c > 11) return false;
     let cell = document.getElementsByClassName(`${r},${c}`)[0];
-    console.log(cell, withinFeature,cell.getAttribute("title").toLowerCase().includes(withinFeature));
-    cell.style.backgroundColor = "black";
+    // console.log(cell, withinFeature,cell.getAttribute("title").toLowerCase().includes(withinFeature));
+    // cell.style.backgroundColor = "black";
     return cell && cell.getAttribute("title").toLowerCase().includes(withinFeature);
   }
 
@@ -241,7 +241,7 @@ function cellClicked(cellClass) {
   }
   // Check if the clue involves being within one space of something
   if (clue.includes("The habitat is within one space of ")) {
-    console.log(splitting(clue,7));
+    // console.log(splitting(clue,7));
     let withinFeature = splitting(clue,8)[7].toLowerCase();
     let r = Number(tag.classList[1].split(",")[0]);
     let c = Number(tag.classList[1].split(",")[1]);
@@ -251,7 +251,7 @@ function cellClicked(cellClass) {
     }
  
     let anyTrue = false;
-    console.log(document.getElementsByClassName(`${r},${c}`)[0]);
+    // console.log(document.getElementsByClassName(`${r},${c}`)[0]);
 
     // Check adjacent cells in each direction
     let to_use;
@@ -276,7 +276,7 @@ function cellClicked(cellClass) {
   }
   // The habitat is within two spaces of a something
   if (clue.includes("The habitat is within two spaces of a ")) {
-    console.log(splitting(clue,8));
+    // console.log(splitting(clue,8));
     let withinFeature = splitting(clue,8)[8].toLowerCase();
     let r = Number(tag.classList[1].split(",")[0]);
     let c = Number(tag.classList[1].split(",")[1]);
@@ -286,7 +286,7 @@ function cellClicked(cellClass) {
     }
 
     let anyTrue = false;
-    console.log(document.getElementsByClassName(`${r},${c}`)[0]);
+    // console.log(document.getElementsByClassName(`${r},${c}`)[0]);
 
     // Check adjacent cells in each direction
     let to_use;
@@ -324,7 +324,7 @@ function cellClicked(cellClass) {
   }
   // The habitat is within two spaces of a something
   if (clue.includes("The habitat is within three spaces of a ")) {
-    console.log(splitting(clue,8));
+    // console.log(splitting(clue,8));
     let withinFeature = splitting(clue,8)[8].toLowerCase();
     let r = Number(tag.classList[1].split(",")[0]);
     let c = Number(tag.classList[1].split(",")[1]);
@@ -334,7 +334,7 @@ function cellClicked(cellClass) {
     }
 
     let anyTrue = false;
-    console.log(document.getElementsByClassName(`${r},${c}`)[0]);
+    // console.log(document.getElementsByClassName(`${r},${c}`)[0]);
 
     // Check adjacent cells in each direction
     let to_use;
@@ -397,7 +397,7 @@ function cellClicked(cellClass) {
   }
   // Check if the clue involves being within one space of something
   if (clue.includes("The habitat is not within one space of ")) {
-    console.log(splitting(clue,7));
+    // console.log(splitting(clue,7));
     let withinFeature = splitting(clue,8)[7].toLowerCase();
     let r = Number(tag.classList[1].split(",")[0]);
     let c = Number(tag.classList[1].split(",")[1]);
@@ -407,7 +407,7 @@ function cellClicked(cellClass) {
     }
   
     let anyTrue = false;
-    console.log(document.getElementsByClassName(`${r},${c}`)[0]);
+    // console.log(document.getElementsByClassName(`${r},${c}`)[0]);
 
     // Check adjacent cells in each direction
     let to_use;
@@ -432,7 +432,7 @@ function cellClicked(cellClass) {
   }
   // The habitat is not within two spaces of a something
   if (clue.includes("The habitat is not within two spaces of a ")) {
-    console.log(splitting(clue,8));
+    // console.log(splitting(clue,8));
     let withinFeature = splitting(clue,8)[8].toLowerCase();
     let r = Number(tag.classList[1].split(",")[0]);
     let c = Number(tag.classList[1].split(",")[1]);
@@ -442,7 +442,7 @@ function cellClicked(cellClass) {
     }
 
     let anyTrue = false;
-    console.log(document.getElementsByClassName(`${r},${c}`)[0]);
+    // console.log(document.getElementsByClassName(`${r},${c}`)[0]);
 
     // Check adjacent cells in each direction
     let to_use;
@@ -480,7 +480,7 @@ function cellClicked(cellClass) {
   }
   // The habitat is not within two spaces of a something
   if (clue.includes("The habitat is not within three spaces of a ")) {
-    console.log(splitting(clue,8));
+    // console.log(splitting(clue,8));
     let withinFeature = splitting(clue,8)[8].toLowerCase();
     let r = Number(tag.classList[1].split(",")[0]);
     let c = Number(tag.classList[1].split(",")[1]);
@@ -490,7 +490,7 @@ function cellClicked(cellClass) {
     }
 
     let anyTrue = false;
-    console.log(document.getElementsByClassName(`${r},${c}`)[0]);
+    // console.log(document.getElementsByClassName(`${r},${c}`)[0]);
 
     // Check adjacent cells in each direction
     let to_use;
@@ -544,7 +544,7 @@ function cellClicked(cellClass) {
 
 
 
-  console.log("============================================================");
+  // console.log("============================================================");
  // ================================================================================================================================
  // ================================================================================================================================
  // ================================================================================================================================
