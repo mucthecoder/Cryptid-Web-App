@@ -17,8 +17,8 @@ const userController = require("./controllers/userController");
 //=============== Auth =====================
 const Google_Email = require("./auth/passport.js").Google_Email;
 Google_Email(passport);
-const Facebook_Email = require("./auth/passport.js").Facebook_Email;
-Facebook_Email(passport);
+const Github_Email = require("./auth/passport.js").Github_Email;
+Github_Email(passport);
 
 //=========================================== 
 
