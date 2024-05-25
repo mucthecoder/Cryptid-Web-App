@@ -1,6 +1,6 @@
 //passport.js for fb and google auth
 //importing the requirements for passportfb and passportgoogle
-const FacebookStrategy = require('passport-facebook').Strategy;
+const GithubStrategy = require('passport-github2').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require("../models/user.model");
 
@@ -47,13 +47,13 @@ const Google_Email = (passport)=>{
     });
 };
 
-const Facebook_Email = (passport)=>{
-    FACEBOOK_CLIENT_ID = "1216354019390857";
-    FACEBOOK_CLIENT_SECRET = "480713efd2f7b5d741d2390935766641";
-    passport.use(new FacebookStrategy({
-        clientID: FACEBOOK_CLIENT_ID,
-        clientSecret: FACEBOOK_CLIENT_SECRET,
-        callbackURL: "https://playcryptidweb.azurewebsites.net/auth/facebook/callback"
+const Github_Email = (passport)=>{
+GITHUB_CLIENT_ID = "Ov23liIefbbuV1FBRc19";
+    GITHUB_CLIENT_SECRET = "00a6ef40f316471edca18854f7dff1b73fbbe60c";
+    passport.use(new GithubStrategy({
+        clientID: GITHUB_CLIENT_ID,
+        clientSecret: GITHUB_CLIENT_SECRET,
+        callbackURL: "https://playcryptidweb.azurewebsites.net/auth/github/callback"
     },
     async (accessToken, refreshToken, profile, done) => {
         try {
@@ -94,5 +94,5 @@ const Facebook_Email = (passport)=>{
 
 module.exports = {
     Google_Email,
-    Facebook_Email
+    Github_Email
 }
