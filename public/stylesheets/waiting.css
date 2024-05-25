@@ -1,13 +1,14 @@
 body {
     margin: 0;
-    height: 100vh; /* Set the height of the body to the viewport height */
+    /* height: 100vh; Set the height of the body to the viewport height */
     display: flex;
     flex-direction: column;
     justify-content: flex-start; /* Align items to the top of the page */
     align-items: center;
-    background-image: url("../images/LOOBY.png");
+    background-image: url("../images/normal.jpeg");
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    padding: 1em;
 }
 .bigger{
     display: flex;
@@ -87,7 +88,7 @@ header{
     font-size: 100px;
     font-weight: bold;
     font-family: cursive;
-    color: #556B2F; /* Red color for the title */
+    color: white; /* Red color for the title */
     margin-top: 50px;
 }
 
