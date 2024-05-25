@@ -103,7 +103,7 @@ router.get('/play-custom', verify, function(req, res, next) {
   res.sendFile(filePath);
 });
 
-router.get('/waiting', verify, function(req, res, next) {
+router.get('/waiting', function(req, res, next) {
   const filePath = path.join(__dirname, "../public/waiting.html");
   res.sendFile(filePath);
 });

@@ -21,6 +21,10 @@ if (mode!=null){
     document.getElementById("mode").textContent=mode;
 }
 
+if (goal=="join"){
+    let g=document.getElementById("starter");
+    if (g) g.parentNode.removeChild(g);
+}
 
 let met = document.getElementById("myname");
 // console.log(typeof met);
