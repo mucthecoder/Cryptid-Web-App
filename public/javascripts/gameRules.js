@@ -121,6 +121,23 @@ function nothing(what){
   console.log("stupid");
 }
 
+function splitting(clue_word, count){
+  // let clue = "The habitat is within two spaces of a blue shack";
+  let words = clue_word.split(" ");
+  let result = [];
+
+  // Push the first 8 words as individual elements
+  for (let i = 0; i < count; i++) {
+    result.push(words[i]);
+  }
+
+  // Combine the remaining words into the last element
+  result.push(words.slice(count).join(" "));
+
+  return result;
+}
+
+
 function cellClicked(cellClass) {
   var cells = document.getElementsByClassName(cellClass);
   var cell = cells[0];
@@ -128,7 +145,411 @@ function cellClicked(cellClass) {
     console.log("Game is finished");
     return;
   }
+
   if (round < 2) {
+// ================================================================================================================================
+// ================================================================================================================================
+// ================================================================================================================================
+// ================================================================================================================================
+  // console.log("============================================================");
+  // Helper function to check adjacent cells
+  function checkAdjacent(r, c,withinFeature) {
+    if (r < 0 || r > 8 || c < 0 || c > 11) return false;
+    let cell = document.getElementsByClassName(`${r},${c}`)[0];
+    // console.log(cell, withinFeature,cell.getAttribute("title").toLowerCase().includes(withinFeature));
+    // cell.style.backgroundColor = "black";
+    return cell && cell.getAttribute("title").toLowerCase().includes(withinFeature);
+  }
+
+  // Define the six directions in a hexagonal grid (clockwise)
+  const directionsU = [
+    { dr: -1,  dc: 0  },
+    { dr: 0 ,  dc: -1  }, 
+    { dr: 1 ,  dc: -1  }, 
+    { dr: 1 ,  dc: 0 },
+    { dr: 1 ,  dc: 1 },
+    { dr: 0 ,  dc: 1  },
+
+    // for down U
+    { dr:-2, dc:  0 },
+    { dr:-1, dc: -1 }, 
+    { dr:-1, dc: -2 }, 
+    { dr: 0, dc: -2 },
+    { dr: 1, dc: -2 },
+    { dr: 2, dc: -1 },
+    { dr: 2, dc:  0 },
+    { dr: 2, dc:  1 }, 
+    { dr: 1, dc:  2 }, 
+    { dr: 0, dc:  2 },
+    { dr:-1, dc:  2 },
+    { dr:-1, dc:  1 },
+
+    { dr: -3, dc: 0 },   // up 3
+    { dr: -2, dc: -1 },  // up 2, left 1
+    { dr: -1, dc: -2 },  // up 1, left 2
+    { dr: 0, dc: -3 },   // left 3
+    { dr: 1, dc: -3 },   // down 1, left 3
+    { dr: 2, dc: -2 },   // down 2, left 2
+    { dr: 3, dc: -1 },   // down 3, left 1
+    { dr: 3, dc: 0 },    // down 3
+    { dr: 3, dc: 1 },    // down 3, right 1
+    { dr: 2, dc: 2 },    // down 2, right 2
+    { dr: 1, dc: 3 },    // down 1, right 3
+    { dr: 0, dc: 3 },    // right 3
+    { dr: -1, dc: 3 },   // up 1, right 3
+    { dr: -2, dc: 2 },   // up 2, right 2
+    { dr: -3, dc: 1 },   // up 3, right 1
+    { dr: -3, dc: -1 },  // up 3, left 1
+    { dr: -2, dc: -2 },  // up 2, left 2
+    { dr: -1, dc: -3 }   // up 1, left 3
+  ];
+
+  const directions = [
+    { dr: -1,  dc: 0  },
+    { dr: -1 ,  dc: -1  }, 
+    { dr: 0 ,  dc: -1  }, 
+    { dr: 1 ,  dc: 0 },
+    { dr: 0 ,  dc: 1 },
+    { dr: -1 ,  dc: 1  },
+    // for down 
+    { dr: -2 ,  dc:  0  },
+    { dr: -2 ,  dc: -1  }, 
+    { dr: -1 ,  dc: -2  }, 
+    { dr:  0 ,  dc: -2  },
+    { dr:  1 ,  dc: -2  },
+    { dr:  1 ,  dc: -1  },
+    { dr:  2 ,  dc:  0  },
+    { dr:  1 ,  dc:  1  }, 
+    { dr:  1 ,  dc:  2  }, 
+    { dr:  0 ,  dc:  2  },
+    { dr: -1 ,  dc:  2  },
+    { dr: -2 ,  dc:  1  },
+
+  ];
+
+  const index = colors.findIndex(temp => temp == turnList[turn]);
+  let clue = clues[index];
+  let tag = document.getElementsByClassName(cellClass)[0];
+  let hegot = tag.getAttribute("title");
+
+  // Check if the title matches the clue
+  if(clue.includes("The habitat is on ")){
+    if (hegot.toLowerCase().includes(clue.split(" ")[4].toLowerCase())  || hegot.toLowerCase().includes(clue.split(" ")[6].toLowerCase())) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+  }
+  // Check if the clue involves being within one space of something
+  if (clue.includes("The habitat is within one space of ")) {
+    // console.log(splitting(clue,7));
+    let withinFeature = splitting(clue,8)[7].toLowerCase();
+    let r = Number(tag.classList[1].split(",")[0]);
+    let c = Number(tag.classList[1].split(",")[1]);
+    if (hegot.toLowerCase().includes(withinFeature)) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+ 
+    let anyTrue = false;
+    // console.log(document.getElementsByClassName(`${r},${c}`)[0]);
+
+    // Check adjacent cells in each direction
+    let to_use;
+    if((c + 1)%2 == 0){
+      to_use = directionsU;
+    }
+    else{
+      to_use = directions;
+    }
+    for (let i = 0; i < 6; i++) {
+      let dir = to_use[i];
+      if (checkAdjacent(r + dir.dr, c + dir.dc,withinFeature)) {
+        anyTrue = true;
+        break; // If any adjacent cell is true, no need to continue checking
+      }
+    }
+    if (anyTrue) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+   
+  }
+  // The habitat is within two spaces of a something
+  if (clue.includes("The habitat is within two spaces of a ")) {
+    // console.log(splitting(clue,8));
+    let withinFeature = splitting(clue,8)[8].toLowerCase();
+    let r = Number(tag.classList[1].split(",")[0]);
+    let c = Number(tag.classList[1].split(",")[1]);
+    if (hegot.toLowerCase().includes(splitting(clue,8)[8].toLowerCase())) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+
+    let anyTrue = false;
+    // console.log(document.getElementsByClassName(`${r},${c}`)[0]);
+
+    // Check adjacent cells in each direction
+    let to_use;
+    if((c + 1)%2 == 0){
+      to_use = directionsU;
+    }
+    else{
+      to_use = directions;
+    }
+    for (let i = 0; i < 6; i++) {
+      let dir = to_use[i];
+
+      if (checkAdjacent(r + dir.dr, c + dir.dc,withinFeature)) {
+        anyTrue = true;
+        break; // If any adjacent cell is true, no need to continue checking
+      }
+    }
+    if (anyTrue) {
+    alert("Invalid move to insert on a negative");
+      return;
+    }
+
+   // Check adjacent cells up to 2 spaces away in each direction
+    for (let i = 6; i < 18; i++) {
+      let dir = to_use[i];
+      if (checkAdjacent(r + dir.dr, c + dir.dc,withinFeature)) {
+        anyTrue = true;
+        break; // If any adjacent cell is true, no need to continue checking
+      }
+    }
+    if (anyTrue) {
+    alert("Invalid move to insert on a negative");
+      return;
+    }
+  }
+  // The habitat is within two spaces of a something
+  if (clue.includes("The habitat is within three spaces of a ")) {
+    // console.log(splitting(clue,8));
+    let withinFeature = splitting(clue,8)[8].toLowerCase();
+    let r = Number(tag.classList[1].split(",")[0]);
+    let c = Number(tag.classList[1].split(",")[1]);
+    if (hegot.toLowerCase().includes(splitting(clue,8)[8].toLowerCase())) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+
+    let anyTrue = false;
+    // console.log(document.getElementsByClassName(`${r},${c}`)[0]);
+
+    // Check adjacent cells in each direction
+    let to_use;
+    if((c + 1)%2 == 0){
+      to_use = directionsU;
+    }
+    else{
+      to_use = directions;
+    }
+    for (let i = 0; i < 6; i++) {
+      let dir = to_use[i];
+
+      if (checkAdjacent(r + dir.dr, c + dir.dc,withinFeature)) {
+        anyTrue = true;
+        break; // If any adjacent cell is true, no need to continue checking
+      }
+    }
+    if (anyTrue) {
+    alert("Invalid move to insert on a negative");
+      return;
+    }
+    // Check adjacent cells up to 2 spaces away in each direction
+    for (let i = 6; i < 18; i++) {
+      let dir = to_use[i];
+      if (checkAdjacent(r + dir.dr, c + dir.dc,withinFeature)) {
+        anyTrue = true;
+        break; // If any adjacent cell is true, no need to continue checking
+      }
+    }
+
+    if (anyTrue) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+
+  // Check adjacent cells up to 3 spaces away in each direction
+  // for (let i = 18; i < 36; i++) {
+  //   let dir = directionsU[i];//to_use[i];
+  //   if (checkAdjacent(r + dir.dr, c + dir.dc,withinFeature)) {
+  //     anyTrue = true;
+  //     // break; // If any adjacent cell is true, no need to continue checking
+  //   }
+  // }
+
+  // if (anyTrue) {
+  //   alert("2.4 = Invalid move to insert on a negative");
+  //   return;
+  // }
+
+  }
+
+  // ========not=================
+
+  // Check if the title matches the clue
+  if(clue.includes("The habitat is not on ")){
+    if (!hegot.toLowerCase().includes(clue.split(" ")[4].toLowerCase())  && !hegot.toLowerCase().includes(clue.split(" ")[6].toLowerCase())) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+  }
+  // Check if the clue involves being within one space of something
+  if (clue.includes("The habitat is not within one space of ")) {
+    // console.log(splitting(clue,7));
+    let withinFeature = splitting(clue,8)[7].toLowerCase();
+    let r = Number(tag.classList[1].split(",")[0]);
+    let c = Number(tag.classList[1].split(",")[1]);
+    if (!hegot.toLowerCase().includes(withinFeature)) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+  
+    let anyTrue = false;
+    // console.log(document.getElementsByClassName(`${r},${c}`)[0]);
+
+    // Check adjacent cells in each direction
+    let to_use;
+    if((c + 1)%2 == 0){
+      to_use = directionsU;
+    }
+    else{
+      to_use = directions;
+    }
+    for (let i = 0; i < 6; i++) {
+      let dir = to_use[i];
+      if (checkAdjacent(r + dir.dr, c + dir.dc,withinFeature)) {
+        anyTrue = true;
+        break; // If any adjacent cell is true, no need to continue checking
+      }
+    }
+    if (!anyTrue) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+    
+  }
+  // The habitat is not within two spaces of a something
+  if (clue.includes("The habitat is not within two spaces of a ")) {
+    // console.log(splitting(clue,8));
+    let withinFeature = splitting(clue,8)[8].toLowerCase();
+    let r = Number(tag.classList[1].split(",")[0]);
+    let c = Number(tag.classList[1].split(",")[1]);
+    if (!hegot.toLowerCase().includes(splitting(clue,8)[8].toLowerCase())) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+
+    let anyTrue = false;
+    // console.log(document.getElementsByClassName(`${r},${c}`)[0]);
+
+    // Check adjacent cells in each direction
+    let to_use;
+    if((c + 1)%2 == 0){
+      to_use = directionsU;
+    }
+    else{
+      to_use = directions;
+    }
+    for (let i = 0; i < 6; i++) {
+      let dir = to_use[i];
+
+      if (checkAdjacent(r + dir.dr, c + dir.dc,withinFeature)) {
+        anyTrue = true;
+        break; // If any adjacent cell is true, no need to continue checking
+      }
+    }
+    if (!anyTrue) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+
+    // Check adjacent cells up to 2 spaces away in each direction
+    for (let i = 6; i < 18; i++) {
+      let dir = to_use[i];
+      if (checkAdjacent(r + dir.dr, c + dir.dc,withinFeature)) {
+        anyTrue = true;
+        break; // If any adjacent cell is true, no need to continue checking
+      }
+    }
+    if (!anyTrue) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+  }
+  // The habitat is not within two spaces of a something
+  if (clue.includes("The habitat is not within three spaces of a ")) {
+    // console.log(splitting(clue,8));
+    let withinFeature = splitting(clue,8)[8].toLowerCase();
+    let r = Number(tag.classList[1].split(",")[0]);
+    let c = Number(tag.classList[1].split(",")[1]);
+    if (!hegot.toLowerCase().includes(splitting(clue,8)[8].toLowerCase())) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+
+    let anyTrue = false;
+    // console.log(document.getElementsByClassName(`${r},${c}`)[0]);
+
+    // Check adjacent cells in each direction
+    let to_use;
+    if((c + 1)%2 == 0){
+      to_use = directionsU;
+    }
+    else{
+      to_use = directions;
+    }
+    for (let i = 0; i < 6; i++) {
+      let dir = to_use[i];
+
+      if (checkAdjacent(r + dir.dr, c + dir.dc,withinFeature)) {
+        anyTrue = true;
+        break; // If any adjacent cell is true, no need to continue checking
+      }
+    }
+    if (!anyTrue) {
+    alert("Invalid move to insert on a negative");
+      return;
+    }
+    // Check adjacent cells up to 2 spaces away in each direction
+    for (let i = 6; i < 18; i++) {
+      let dir = to_use[i];
+      if (checkAdjacent(r + dir.dr, c + dir.dc,withinFeature)) {
+        anyTrue = true;
+        break; // If any adjacent cell is true, no need to continue checking
+      }
+    }
+
+    if (!anyTrue) {
+      alert("Invalid move to insert on a negative");
+      return;
+    }
+
+  // Check adjacent cells up to 3 spaces away in each direction
+  // for (let i = 18; i < 36; i++) {
+  //   let dir = directionsU[i];//to_use[i];
+  //   if (checkAdjacent(r + dir.dr, c + dir.dc,withinFeature)) {
+  //     anyTrue = true;
+  //     // break; // If any adjacent cell is true, no need to continue checking
+  //   }
+  // }
+
+  // if (anyTrue) {
+  //   alert("2.4 = Invalid move to insert on a negative");
+  //   return;
+  // }
+
+  }
+
+
+
+  // console.log("============================================================");
+ // ================================================================================================================================
+ // ================================================================================================================================
+ // ================================================================================================================================
+ // ================================================================================================================================
+
     var shapeDiv = createPiece("square");
     var classesArray = Array.from(cell.classList);
     var classToAdd = turnList[turn];
@@ -663,3 +1084,4 @@ function on_game_start(player){
     document.getElementById("notifier").textContent=`You are ${capitalizeFirstLetter(my_colour)}, ${capitalizeFirstLetter(player)}'s Turn`;
   }
 }
+
