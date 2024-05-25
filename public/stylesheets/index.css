@@ -1,3 +1,21 @@
 .nav-link:hover {
     background-color: lightgray; /* Change color to your desired color */
 }
+
+/* Media queries for responsiveness */
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    header .nav li {
+        display: block;
+        margin: 10px 0;
+    }
+    header .nav a {
+        font-size: 0.8em; /* Smaller font size on smaller screens */
+        padding: 3px 10px; /* Smaller padding on smaller screens */
+    }
+
+}
