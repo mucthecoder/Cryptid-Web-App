@@ -86,11 +86,11 @@ h6 span{
   position: relative;
   width: 540px;
   max-width: 100%;
-  height: 490px;
+  height: 520px;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   perspective: 800px;
-  margin-top: 60px;
+  margin-top: 30px;
 }
 .card-3d-wrapper {
   width: 100%;
@@ -349,4 +349,15 @@ h6 span{
 
 .click_2:hover{
   background-color: #044a7c;
+}
+
+.strength, #taken{
+  display: none;
+  color: red;
+}
+
+.strength ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
