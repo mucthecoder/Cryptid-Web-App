@@ -19,7 +19,7 @@ const Google_Email = (passport)=>{
                 if (!user) {
                     user = new User({
                         OAuthID: profile.id,
-                        email: profile.emails[0].value,
+                        emails: profile.emails.map(email => email.value),
                         username: profile.displayName,
                         usertType:"user"
                     });
