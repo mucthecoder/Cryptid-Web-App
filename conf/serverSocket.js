@@ -26,6 +26,9 @@ class lobby {
 }
 
 
+const onlineUsers = {};
+
+
 function code_gen(number) {
     let base36String = number.toString(36);
     const fixedPattern = 'uniqueid';
@@ -601,7 +604,30 @@ function configureSocketIO(server) {
             if (h!=-1){
                 custom_lobbies.splice(h,1);
             }
+
+            // =======================================
+            const username = onlineUsers[socket.id];
+
+            if (username) {
+                delete onlineUsers[socket.id];
+
+                // io.emit("allonlineusers", Object.values(onlineUsers));
+            }
+            // ============================
         });
+
+        // ================= 
+        
+        socket.on("joinedusername", (username) => {
+            onlineUsers[socket.id] = username;
+            
+            // io.emit("allonlineusers", Object.values(onlineUsers));
+        });
+
+        socket.on("audio", (data) => {
+            socket.broadcast.emit("audio1", data);
+        });
+
     });
 
     return io;
