@@ -34,15 +34,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const imageRow = document.getElementById("image-row");
   const flipButton = document.getElementById("flip");
 
-  // Set to track images currently in cells
-  //const imagesInCells = new Set();
-
   // Function to handle drag start event
+  const handleDragStart = (e) => {
+    console.log("Drag started:", e.target.id);
+    e.dataTransfer.setData("text/plain", e.target.id);
+  };
+
   images.forEach((img) => {
-    img.addEventListener("dragstart", (e) => {
-      console.log("Drag started:", e.target.id);
-      e.dataTransfer.setData("text/plain", e.target.id);
-    });
+    img.addEventListener("dragstart", handleDragStart);
   });
 
   // Function to handle drag over event for grid cells
@@ -67,35 +66,16 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Dropped:", imgId, "into", e.currentTarget.id);
     if (img) {
       if (e.currentTarget.classList.contains("grid-cell")) {
-        // Get the cell index
         const cellIndex = Array.from(cells).indexOf(e.currentTarget);
         if (e.currentTarget.children.length === 0) {
-          // Clone the image and append it to the cell
           const clonedImg = img.cloneNode(true);
-          clonedImg.id = imgId + "-clone";
+          clonedImg.id = imgId + "-clone-" + cellIndex; // Assign unique id based on cell index
+          clonedImg.addEventListener("dragstart", handleDragStart);
           e.currentTarget.appendChild(clonedImg);
 
-          // Update the tracking array and set
-          //const prevCellIndex = cellImageArray.indexOf(imgId);
-          // if (prevCellIndex !== -1) {
-          //     //cellImageArray[prevCellIndex] = null;
-          //     imagesInCells.delete(imgId);
-          // }
-          cellImageArray[cellIndex] = imgId;
-          //imagesInCells.add(imgId);
+          cellImageArray[cellIndex] = imgId; // Update the array with the current image
         } else {
           console.log("Cell is not empty:", e.currentTarget.id);
-        }
-      } else {
-        console.log("Dropping into an invalid area:", e.currentTarget.id);
-        if (!e.currentTarget.classList.contains("image-row")) {
-          // If image is dropped outside the cells, remove it
-          const prevCellIndex = cellImageArray.indexOf(imgId);
-          if (prevCellIndex !== -1) {
-            cellImageArray[prevCellIndex] = null;
-            imagesInCells.delete(imgId);
-          }
-          img.remove();
         }
       }
     } else {
@@ -111,6 +91,29 @@ document.addEventListener("DOMContentLoaded", () => {
     cell.addEventListener("drop", handleDrop);
   });
 
+  // Add event listener for drop event on the document to handle removing images
+  document.addEventListener("drop", (e) => {
+    e.preventDefault();
+    const imgId = e.dataTransfer.getData("text/plain");
+    const img = document.getElementById(imgId);
+    if (img && !Array.from(cells).includes(e.target) && !imageRow.contains(e.target)) {
+      const imgParentCell = img.parentElement;
+      if (imgParentCell && imgParentCell.classList.contains("grid-cell")) {
+        const cellIndex = Array.from(cells).indexOf(imgParentCell);
+        if (cellIndex !== -1) {
+          cellImageArray[cellIndex] = null; // Clear the cell image array entry
+          imgParentCell.removeChild(img); // Remove the image from the cell
+          console.log("Removed image:", imgId, "from cell index:", cellIndex);
+        }
+      }
+    }
+    console.log("Current cellImageArray:", cellImageArray);
+  });
+
+  document.addEventListener("dragover", (e) => {
+    e.preventDefault();
+  });
+
   // Flip button functionality
   flipButton.addEventListener("click", () => {
     const firstSet = document.querySelectorAll(
@@ -121,26 +124,12 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     firstSet.forEach((img) => {
-      if (true) {
-        img.style.display = img.style.display === "none" ? "inline" : "none";
-      }
+      img.style.display = img.style.display === "none" ? "inline" : "none";
     });
 
     secondSet.forEach((img) => {
-      if (true) {
-        img.style.display = img.style.display === "none" ? "inline" : "none";
-      }
+      img.style.display = img.style.display === "none" ? "inline" : "none";
     });
-
-    // Track the visibility state of the first set
-    // const isFirstSetVisible = Array.from(firstSet).every(img => img.style.display !== 'none');
-    // if (isFirstSetVisible) {
-    //     firstSet.forEach(img => img.style.display = 'none');
-    //     secondSet.forEach(img => img.style.display = 'inline');
-    // } else {
-    //     firstSet.forEach(img => img.style.display = 'inline');
-    //     secondSet.forEach(img => img.style.display = 'none');
-    // }
   });
 });
 
@@ -157,7 +146,6 @@ function submitConfig() {
     console.log("here is the mapstring" + mapstring);
 
     document.getElementById("image-row").remove();
-    document.getElementById("flip").remove();
     document.querySelector(".grid-container").remove();
     document.getElementById("submit-button").remove();
 
@@ -169,6 +157,8 @@ function submitConfig() {
     // Append the buttons to the buttons div
     document.getElementById("buttons").appendChild(introButton);
     document.getElementById("buttons").appendChild(normalButton);
+
+    document.getElementById("para").textContent="Choose your difficulty";
   }
 }
 
@@ -201,7 +191,7 @@ function cellClicked(cellClass) {
       document.getElementById("buttons").appendChild(img2);
     } else {
       const textElement = document.createElement("p");
-      textElement.textContent = "Pick destination";
+      textElement.textContent = "Destination";
       document.getElementById("buttons").appendChild(textElement);
     }
     console.log("mapstring so far" + mapstring);
@@ -346,8 +336,10 @@ function playButtonClickHandler() {
 function button3ClickHandler() {
   console.log("Button 3 clicked");
   // Your code for button 3 click handler
+  document.getElementById("para").textContent="Name your rules then play";
   arrayOfEverything.push(3);
   const buttonsDiv = document.getElementById("buttons");
+  buttonsDiv.style.flexDirection='column';
   buttonsDiv.innerHTML = "";
 
   // Add three text inputs
@@ -372,8 +364,10 @@ function button3ClickHandler() {
 function button4ClickHandler() {
   console.log("Button 4 clicked");
   // Your code for button 4 click handler
+  document.getElementById("para").textContent="Name your rules then play";
   arrayOfEverything.push(4);
   const buttonsDiv = document.getElementById("buttons");
+  buttonsDiv.style.flexDirection='column';
   buttonsDiv.innerHTML = "";
 
   // Add three text inputs
@@ -398,8 +392,10 @@ function button4ClickHandler() {
 function button5ClickHandler() {
   console.log("Button 5 clicked");
   // Your code for button 5 click handler
+  document.getElementById("para").textContent="Name your rules then play";
   arrayOfEverything.push(5);
   const buttonsDiv = document.getElementById("buttons");
+  buttonsDiv.style.flexDirection='column';
   buttonsDiv.innerHTML = "";
 
   // Add three text inputs
@@ -433,6 +429,9 @@ function addButtons() {
   buttonsDiv.appendChild(button3);
   buttonsDiv.appendChild(button4);
   buttonsDiv.appendChild(button5);
+
+  document.getElementById("para").textContent="Choose number of players";
+
 }
 
 function createButton(text, clickHandler) {
@@ -481,6 +480,8 @@ function introFunction() {
   img.style.width = "50px";
   img.style.height = "50px"; // Replace 'path/to/your/image.png' with the actual path to your image
   document.getElementById("buttons").appendChild(img);
+
+  document.getElementById("para").textContent="Choose where to place the below piece:";
 }
 
 function normalFunction() {
@@ -495,6 +496,8 @@ function normalFunction() {
   img.style.width = "50px";
   img.style.height = "50px"; // Replace 'path/to/your/image.png' with the actual path to your image
   document.getElementById("buttons").appendChild(img);
+
+  document.getElementById("para").textContent="Choose where to place the below piece:";
 }
 
 function drawIt2(str) {

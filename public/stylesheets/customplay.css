@@ -17,7 +17,21 @@ button{
 #buttons{
   margin: 15px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#buttons button{
+  background-color: #0000;
+  padding: 10px;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 10px;
+}
+
+#buttons button:hover{
+  background-color: #0001;
 }
 
 input{
@@ -33,6 +47,20 @@ input{
     padding: 10px;
     justify-content: center;
     width: 100%;
+    align-items: center;
+}
+
+#flip{
+  border-radius: 50%;
+  height: 50;
+  aspect-ratio: 1/1;
+  margin-right: 30px;
+
+}
+
+#flip img{
+  height: 100%;
+  width: 100%;
 }
 
 .image-row img {
