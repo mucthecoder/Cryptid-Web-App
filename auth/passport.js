@@ -62,8 +62,8 @@ GITHUB_CLIENT_ID = "Ov23liIefbbuV1FBRc19";
             if (!user) {
                 user = new User({
                     OAuthID: profile.id,
-                    email: profile.emails[0].value,
-                    username: profile.displayName,
+                    // email: profile.emails[0].value,
+                    username: profile.username,
                     usertType:"user"
                 });
                 await user.save();
