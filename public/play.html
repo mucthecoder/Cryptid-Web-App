@@ -23,9 +23,37 @@
         border-radius: 5px;
         font-size: 20px;
       }
+      /* ============================== */
+      
+      .main {
+          display: flex;
+          justify-content: center;
+      }
+
+      #microphone-icon {
+          cursor: pointer;
+          border: 2px solid red;
+          border-radius: 50%;
+          padding: 0px 5px;
+
+          p {
+              color: #008080;
+              font-size: 16px;
+          }
+      }
+
     </style>
   </head>
   <body>
+
+    
+    <div id="Talk" class="main">
+      <div id="microphone-icon" onclick="toggleMicrophone()">
+          <i class="bi bi-mic-mute" id="mic-image"></i>
+          <p id="microphone-state">Muted</p>
+      </div>
+  </div>
+
     <div id="whatt">
       <div id="notifier">This will tell you what's happening in the game</div>
       <div id="butts"></div>
@@ -74,6 +102,7 @@
       <span id="closeModal">&times;</span>
     </div>
 
+    <!-- <script src="javascripts/chat.js"></script> -->
     <script src="javascripts/cluelist.js"></script>
     <script src="javascripts/machinelearning.js"></script>
     <script src="javascripts/game_setup.js"></script>
@@ -81,5 +110,7 @@
     <script src="javascripts/getBoards.js"></script>
     <script src="javascripts/buttons.js"></script>
     <script src="javascripts/gameRules.js"></script>
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+
   </body>
 </html>
