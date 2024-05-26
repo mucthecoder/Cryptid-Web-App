@@ -1090,6 +1090,6 @@ function leave(){
     history.go(-3);
   }
   else{
-    window.history.back();
+   history.go(-4);
   }
 }
