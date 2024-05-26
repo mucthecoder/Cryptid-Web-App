@@ -21,7 +21,8 @@ if (mode!=null){
     document.getElementById("mode").textContent=mode;
 }
 
-if (goal=="join"){
+let h=sessionStorage.getItem("cryptid-game-action-res");
+if (goal=="join" && h!="created"){
     let g=document.getElementById("starter");
     if (g) g.parentNode.removeChild(g);
 }
@@ -57,6 +58,7 @@ socket.on("create-res",(response)=>{
     match_id=response.id;
     sessionStorage.setItem("cryptid-game-room-number",match_id);
     sessionStorage.setItem("cryptid-game-action","join");
+    sessionStorage.setItem("cryptid-game-action-res","created");
     document.getElementById("join_code").textContent=`Joining code: ${response.id}`;
 });
 
@@ -221,6 +223,8 @@ function update_colors(who,what){
 socket.on("not-found",()=>{
     //invalid code, alert player
     document.getElementById("join_code").textContent=`Invalid Joining Code`;
+    alert("Innvalid Joining Code!");
+    window.history.back();
 });
 
 

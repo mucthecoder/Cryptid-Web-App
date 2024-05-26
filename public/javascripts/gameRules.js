@@ -1084,3 +1084,12 @@ function on_game_start(player){
     document.getElementById("notifier").textContent=`You are ${capitalizeFirstLetter(my_colour)}, ${capitalizeFirstLetter(player)}'s Turn`;
   }
 }
+
+function leave(){
+  if (goal=="play"){
+    history.go(-3);
+  }
+  else{
+    window.history.back();
+  }
+}
