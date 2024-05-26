@@ -5,7 +5,7 @@
 This is a group project for the Software Design (COMS3009A) module. We, the following students, have collaborated to create this project:
 
 - Massamba Maphalala: [Massamba505](https://github.com/Massamba505)
-- Siphelele Mthethwa: [SOMEONE1703](SOMEONE1703)
+- Siphelele Mthethwa: [SOMEONE1703](https://github.com/SOMEONE1703)
 - Ritanzwe Mbedzi: [Ritanzwe](https://github.com/Ritanzwe)
 - Kananelo Rampele: [Kanizo11](https://github.com/Kanizo11)
 - Mukhunyeledzi Muthuphei: [Toby-Query](https://github.com/Toby-Query)
@@ -101,7 +101,7 @@ You can access our Cryptid Web App at: [https://playcryptidweb.azurewebsites.net
 If you have any questions or need further information, please contact us:
 
 - Massamba Maphalala: [Massamba505](https://github.com/Massamba505)
-- Siphelele Mthethwa: [SOMEONE1703](SOMEONE1703)
+- Siphelele Mthethwa: [SOMEONE1703](https://github.com/SOMEONE1703)
 - Ritanzwe Mbedzi: [Ritanzwe](https://github.com/Ritanzwe)
 - Kananelo Rampele: [Kanizo11](https://github.com/Kanizo11)
 - Mukhunyeledzi Muthuphei: [Toby-Query](https://github.com/Toby-Query)
