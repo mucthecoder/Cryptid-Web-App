@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="stylesheets/customplay.css" />
-    <link rel="shortcut icon" href="/images/logo.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/logo.jpg" type="image/x-icon" />
   </head>
   <body>
     <div class="image-row" id="image-row">
+      <button id="flip">
+        <img src="images/rotate.svg" alt="rotate" />
+      </button>
       <img id="img0" height="100px" src="tiles/0.png" alt="" draggable="true" />
       <img id="img1" height="100px" src="tiles/1.png" alt="" draggable="true" />
       <img id="img2" height="100px" src="tiles/2.png" alt="" draggable="true" />
@@ -65,8 +68,12 @@
       />
     </div>
 
+    <p id="para">
+      Create your map, then submit. Click the rotate button to rotate pieces.
+    </p>
+
     <div id="buttons">
-      <button id="flip">Flip Pieces</button>
+      <!-- <button id="flip">Flip Pieces</button> -->
       <button onclick="submitConfig()" id="submit-button">
         Submit Configuration
       </button>
@@ -85,8 +92,6 @@
       <div id="box"></div>
       <canvas width="600" height="600" id="myCanvas"> </canvas>
     </div>
-
-    <div id="buttons"></div>
 
     <script src="javascripts/customplay.js"></script>
   </body>
