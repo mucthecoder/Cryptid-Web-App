@@ -337,3 +337,15 @@ h6 span{
 #uniqueCode{
   display: none;
 }
+
+.strength{
+  display: none;
+  color: red;
+}
+.code-send{
+  display: none;
+  color: green;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+}

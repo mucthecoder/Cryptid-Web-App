@@ -255,6 +255,7 @@ function drawTowersAndShacks() {
   updateTitles();
 }
 
+
 function updateTitles() {
   // Loop through all cells and update their titles
   for (let col = 0; col < 12; col++) {
@@ -281,10 +282,15 @@ function drawTower(imgUrl, r, c, color) {
     // Find all cells with the specified class
     var cells = document.getElementsByClassName(cellClass);
     // Iterate over all found cells (in case there are multiple cells with the same class)
+    // cells[0].classList.add(what.split(" ")[0]);
+    // cells[0].classList.add(what.split(" ")[1]);
+    // cell[0].setAttribute("tt","ss");
+    // console.log(cells[0]);
     for (var i = 0; i < cells.length; i++) {
       var cell = cells[i];
       // Append the tower image to each found cell
       cell.appendChild(img);
+      // cell[0].classList.add(`${what}`);
     }
   };
 }

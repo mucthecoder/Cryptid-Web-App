@@ -5,7 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="stylesheets/replay.css" />
-    
+    <link rel="shortcut icon" href="/images/logo.jpg" type="image/x-icon">
+    <style>
+      #leave{
+        height:40px;
+        background-color: rgb(255, 214, 161);
+        color: rgb(95, 49, 11);
+        border: 2px solid;
+        border-radius: 5px;
+        font-size: 20px;
+      }
+      #leave:hover{
+        background-color: rgb(95, 49, 11);
+        color: rgb(255, 214, 161);
+        border: 2px solid rgb(95, 49, 11);;
+        border-radius: 5px;
+        font-size: 20px;
+      }
+    </style>
+    <script>function leave(){window.history.back();}</script>
   </head>
   <body>
     <div id="whatt">
@@ -17,7 +35,10 @@
         <button id="next" class="actions" onclick="next()">Next</button>
         <span style="width: 15px;"></span>
         <button id="auto" class="actions" onclick="toggle()">Auto</button>
+        
       </div>
+      <span style="width: 15px;"></span>
+        <div><button onclick="leave()" id="leave">Exit Game</button></div>
     </div>
     <section>
       <article>

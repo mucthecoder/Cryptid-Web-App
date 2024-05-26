@@ -3,7 +3,7 @@ const fs=require("fs");
 const path=require("path");
 const custom_lobbies = [];
 const lobbies = [];
-const curr_ind=0;
+let curr_ind=0;
 
 let next_custom=0;
 
@@ -116,11 +116,14 @@ function configureSocketIO(server) {
                 temp.players.push(data.username);
                 temp.mode=data.mode;
                 lobbies.push(temp);
+                curr_ind++;
                 io.to(socket.id).emit("found",{data:"new lobby",identity:temp.lobby_id});
                 console.log("creating new lobby");
                 //console.log(lobbies);
             }
             else{
+                console.log("joining lobby");
+                console.log(lobbies[index]);
                 lobbies[index].player_sockets.push(socket.id);
                 lobbies[index].players.push(data.username);
                 console.log("I am the one");
@@ -156,7 +159,7 @@ function configureSocketIO(server) {
 
         });
         socket.on("start",(data)=>{
-            console.log(data.id);
+            console.log(data);
             if (data.action=="create"){
                 
                 const index = custom_lobbies.findIndex(car => car.lobby_id==data.id);
@@ -173,6 +176,7 @@ function configureSocketIO(server) {
             else if(data.action=="play"){
                 const index = lobbies.findIndex(car => car.lobby_id==data.id);
                 console.log(index);
+                console.log(lobbies[index]);
                 if (index==-1){
                     return;
                 }
@@ -181,6 +185,7 @@ function configureSocketIO(server) {
                 }
                 lobbies[index].num_players=lobbies[index].players.length;
                 lobbies[index].started=true;
+                console.log(lobbies[index]);
             }
         });
         //#################################################################

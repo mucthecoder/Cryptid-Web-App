@@ -86,11 +86,11 @@ h6 span{
   position: relative;
   width: 540px;
   max-width: 100%;
-  height: 490px;
+  height: 560px;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   perspective: 800px;
-  margin-top: 60px;
+  margin-top: 30px;
 }
 .card-3d-wrapper {
   width: 100%;
@@ -272,8 +272,8 @@ h6 span{
 
 .logo {
 	position: absolute;
-	top: 20px;
-	left: 15px;
+	top: 10px;
+	left: 10px;
 	display: block;
 	z-index: 100;
 	transition: all 250ms linear;
@@ -349,4 +349,24 @@ h6 span{
 
 .click_2:hover{
   background-color: #044a7c;
+}
+
+.strength, #taken{
+  display: none;
+  color: red;
+}
+
+.strength ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+@media (max-width: 700px) {
+  .logo img {
+    height: 50px;
+    width: auto;
+    display: block;
+  }
 }

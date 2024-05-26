@@ -13,10 +13,11 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="/stylesheets/forgot.css">
+    <link rel="shortcut icon" href="/images/logo.jpg" type="image/x-icon">
 </head>
 <body>
-	<a href="/" class="logo">
-		<img src="/images/logo.jpg" alt="">
+	<a href="/users" class="logo">
+		<img style="border-radius: 1em;" src="/images/BACK.jpeg" alt="">
 	</a>
 
 	<div class="section">
@@ -25,13 +26,15 @@
 				<div class="col-12 text-center align-self-center py-5">
 					<div class="section pb-5 pt-5 pt-sm-2 text-center">
 			          	<input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+						<span id="code-sent" class="code-send">CODE SENT</span>
 						<div class="card-3d-wrap mx-auto">
 							<div class="card-3d-wrapper">
 								<div class="card-front">
 									<div class="center-wrap">
 										<div id="uniqueEmail" class="section text-center">
 											<form id="Submitemail" method="post">
-												<h4 class="mb-4 pb-3">Fogot Password</h4>
+												<h4 class="pb-2">Fogot Password</h4>
+												<span id="invalid" class="strength mb-1">Email does not exist</span>
 												<div class="form-group">
 													<input required type="email" name="email" class="form-style" placeholder="Your Email" id="email" autocomplete="off">
 													<i class="input-icon uil uil-at"></i>
@@ -42,7 +45,8 @@
                                         <!-- code part -->
 										<div id="uniqueCode" class="section text-center">
 											<form id="Submitcode" method="post">
-												<h4 class="mb-4 pb-3">Code</h4>
+												<h4 class="mb pb-3">Code</h4>
+												<span id="invalid2" class="strength mb-1">Invalid Code</span>
 												<div class="form-group mt-3">
 													<input required type="text" name="code" class="form-style" placeholder="Code" id="code" autocomplete="off">
 													<i class="input-icon uil uil-at"></i>
@@ -57,6 +61,9 @@
 										<div class="section text-center">
 											<form id="newPassword" method="post">
 												<h4 class="mb-3 pb-2 pt-3">New Password</h4>
+												<div id="passwordStrength" class="strength mb-1">
+													<ul id="strengthMessages"></ul>
+												</div>
 												<div class="form-group mt-2">
 													<input type="password" name="newpass" class="form-style" placeholder="New Password" id="newpass" autocomplete="off">
 													<i class="input-icon uil uil-lock-alt"></i>

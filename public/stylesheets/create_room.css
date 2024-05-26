@@ -4,28 +4,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    height: 100vh;
+    /* height: 100vh; */
     background-color: #02233b; /* Dark Blue */
     color: #FFFFFF; /* White */
+    text-align: center;
 }
 
 .container {
-    /* width: 100%;
-    max-width: 1200px;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #02233b;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    margin-top: 90px;  */
-
-    
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* max-width: 1200px; */
-    /* margin: 80px auto 20px; */
-    padding: 100px;
+    padding-top: 100px;
     box-sizing: border-box;
 }
 
@@ -79,30 +68,18 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
     padding-top: 20px; /* Adjusted padding top */
 }
 
-.card {
-    /* background: #02233b;
-    border: 1px solid #FFFFFF; 
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 400px;
-    margin: 10px auto; 
-    text-align: center;
-    overflow: hidden; */
-
-        
+.card { 
     background-color: #02233b;
     color: white;
     margin: 10px;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 25em;
-    /* max-width: 400px; */
+    width: 20em;
     display: flex;
     justify-content: center;
     flex-direction: column;

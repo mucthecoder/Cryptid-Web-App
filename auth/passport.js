@@ -1,4 +1,6 @@
-const FacebookStrategy = require('passport-facebook').Strategy;
+//passport.js for fb and google auth
+//importing the requirements for passportfb and passportgoogle
+const GithubStrategy = require('passport-github2').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require("../models/user.model");
 
@@ -17,7 +19,7 @@ const Google_Email = (passport)=>{
                 if (!user) {
                     user = new User({
                         OAuthID: profile.id,
-                        email: profile.emails[0].value,
+                        emails: profile.emails.map(email => email.value),
                         username: profile.displayName,
                         usertType:"user"
                     });
@@ -45,13 +47,13 @@ const Google_Email = (passport)=>{
     });
 };
 
-const Facebook_Email = (passport)=>{
-    FACEBOOK_CLIENT_ID = "453961490558859";
-    FACEBOOK_CLIENT_SECRET = "7ef3c13a5844b8bb493c04d029b5a7e7";
-    passport.use(new FacebookStrategy({
-        clientID: FACEBOOK_CLIENT_ID,
-        clientSecret: FACEBOOK_CLIENT_SECRET,
-        callbackURL: "/auth/facebook/callback"
+const Github_Email = (passport)=>{
+GITHUB_CLIENT_ID = "Ov23liIefbbuV1FBRc19";
+    GITHUB_CLIENT_SECRET = "00a6ef40f316471edca18854f7dff1b73fbbe60c";
+    passport.use(new GithubStrategy({
+        clientID: GITHUB_CLIENT_ID,
+        clientSecret: GITHUB_CLIENT_SECRET,
+        callbackURL: "https://playcryptidweb.azurewebsites.net/auth/github/callback"
     },
     async (accessToken, refreshToken, profile, done) => {
         try {
@@ -60,8 +62,8 @@ const Facebook_Email = (passport)=>{
             if (!user) {
                 user = new User({
                     OAuthID: profile.id,
-                    email: profile.emails[0].value,
-                    username: profile.displayName,
+                    // email: profile.emails[0].value,
+                    username: profile.username,
                     usertType:"user"
                 });
                 await user.save();
@@ -92,5 +94,5 @@ const Facebook_Email = (passport)=>{
 
 module.exports = {
     Google_Email,
-    Facebook_Email
+    Github_Email
 }

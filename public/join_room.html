@@ -5,11 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join room</title>
     <link rel="stylesheet" href="stylesheets/join_room.css">
+    <link rel="shortcut icon" href="/images/logo.jpg" type="image/x-icon">
     <script src="/javascripts/join_room.js"></script>
+    <style>
+        #leave{
+          height:40px;
+          background-color: rgb(255, 214, 161);
+          color: rgb(95, 49, 11);
+          border: 2px solid;
+          border-radius: 5px;
+          font-size: 20px;
+        }
+        #leave:hover{
+          background-color: rgb(95, 49, 11);
+          color: rgb(255, 214, 161);
+          border: 2px solid rgb(95, 49, 11);;
+          border-radius: 5px;
+          font-size: 20px;
+        }
+      </style>
+      <script>function leave(){window.history.back();}</script>
 </head>
 <body>
     <div class="navbar">
-        <img src="/images/BACK.jpeg" width="75px" height="75px" class="logo"/>
+        <img src="/images/BACK.jpeg" onclick="leave()" width="75px" height="75px" class="logo"/>
         
     </div>
     <div class="bigger">

@@ -1,13 +1,11 @@
 body {
   display: flex;
   flex-direction: column;
-  padding: 5px 0;
-  min-height: 100vh;
+  margin: 0px;
   align-items: center;
   background-color: #efd29f;
   justify-content:center;
-  margin-left: 0;
-  margin-right: 0;
+  padding: 10px 2px;
 }
 #whatt{
   display: flex;
@@ -32,7 +30,6 @@ body {
   justify-content: center;
   margin: 0px 0px 20px 0px;
   min-height: 10%;
-  
 }
 .circs{
   height:60px;
@@ -235,6 +232,7 @@ canvas {
   width: 100%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  cursor: pointer;
 }
 
 #clues div:first-child {
@@ -299,7 +297,7 @@ canvas {
   font-weight: bold;
 }
 #clue-show{
-  width: inherit;
+  width: 100%;
   border-left: 2px solid;
   border-right: 2px solid;
   border-bottom: 2px solid;
@@ -412,6 +410,10 @@ article{
 }
 
 @media (max-width: 700px) {
+  body{
+    display: flex;
+    flex-direction: column;
+  }
   section {
     flex-direction: column-reverse;
   }
@@ -441,6 +443,7 @@ article{
   .turns{
     border: 1px solid black;
     height: 30px;
+    width: 98%;
   }
 
   #legendButt{
@@ -450,5 +453,11 @@ article{
   #modalImg{
     width: 100%;
   }
+  #bigg{
+    width: 96%;
+  }
 }
 
+#invalid2{
+  color: red;
+}

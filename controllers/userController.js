@@ -42,7 +42,8 @@ const signup =  async function(req, res) {
       const this_user = await User.findOne({username});
       if(this_user){
         return res.status(409).json({
-          message:"Username already taken"
+          message:"Username is taken",
+          status:409
         });
       }
   
@@ -59,7 +60,11 @@ const signup =  async function(req, res) {
       req.session.user_id = user._id;
       req.session.username = username;
   
-      res.sendStatus(201);
+      res.status(201).json({
+        message:"success",
+        status:201
+      });;
+      // res.redirect("/home")
   
     }catch(err){
         console.log(err);

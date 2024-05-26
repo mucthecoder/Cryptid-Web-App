@@ -11,7 +11,7 @@ if (jsonDataString) {
     try {
         const jsonData = JSON.parse(jsonDataString);
         drawIt(jsonData);
-        console.log('Retrieved JSON data from sessionStorage:', jsonData);
+        //console.log('Retrieved JSON data from sessionStorage:', jsonData);
     } catch (error) {
         console.error('Error parsing JSON:', error);
         alert("Invalid JSON: " + error.message);
@@ -45,5 +45,7 @@ function closeModal() {
     document.getElementById("modal").style.display = "none";
 }
 
-
+function leave(){
+    window.history.back();
+}
   

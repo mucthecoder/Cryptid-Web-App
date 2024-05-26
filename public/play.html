@@ -6,12 +6,31 @@
     <title>Document</title>
     <link rel="stylesheet" href="stylesheets/play.css" />
     <script src="/socket.io/socket.io.js"></script>
+    <style>
+      #leave{
+        /* height:40px; */
+        background-color: rgb(255, 214, 161);
+        color: rgb(95, 49, 11);
+        border: 2px solid;
+        border-radius: 5px;
+        font-size: 20px;
+        margin: 0.5em;
+      }
+      #leave:hover{
+        background-color: rgb(95, 49, 11);
+        color: rgb(255, 214, 161);
+        border: 2px solid rgb(95, 49, 11);;
+        border-radius: 5px;
+        font-size: 20px;
+      }
+    </style>
   </head>
   <body>
     <div id="whatt">
       <div id="notifier">This will tell you what's happening in the game</div>
       <div id="butts"></div>
-      <span style="width: 100px"></span>
+      <!-- <span style="width: 100px"></span> -->
+      <div><button onclick="leave()" id="leave">Exit Game</button></div>
     </div>
     <section>
       <article>
@@ -54,8 +73,6 @@
       <img id="modalImg" src="" alt="" />
       <span id="closeModal">&times;</span>
     </div>
-
-    <br />
 
     <script src="javascripts/cluelist.js"></script>
     <script src="javascripts/machinelearning.js"></script>

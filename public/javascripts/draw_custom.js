@@ -11,21 +11,70 @@ var mapCodeValue = 0,
 
 const game_progress=[];
 tilePos = [null, null, null, null, null, null];
-
-fetch("/maps/dictionary.json")
-  .then((response) => response.json())
-  .then((data) => {
-    // Work with the fetched dictionary object
-    dict = data;
-  })
-  .catch((error) => {
-    // Handle errors
-    console.error("Error fetching dictionary:", error);
-  });
+var dict = {
+  "forest_or_mountain": "The habitat is on forest or mountain",
+  "forest_or_bone": "The habitat is on forest or swamp",
+  "desert_or_mountain": "The habitat is on desert or mountain",
+  "desert_or_bone": "The habitat is on desert or swamp",
+  "forest_or_desert": "The habitat is on forest or desert",
+  "mountain_or_bone": "The habitat is on mountain or swamp",
+  "water_or_bone": "The habitat is on water or swamp",
+  "water_or_desert": "The habitat is on water or desert",
+  "water_or_forest": "The habitat is on water or forest",
+  "water_or_mountain": "The habitat is on water or mountain",
+  "within_water": "The habitat is within one space of water",
+  "within_forest": "The habitat is within one space of forest",
+  "within_desert": "The habitat is within one space of desert",
+  "within_mountain": "The habitat is within one space of mountain",
+  "within_bone": "The habitat is within one space of swamp",
+  "within_fissure": "The habitat is within one space of either animal territory",
+  "within_pyramid": "The habitat is within two spaces of a standing stone",
+  "within_colony": "The habitat is within two spaces of a shack",
+  "within_dormant_fissure": "The habitat is within two spaces of a bear territory",
+  "within_active_fissure": "The habitat is within two spaces of a cougar territory",
+  "within_green": "The habitat is within three spaces of a green structure",
+  "within_red": "The habitat is within three spaces of a white structure",
+  "within_blue": "The habitat is within three spaces of a blue structure",
+  "within_black": "The habitat is within three spaces of a black structure",
+  "not_forest_or_mountain": "The habitat is not on forest or mountain",
+  "not_forest_or_bone": "The habitat is not on forest or swamp",
+  "not_desert_or_mountain": "The habitat is not on desert or mountain",
+  "not_desert_or_bone": "The habitat is not on desert or swamp",
+  "not_forest_or_desert": "The habitat is not on forest or desert",
+  "not_mountain_or_bone": "The habitat is not on mountain or swamp",
+  "not_water_or_bone": "The habitat is not on water or swamp",
+  "not_water_or_desert": "The habitat is not on water or desert",
+  "not_water_or_forest": "The habitat is not on water or forest",
+  "not_water_or_mountain": "The habitat is not on water or mountain",
+  "not_within_water": "The habitat is not within one space of water",
+  "not_within_forest": "The habitat is not within one space of forest",
+  "not_within_desert": "The habitat is not within one space of desert",
+  "not_within_mountain": "The habitat is not within one space of mountain",
+  "not_within_bone": "The habitat is not within one space of swamp",
+  "not_within_fissure": "The habitat is not within one space of either animal territory",
+  "not_within_pyramid": "The habitat is not within two spaces of a standing stone",
+  "not_within_colony": "The habitat is not within two spaces of a shack",
+  "not_within_dormant_fissure": "The habitat is not within two spaces of a bear territory",
+  "not_within_active_fissure": "The habitat is not within two spaces of a cougar territory",
+  "not_within_green": "The habitat is not within three spaces of a green structure",
+  "not_within_red": "The habitat is not within three spaces of a white structure",
+  "not_within_blue": "The habitat is not within three spaces of a blue structure",
+  "not_within_black": "The habitat is not within three spaces of a black structure",
+  "hint_not_1": "There are no within 1 clues",
+  "hint_water": "There are no clues which mention water",
+  "hint_terrain": "There are no clues which mention terrain of any type",
+  "hint_fissure": "There are no clues which mention animals",
+  "hint_mountain": "There are no clues which mention mountain",
+  "hint_forest": "There are no clues which mention forest",
+  "hint_desert": "There are no clues which mention desert",
+  "hint_bone": "There are no clues which mention swamp",
+  "hint_not_2": "There are no within 2 clues",
+  "hint_not_3": "There are no within 3 clues"
+}
 
 function drawIt(data) {
     try {
-        console.log(data.players);
+        //console.log(data.players);
         mapCodeValue = data.mapCode;
         game_progress.push({ mapCode: mapCodeValue });
 
@@ -37,7 +86,7 @@ function drawIt(data) {
                 sessionStorage.setItem("cryptid-num-players", i);
             }
         }
-        console.log(num_players);
+        //console.log(num_players);
         // Ensure that destination and rules exist for the determined number of players
         if (!data.players || !data.players[num_players]) {
             throw new Error("Invalid player data");
@@ -45,6 +94,16 @@ function drawIt(data) {
 
         dest = data.players[num_players][0].destination;
         clues = data.players[num_players][0].rules;
+        //console.log(dict);
+        for (let i = 0; i < clues.length; i++) {
+          
+          let h=dict[clues[i]];
+          if (h){
+            clues[i] = dict[clues[i]];
+          }
+          //console.log(clues[i]);
+          
+        }
         let g = { rules: clues };
         game_progress.push(g);
 
@@ -82,11 +141,11 @@ function drawIt(data) {
             config[4],
             config[5],
         ];
-        console.log("done with drawIt, somewhat");
+        //console.log("done with drawIt, somewhat");
 
         // Load the images
         loadImages();
-        console.log("me");
+        //console.log("me");
     } catch (error) {
         alert("Invalid JSON"+error.message);
     }
@@ -123,7 +182,7 @@ function drawIt2(str) {
 function transformString(str) {
   var substr = str.toString().slice(0, 6);
   var transformed = [];
-  console.log(substr);
+  //console.log(substr);
   for (var i = 0; i < substr.length; i++) {
     var char = substr[i];
 
@@ -143,7 +202,7 @@ function transformString(str) {
 function transformString2(str) {
   var substr = str.toString().slice(6);
   var transformed = [];
-  console.log(substr);
+  //console.log(substr);
   for (var i = 0; i < substr.length; i++) {
     var char = substr[i];
 
@@ -163,7 +222,7 @@ function transformString2(str) {
 // Function to load images onto the canvas
 function loadImages() {
   var imagesLoaded = 0;
-    console.log(imageUrls);
+    //console.log(imageUrls);
   imageUrls.forEach(function (url, index) {
     var img = new Image();
     img.src = url;
@@ -195,15 +254,15 @@ function loadImages() {
           cellSize.width,
           cellSize.height
         );
-        console.log("This is my ratio" + col * cellSize.width);
+        //console.log("This is my ratio" + col * cellSize.width);
       }
-      console.log("incrementing");
+      //console.log("incrementing");
       imagesLoaded++;
       if (imagesLoaded === imageUrls.length) {
         console.log("i passed");
         setUp();
         drawTowersAndShacks();
-        console.log("now i'm here");
+        //console.log("now i'm here");
       }
     };
   });
@@ -212,9 +271,9 @@ function loadImages() {
 function drawTowersAndShacks() {
   // Draw towers and shacks on top of the board images
   // Example positions (8, 6) for towers and shacks
-  console.log("I got this far");
+  //console.log("I got this far");
   coordinates = transformString2(mapCodeValue);
-  console.log(coordinates);
+  //console.log(coordinates);
   if (coordinates.length == 12) {
     drawTower("tiles/s1.png", coordinates[0], coordinates[1]); // Replace "tower-image-url" with actual tower image URL
     drawTower("tiles/s2.png", coordinates[2], coordinates[3]); // Replace "tower-image-url" with actual tower image URL
@@ -280,12 +339,12 @@ function addStructureToTitle(r,c, structure){
     if(Math.floor(c/6)==0) listOfAllTiles[config[4]][r%3][c%6]+=", "+structure;
     else listOfAllTiles[config[5]][r%3][c%6]+=", "+structure;
   }
-  console.log(listOfAllTiles[config[0]]);
+  //console.log(listOfAllTiles[config[0]]);
 }
 
 function drawShack(imgUrl, r, c) {
   addStructureToTitle(r,c,"shack");
-  console.log("i am drawing shack");
+  //console.log("i am drawing shack");
   var img = new Image();
   img.src = imgUrl;
   img.style.width = "35%";
@@ -306,7 +365,7 @@ function drawShack(imgUrl, r, c) {
 // Call the function to load images
 
 function rcToString(r,c){
-  console.log("My config "+config[0])
+  //console.log("My config "+config[0])
   if(Math.floor(r/3)==0){
     if(Math.floor(c/6)==0) return listOfAllTiles[config[0]][r%3][c%6];
     else return listOfAllTiles[config[1]][r%3][c%6];
@@ -375,7 +434,7 @@ function hover(cell, r,c) {
 }
 
 function custom_hover(cell, val) {
-  console.log(cell);
+  //console.log(cell);
   cell.addEventListener("mouseenter", function () {
     if (val) this.style.backgroundColor = "rgba(255, 0, 0, 0.4)";
     else if(looking==false) this.style.backgroundColor = "rgba(0, 255, 0, 0.4)";
