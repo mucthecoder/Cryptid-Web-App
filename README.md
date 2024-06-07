@@ -96,6 +96,8 @@ This project incorporates Continuous Integration and Continuous Deployment (CI-C
 
 You can access our Cryptid Web App at: [https://playcryptidweb.azurewebsites.net](https://playcryptidweb.azurewebsites.net)
 
+You can watch the demo video on youtube: [CRYPTID WEB APP 🧌](https://www.youtube.com/watch?v=C1pnHL4b0VU)
+
 ## Contact
 
 If you have any questions or need further information, please contact us:
